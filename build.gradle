@@ -1,0 +1,99 @@
+buildscript {
+  repositories {
+    mavenLocal()
+  }
+}
+
+plugins {
+  id 'com.github.sherter.google-java-format' version '0.8'
+  id 'jacoco'
+  id 'java'
+  id 'java-library'
+  id 'application'
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+version = '1.2.1'
+
+repositories { jcenter() }
+
+allprojects {
+  repositories {
+    jcenter()
+//    maven { url "https://jitpack.io" }
+  }
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+dependencies {
+  annotationProcessor 'com.google.auto.value:auto-value:1.6.2'
+  compile 'com.google.auto.value:auto-value-annotations:1.6.2'
+  implementation 'com.google.guava:guava:27.0.1-jre'
+  testCompile "com.google.truth:truth:0.43"
+  testCompile "com.google.truth.extensions:truth-java8-extension:0.43"
+//  testCompile "org.mockito:mockito-core:2.+"
+  testImplementation "junit:junit:4.12"
+}
+
+//test {
+//  useJUnitPlatform()
+//}
+
+task textrocket(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter1.TextRocketTracker'
+}
+
+task canvasrocket(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter2.CanvasRocketTracker'
+}
+
+task clock(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter4.Clock'
+}
+
+task silhouette(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter5.Silhouette'
+}
+
+task blueball(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter6.BlueBall'
+}
+
+task sscene(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter7.SphereScene'
+}
+
+task pscene(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter9.PlaneScene'
+}
+
+task stripeballs(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter10.StripeBalls'
+}
+
+task reflect(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter11.ReflectScene'
+}
+
+task refract(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter11.RefractScene'
+}
+
+task cubes(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter12.CubeScene'
+}
