@@ -63,7 +63,7 @@ public class Cube extends Shape {
   }
 
   public Tuple localNormalAt(Tuple point) {
-    // Return normal for whichever point 
+    // Return normal for whichever point
     int maxIndex = maxIndex(point.x(), -point.x(), point.y(), -point.y(), point.z(), -point.z());
     return NORMALS.get(maxIndex);
   }

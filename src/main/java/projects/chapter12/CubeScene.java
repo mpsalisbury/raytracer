@@ -66,19 +66,16 @@ public class CubeScene {
 
   private static Shape createCube1() {
     Shape s = new Cube();
-    s.setTransform(Matrix.rotationY(Math.PI/6).translation(-0.5, 1, 0.5));
+    s.setTransform(Matrix.rotationY(Math.PI / 6).translation(-0.5, 1, 0.5));
     // TODO: make this an opaque cube. Not working.
     s.setMaterial(
-        Material.builder()
-            .setColor(Color.create(0.4, 0, 0))
-            .setReflectivity(0.5)
-            .build());
+        Material.builder().setColor(Color.create(0.4, 0, 0)).setReflectivity(0.5).build());
     return s;
   }
 
   private static Shape createCube2() {
     Shape s = new Cube();
-    s.setTransform(Matrix.scaling(0.5, 0.5, 0.5).rotateY(-Math.PI/6).translate(1.5, 0.5, -0.5));
+    s.setTransform(Matrix.scaling(0.5, 0.5, 0.5).rotateY(-Math.PI / 6).translate(1.5, 0.5, -0.5));
     s.setMaterial(
         Material.builder()
             .setColor(Color.create(0, 0, 0.4))

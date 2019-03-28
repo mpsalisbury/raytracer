@@ -296,7 +296,8 @@ public class WorldTest {
             Tuple.createVector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
     Intersection i = w.intersect(r).get(0);
     assertThat(i.t()).isWithin(EPSILON).of(Math.sqrt(2));
-//    assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(0.93642, 0.68643, 0.68643));
+    //    assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(0.93642, 0.68643,
+    // 0.68643));
     assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(1.20377, 0.68643, 0.68643));
   }
 
@@ -326,7 +327,7 @@ public class WorldTest {
             Tuple.createVector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
     Intersection i = w.intersect(r).get(0);
     assertThat(i.t()).isWithin(EPSILON).of(Math.sqrt(2));
-    //assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(0.93391, 0.69643, 0.69243));
+    // assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(0.93391, 0.69643, 0.69243));
     assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(1.19001, 0.69643, 0.69243));
   }
 }
