@@ -99,9 +99,8 @@ public class Canvas {
     return image;
   }
 
-  public void writePngFile(String outFileName) throws IOException {
+  public void writePngFile(File outFile) throws IOException {
     RenderedImage image = toImage();
-    File outFile = new File(outFileName);
     ImageIO.write(image, "png", outFile);
   }
 
@@ -112,8 +111,8 @@ public class Canvas {
   }
 
   // Writes this canvas to the given PPM file.
-  public void writePpmFile(String outFileName) throws IOException {
-    FileOutputStream outfile = new FileOutputStream(outFileName);
+  public void writePpmFile(File outFile) throws IOException {
+    FileOutputStream outfile = new FileOutputStream(outFile);
     writePpmStream(outfile);
     outfile.close();
   }
