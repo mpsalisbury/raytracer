@@ -9,6 +9,7 @@ public abstract class Tuple {
   private static final double POINT_W = 1.0;
   private static final double VECTOR_W = 0.0;
   private static final Tuple ZERO = create(0, 0, 0, VECTOR_W);
+  private static final Tuple UNIT_VERTICAL = createVector(0, 1, 0);
 
   public static Tuple create(double x, double y, double z, double w) {
     return new AutoValue_Tuple(x, y, z, w);
@@ -36,6 +37,14 @@ public abstract class Tuple {
 
   public boolean isVector() {
     return w() == VECTOR_W;
+  }
+
+  public boolean isVertical() {
+    return isVector() && Math.abs(dot(UNIT_VERTICAL)) == magnitude();
+  }
+
+  public boolean isHorizontal() {
+    return isVector() && Math.abs(dot(UNIT_VERTICAL)) == 0;
   }
 
   public double magnitude() {

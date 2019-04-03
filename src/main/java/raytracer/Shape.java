@@ -5,7 +5,7 @@ import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 
 public abstract class Shape {
-  private Matrix inverseTransform = Matrix.identity();
+  private Matrix inverseTransform;
   private Material material = Material.create();
   private boolean castsShadow = true;
 
@@ -14,14 +14,21 @@ public abstract class Shape {
     return new TestShape();
   }
 
-  protected Shape() {}
+  protected Shape() {
+    setTransform(Matrix.identity());
+  }
 
   public Matrix transform() {
     return inverseTransform.invert();
   }
 
+  // Transform added to requested transform.
+  protected Matrix startingTransform() {
+    return Matrix.identity();
+  }
+
   public void setTransform(Matrix transform) {
-    this.inverseTransform = transform.invert();
+    this.inverseTransform = transform.times(startingTransform()).invert();
   }
 
   public Material material() {

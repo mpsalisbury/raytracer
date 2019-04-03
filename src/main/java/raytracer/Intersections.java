@@ -71,6 +71,10 @@ public class Intersections {
     return is.get(i);
   }
 
+  public Stream<Intersection> all() {
+    return is.stream();
+  }
+
   public Optional<Intersection> hit() {
     return is.stream().filter(i -> i.t() >= 0.0).min(comparingDouble(Intersection::t));
   }

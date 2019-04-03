@@ -32,6 +32,7 @@ jacoco {
 dependencies {
   annotationProcessor 'com.google.auto.value:auto-value:1.6.2'
   compile 'com.google.auto.value:auto-value-annotations:1.6.2'
+  compile 'org.yaml:snakeyaml:1.8'
   implementation 'com.google.guava:guava:27.0.1-jre'
   testCompile "com.google.truth:truth:0.43"
   testCompile "com.google.truth.extensions:truth-java8-extension:0.43"
@@ -96,4 +97,19 @@ task refract(type:JavaExec) {
 task cubes(type:JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
   main = 'projects.chapter12.CubeScene'
+}
+
+task cylinders(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter13.CylinderScene'
+}
+
+task cones(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter13.ConeScene'
+}
+
+task cover(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.appendix1.CoverWorld'
 }

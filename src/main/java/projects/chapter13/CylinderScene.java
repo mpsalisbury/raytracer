@@ -1,10 +1,10 @@
-package projects.chapter12;
+package projects.chapter13;
 
 import raytracer.AppUtil;
 import raytracer.Camera;
 import raytracer.Canvas;
 import raytracer.Color;
-import raytracer.Cube;
+import raytracer.Cylinder;
 import raytracer.Light;
 import raytracer.Material;
 import raytracer.Matrix;
@@ -14,18 +14,18 @@ import raytracer.Shape;
 import raytracer.Tuple;
 import raytracer.World;
 
-// Render a scene of cubes on a plane.
-public class CubeScene {
+// Render a scene of cylinders on a plane.
+public class CylinderScene {
 
   public static void main(String[] args) {
-    Canvas canvas = new CubeScene().render();
-    AppUtil.saveCanvasToPng(canvas, "cubescene");
+    Canvas canvas = new CylinderScene().render();
+    AppUtil.saveCanvasToPng(canvas, "cylinderscene");
   }
 
   private final World world;
   private final Camera camera;
 
-  private CubeScene() {
+  private CylinderScene() {
     world = createWorld();
     camera = createCamera();
   }
@@ -44,9 +44,9 @@ public class CubeScene {
     World w = new World();
     w.addLight(Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE));
     w.addShape(createFloor());
-    w.addShape(createCube1());
-    w.addShape(createCube2());
-    w.addShape(createCube3());
+    w.addShape(createCylinder1());
+    w.addShape(createCylinder2());
+    w.addShape(createCylinder3());
     return w;
   }
 
@@ -64,17 +64,16 @@ public class CubeScene {
     return p;
   }
 
-  private static Shape createCube1() {
-    Shape s = new Cube();
-    s.setTransform(Matrix.rotationY(Math.PI / 6).translate(-0.5, 1, 0.5));
+  private static Shape createCylinder1() {
+    Shape s = new Cylinder();
+    s.setTransform(Matrix.rotationZ(Math.PI / 6).translate(-0.5, 1, 0.5));
     // TODO: make this an opaque cube. Not working.
-    s.setMaterial(
-        Material.builder().setColor(Color.create(0.4, 0, 0)).setReflectivity(0.5).build());
+    s.setMaterial(Material.builder().setColor(Color.create(0.8, 0.1, 0.1)).build());
     return s;
   }
 
-  private static Shape createCube2() {
-    Shape s = new Cube();
+  private static Shape createCylinder2() {
+    Shape s = new Cylinder();
     s.setTransform(Matrix.scaling(0.5, 0.5, 0.5).rotateY(-Math.PI / 6).translate(1.5, 0.5, -0.5));
     s.setMaterial(
         Material.builder()
@@ -88,8 +87,8 @@ public class CubeScene {
     return s;
   }
 
-  private static Shape createCube3() {
-    Shape s = new Cube();
+  private static Shape createCylinder3() {
+    Shape s = new Cylinder();
     s.setTransform(Matrix.scaling(0.33, 0.33, 0.33).translate(-1.5, 0.33, -0.75));
     s.setMaterial(
         Material.builder()
