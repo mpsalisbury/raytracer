@@ -12,6 +12,7 @@ public class World {
   private List<Light> lights = new ArrayList<>();
   private List<Shape> shapes = new ArrayList<>();
 
+  // TODO: Move to testing.
   public static World createDefault() {
     Light light = Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE);
 
@@ -58,7 +59,7 @@ public class World {
   }
 
   public Color shadeHit(Intersection i, int remainingBounces) {
-    Material material = i.shape().material();
+    Material material = i.material();
 
     Color surfaceC = Color.BLACK;
     for (Light light : lights) {
@@ -82,7 +83,7 @@ public class World {
     if (remainingBounces <= 0) {
       return Color.BLACK;
     }
-    double reflectivity = i.shape().material().reflectivity();
+    double reflectivity = i.material().reflectivity();
     if (reflectivity == 0) {
       Color c = Color.BLACK;
     }
@@ -95,7 +96,7 @@ public class World {
     if (remainingBounces <= 0) {
       return Color.BLACK;
     }
-    double transparency = i.shape().material().transparency();
+    double transparency = i.material().transparency();
     if (transparency == 0) {
       return Color.BLACK;
     }
@@ -106,7 +107,7 @@ public class World {
     // TODO: This should incorporate object's internal color.
 
     Ray refractRay = Ray.create(i.point(), i.refractv()).bumpForward();
-    return colorAt(refractRay, remainingBounces - 1).times(i.shape().material().transparency());
+    return colorAt(refractRay, remainingBounces - 1).times(i.material().transparency());
   }
 
   public Color colorAt(Ray ray) {
@@ -135,7 +136,7 @@ public class World {
     for (Intersection i : hits) {
       if (i.t() < distanceToPoint - EPSILON) {
         // object surface is between point and light, changes light color.
-        Material m = i.shape().material();
+        Material m = i.material();
         // TODO: this should use the object's internal color, not surface color.
         // Sqrt because we hit the object twice, once at each surface.
         Color objectC = m.pattern().colorAt(i.point()).times(m.transparency()).sqrt();

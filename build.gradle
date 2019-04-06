@@ -12,9 +12,17 @@ plugins {
   id 'application'
 }
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-version = '1.2.1'
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+jar {
+  version = '0.1'
+  //includes {
+  //  "src/main/java/raytracer/"
+ // }
+}
 
 repositories { jcenter() }
 
@@ -26,22 +34,33 @@ allprojects {
 }
 
 jacoco {
-    toolVersion = "0.8.2"
+  toolVersion = "0.8.2"
 }
 
 dependencies {
   annotationProcessor 'com.google.auto.value:auto-value:1.6.2'
-  compile 'com.google.auto.value:auto-value-annotations:1.6.2'
-  compile 'org.yaml:snakeyaml:1.8'
+  compileOnly 'com.google.auto.value:auto-value-annotations:1.6.2'
   implementation 'com.google.guava:guava:27.0.1-jre'
-  testCompile "com.google.truth:truth:0.43"
-  testCompile "com.google.truth.extensions:truth-java8-extension:0.43"
-//  testCompile "org.mockito:mockito-core:2.+"
+  testImplementation "com.google.truth:truth:0.43"
+  testImplementation "com.google.truth.extensions:truth-java8-extension:0.43"
   testImplementation "junit:junit:4.12"
 }
 
 //test {
 //  useJUnitPlatform()
+//}
+
+//sourceSets {
+//  main {
+//    java {
+//      exclude 'src/main/java/projects/**'
+//    }
+//  }
+//  apps {
+//    java {
+//      include 'src/main/java/projects/**'
+//    }
+//  }
 //}
 
 task textrocket(type:JavaExec) {

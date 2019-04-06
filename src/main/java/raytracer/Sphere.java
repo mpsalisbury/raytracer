@@ -17,6 +17,7 @@ public class Sphere extends Shape {
     return sphere;
   }
 
+  @Override
   public DoubleStream localIntersect(Ray ray) {
     Tuple sphereToRay = ray.origin().minus(CENTER);
     double a = ray.direction().dot(ray.direction());
@@ -33,6 +34,7 @@ public class Sphere extends Shape {
     return DoubleStream.of(t1, t2);
   }
 
+  @Override
   public Tuple localNormalAt(Tuple point) {
     return point.minus(CENTER);
   }

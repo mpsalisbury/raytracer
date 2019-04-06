@@ -19,6 +19,7 @@ public class Cube extends Shape {
           Tuple.createVector(0, 0, -1));
   private static final double EPSILON = 1.0e-5;
 
+  @Override
   public DoubleStream localIntersect(Ray ray) {
     List<Double> xRange =
         Lists.newArrayList(
@@ -62,6 +63,7 @@ public class Cube extends Shape {
     }
   }
 
+  @Override
   public Tuple localNormalAt(Tuple point) {
     // Return normal for whichever point
     int maxIndex = maxIndex(point.x(), -point.x(), point.y(), -point.y(), point.z(), -point.z());

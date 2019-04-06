@@ -6,6 +6,7 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class Intersection {
 
+  // Shape is lowest-level shape responsible for this intersection.
   public static Intersection create(Ray ray, double t, Shape shape) {
     Tuple point = ray.position(t);
     Tuple eyev = ray.direction().times(-1);
@@ -16,6 +17,7 @@ public abstract class Intersection {
       normalv = normalv.times(-1);
     }
     Tuple reflectv = ray.direction().reflect(normalv);
+    Material material = shape.material();
 
     // Default values for refraction. These are set in copyWithMaterials().
     double n1 = Material.REFRACTIVE_INDEX_VACUUM;
@@ -32,6 +34,7 @@ public abstract class Intersection {
         normalv,
         inside,
         reflectv,
+        material,
         n1,
         n2,
         isTotalInternalReflection,
@@ -49,6 +52,7 @@ public abstract class Intersection {
         Tuple.createVector(0, 0, 0),
         false,
         Tuple.createVector(0, 0, 0),
+        Material.create(),
         Material.REFRACTIVE_INDEX_VACUUM,
         Material.REFRACTIVE_INDEX_VACUUM,
         false,
@@ -87,11 +91,38 @@ public abstract class Intersection {
         normalv(),
         inside(),
         reflectv(),
+        material(),
         n1,
         n2,
         isTotalInternalReflection,
         refractv,
         schlickReflectance);
+  }
+
+  // Adds another transform to the existing intersection.
+  public Intersection copyWithTransform(Matrix transform) {
+    Matrix inverseTransform = transform.invert();
+    Tuple newPoint = inverseTransform.times(point());
+    // TODO invertVectors (transpose first?)
+    Tuple newEyev = inverseTransform.times(eyev());
+    Tuple newNormalv = inverseTransform.times(normalv());
+    Tuple newReflectv = inverseTransform.times(reflectv());
+    Tuple newRefractv = inverseTransform.times(refractv());
+
+    return new AutoValue_Intersection(
+        t(),
+        shape(),
+        newPoint,
+        newEyev,
+        newNormalv,
+        inside(),
+        newReflectv,
+        material(),
+        n1(),
+        n2(),
+        isTotalInternalReflection(),
+        newRefractv,
+        schlickReflectance());
   }
 
   public abstract double t();
@@ -107,6 +138,8 @@ public abstract class Intersection {
   public abstract boolean inside();
 
   public abstract Tuple reflectv();
+
+  public abstract Material material();
 
   public abstract double n1();
 

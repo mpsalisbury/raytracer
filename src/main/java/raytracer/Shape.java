@@ -5,11 +5,12 @@ import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 
 public abstract class Shape {
-  private Matrix inverseTransform;
+  protected Matrix inverseTransform;
   private Material material = Material.create();
   private boolean castsShadow = true;
 
   // Returns degenerate Shape for testing.
+  // TODO: move to testing.
   public static Shape createTest() {
     return new TestShape();
   }
@@ -20,6 +21,10 @@ public abstract class Shape {
 
   public Matrix transform() {
     return inverseTransform.invert();
+  }
+
+  protected Matrix inverseTransform() {
+    return inverseTransform;
   }
 
   // Transform added to requested transform.

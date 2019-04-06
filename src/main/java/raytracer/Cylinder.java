@@ -17,6 +17,7 @@ public class Cylinder extends Shape {
   private static final double RADIUS2 = RADIUS * RADIUS;
   private static final double EPSILON = 1.0e-5;
 
+  @Override
   public DoubleStream localIntersect(Ray ray) {
     List<Double> wallTs = intersectWalls(ray).boxed().collect(Collectors.toList());
     List<Double> capTs = intersectCaps(ray).boxed().collect(Collectors.toList());
@@ -114,6 +115,7 @@ public class Cylinder extends Shape {
     }
   }
 
+  @Override
   public Tuple localNormalAt(Tuple point) {
     double y = point.y();
     if (Math.abs(y - BOTTOM_Y) < EPSILON) {

@@ -128,7 +128,7 @@ public class CoverWorld {
             .setShininess(200)
             .setReflectivity(0.7)
             .setTransparency(0.7)
-            .setRefractiveIndex(1.5)
+            .setRefractiveIndex(Material.REFRACTIVE_INDEX_GLASS)
             .build());
     s.setTransform(largeObject());
     return s;

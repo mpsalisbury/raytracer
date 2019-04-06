@@ -8,6 +8,7 @@ public class Plane extends Shape {
   private static final Tuple NORMAL = Tuple.createVector(0, 1, 0);
   private static final double EPSILON = 1.0e-5;
 
+  @Override
   public DoubleStream localIntersect(Ray ray) {
     double yOrigin = ray.origin().y();
     double yVelocity = ray.direction().y();
@@ -18,6 +19,7 @@ public class Plane extends Shape {
     return DoubleStream.of(-yOrigin / yVelocity);
   }
 
+  @Override
   public Tuple localNormalAt(Tuple point) {
     return NORMAL;
   }

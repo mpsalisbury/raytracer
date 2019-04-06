@@ -57,9 +57,9 @@ public class BlueBall {
           if (maybeHit.isPresent()) {
             Intersection hit = maybeHit.get();
             Tuple point = cameraRay.position(hit.t());
-            Tuple normal = hit.shape().normalAt(point);
+            Tuple normal = hit.normalv();
             Tuple eye = cameraRay.direction().times(-1);
-            Color color = hit.shape().material().lighting(light, point, eye, normal, Color.WHITE);
+            Color color = hit.material().lighting(light, point, eye, normal, Color.WHITE);
             canvas.setPixel(x, y, color);
           }
         });

@@ -19,6 +19,7 @@ public class Cone extends Shape {
     return Matrix.translation(0, Y_SHIFT, 0);
   }
 
+  @Override
   public DoubleStream localIntersect(Ray ray) {
     return DoubleStream.concat(intersectWalls(ray), intersectCap(ray));
   }
@@ -75,6 +76,7 @@ public class Cone extends Shape {
     return originToPoint.dot(originToPoint) < RADIUS2;
   }
 
+  @Override
   public Tuple localNormalAt(Tuple point) {
     double y = point.y();
     if (Math.abs(y - BOTTOM_Y) < EPSILON) {

@@ -42,14 +42,14 @@ public class Intersections {
         // if we already saw this shape, ray is exiting
         shapeStack.remove(i.shape());
         Shape lastShape = shapeStack.peekLast();
-        double n1 = i.shape().material().refractiveIndex();
+        double n1 = i.material().refractiveIndex();
         double n2 = lastShape.material().refractiveIndex();
         materialIs.add(i.copyWithMaterials(n1, n2));
       } else {
         // if shape not already seen, ray is entering
         Shape lastShape = shapeStack.peekLast();
         double n1 = lastShape.material().refractiveIndex();
-        double n2 = i.shape().material().refractiveIndex();
+        double n2 = i.material().refractiveIndex();
         // This shape is now latest in stack.
         shapeStack.add(i.shape());
         materialIs.add(i.copyWithMaterials(n1, n2));
