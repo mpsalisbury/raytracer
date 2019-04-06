@@ -3,12 +3,14 @@ package raytracer;
 import java.util.stream.DoubleStream;
 
 // Sphere centered at origin with radius 1.
-public class Sphere extends Shape {
+public class Sphere extends Geometry {
 
-  private static final Tuple CENTER = Tuple.createPoint(0, 0, 0);
+  public static Shape create() {
+    return new GeometryShape(new Sphere());
+  }
 
-  public static Sphere createGlass() {
-    Sphere sphere = new Sphere();
+  public static Shape createGlass() {
+    Shape sphere = Sphere.create();
     sphere.setMaterial(
         Material.builder()
             .setTransparency(1.0)
@@ -17,8 +19,10 @@ public class Sphere extends Shape {
     return sphere;
   }
 
+  private static final Tuple CENTER = Tuple.createPoint(0, 0, 0);
+
   @Override
-  public DoubleStream localIntersect(Ray ray) {
+  public DoubleStream intersect(Ray ray) {
     Tuple sphereToRay = ray.origin().minus(CENTER);
     double a = ray.direction().dot(ray.direction());
     double b = 2.0 * ray.direction().dot(sphereToRay);
@@ -35,7 +39,7 @@ public class Sphere extends Shape {
   }
 
   @Override
-  public Tuple localNormalAt(Tuple point) {
+  public Tuple normalAt(Tuple point) {
     return point.minus(CENTER);
   }
 }

@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.stream.DoubleStream;
 
 // Cube centered at origin with side length 2.
-public class Cube extends Shape {
+public class Cube extends Geometry {
+
+  public static Shape create() {
+    return new GeometryShape(new Cube());
+  }
 
   // Normals in order +x, -x, +y, -y, +z, -z.
   private static final List<Tuple> NORMALS =
@@ -20,7 +24,7 @@ public class Cube extends Shape {
   private static final double EPSILON = 1.0e-5;
 
   @Override
-  public DoubleStream localIntersect(Ray ray) {
+  public DoubleStream intersect(Ray ray) {
     List<Double> xRange =
         Lists.newArrayList(
             intersectPlane(ray.origin().x(), ray.direction().x(), 1),
@@ -64,7 +68,7 @@ public class Cube extends Shape {
   }
 
   @Override
-  public Tuple localNormalAt(Tuple point) {
+  public Tuple normalAt(Tuple point) {
     // Return normal for whichever point
     int maxIndex = maxIndex(point.x(), -point.x(), point.y(), -point.y(), point.z(), -point.z());
     return NORMALS.get(maxIndex);

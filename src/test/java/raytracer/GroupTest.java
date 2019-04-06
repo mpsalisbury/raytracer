@@ -43,10 +43,10 @@ public class GroupTest {
   @Test
   // Scenario: Intersecting a ray with a nonempty group
   public void intersect() {
-    Shape s1 = new Sphere();
-    Shape s2 = new Sphere();
+    Shape s1 = Sphere.create();
+    Shape s2 = Sphere.create();
     s2.setTransform(Matrix.translation(0, 0, -3));
-    Shape s3 = new Sphere();
+    Shape s3 = Sphere.create();
     s3.setTransform(Matrix.translation(5, 0, 0));
 
     Group g = new Group();
@@ -74,7 +74,7 @@ public class GroupTest {
     Group g = new Group();
     g.setTransform(Matrix.scaling(2, 2, 2));
 
-    Shape s = new Sphere();
+    Shape s = Sphere.create();
     s.setTransform(Matrix.translation(5, 0, 0));
     g.add(s);
 
@@ -92,7 +92,7 @@ public class GroupTest {
     Group g = new Group();
     g.setTransform(Matrix.scaling(2, 2, 2));
 
-    Shape s = new Sphere();
+    Shape s = Sphere.create();
     s.setTransform(Matrix.translation(5, 0, 0));
     g.add(s);
 

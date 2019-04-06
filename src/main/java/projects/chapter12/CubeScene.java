@@ -51,7 +51,7 @@ public class CubeScene {
   }
 
   private static Shape createFloor() {
-    Plane p = new Plane();
+    Shape p = Plane.create();
     p.setMaterial(
         Material.builder()
             .setPattern(
@@ -65,7 +65,7 @@ public class CubeScene {
   }
 
   private static Shape createCube1() {
-    Shape s = new Cube();
+    Shape s = Cube.create();
     s.setTransform(Matrix.rotationY(Math.PI / 6).translate(-0.5, 1, 0.5));
     // TODO: make this an opaque cube. Not working.
     s.setMaterial(
@@ -74,7 +74,7 @@ public class CubeScene {
   }
 
   private static Shape createCube2() {
-    Shape s = new Cube();
+    Shape s = Cube.create();
     s.setTransform(Matrix.scaling(0.5, 0.5, 0.5).rotateY(-Math.PI / 6).translate(1.5, 0.5, -0.5));
     s.setMaterial(
         Material.builder()
@@ -89,7 +89,7 @@ public class CubeScene {
   }
 
   private static Shape createCube3() {
-    Shape s = new Cube();
+    Shape s = Cube.create();
     s.setTransform(Matrix.scaling(0.33, 0.33, 0.33).translate(-1.5, 0.33, -0.75));
     s.setMaterial(
         Material.builder()

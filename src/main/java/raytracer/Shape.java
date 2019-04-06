@@ -5,19 +5,16 @@ import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 
 public abstract class Shape {
-  protected Matrix inverseTransform;
+  protected Matrix inverseTransform = Matrix.identity();
   private Material material = Material.create();
-  private boolean castsShadow = true;
 
   // Returns degenerate Shape for testing.
   // TODO: move to testing.
   public static Shape createTest() {
-    return new TestShape();
+    return new GeometryShape(new TestGeometry());
   }
 
-  protected Shape() {
-    setTransform(Matrix.identity());
-  }
+  public Shape() { }
 
   public Matrix transform() {
     return inverseTransform.invert();
@@ -27,13 +24,8 @@ public abstract class Shape {
     return inverseTransform;
   }
 
-  // Transform added to requested transform.
-  protected Matrix startingTransform() {
-    return Matrix.identity();
-  }
-
   public void setTransform(Matrix transform) {
-    this.inverseTransform = transform.times(startingTransform()).invert();
+    this.inverseTransform = transform.invert();
   }
 
   public Material material() {
@@ -44,36 +36,13 @@ public abstract class Shape {
     this.material = m;
   }
 
-  public boolean castsShadow() {
-    return castsShadow;
-  }
-
-  public void setCastsShadow(boolean castsShadow) {
-    this.castsShadow = castsShadow;
-  }
-
   public Intersections intersect(Ray ray) {
     return new Intersections(intersectStream(ray));
   }
 
-  public Stream<Intersection> intersectStream(Ray ray) {
-    return localIntersect(ray.transform(inverseTransform))
-        .mapToObj(t -> Intersection.create(ray, t, this));
-  }
+  public abstract Stream<Intersection> intersectStream(Ray ray);
 
-  // Returns stream of t values where given ray intersects this shape.
-  public abstract DoubleStream localIntersect(Ray localRay);
-
-  public Tuple normalAt(Tuple point) {
-    Tuple localPoint = inverseTransform.times(point);
-    Tuple localNormal = localNormalAt(localPoint);
-    Tuple worldNormal = inverseTransform.transpose().times(localNormal);
-    // Hack -- w=0 and normalize. TODO: investigate p82.
-    return Tuple.createVector(worldNormal.x(), worldNormal.y(), worldNormal.z()).normalize();
-  }
-
-  // Returns the vector normal at the given point on this shape.
-  public abstract Tuple localNormalAt(Tuple point);
+  public abstract Tuple normalAt(Tuple point);
 
   @Override
   public boolean equals(Object obj) {
@@ -96,12 +65,12 @@ public abstract class Shape {
     return Objects.hash(inverseTransform, material);
   }
 
-  private static class TestShape extends Shape {
-    public DoubleStream localIntersect(Ray localRay) {
+  private static class TestGeometry extends Geometry {
+    public DoubleStream intersect(Ray localRay) {
       return DoubleStream.empty();
     }
 
-    public Tuple localNormalAt(Tuple point) {
+    public Tuple normalAt(Tuple point) {
       return Tuple.createVector(point.x(), point.y(), point.z());
     }
   }

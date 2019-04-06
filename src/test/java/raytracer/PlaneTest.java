@@ -17,7 +17,7 @@ public class PlaneTest {
   @Test
   // Scenario: The normal of a plane is constant everywhere
   public void normalIsConstant() {
-    Plane p = new Plane();
+    Shape p = Plane.create();
     assertThat(p.normalAt(Tuple.createPoint(0, 0, 0))).isEqualTo(Tuple.createVector(0, 1, 0));
     assertThat(p.normalAt(Tuple.createPoint(10, 0, -10))).isEqualTo(Tuple.createVector(0, 1, 0));
     assertThat(p.normalAt(Tuple.createPoint(-5, 0, 150))).isEqualTo(Tuple.createVector(0, 1, 0));
@@ -26,7 +26,7 @@ public class PlaneTest {
   @Test
   // Scenario: Intersect with a ray parallel to the plane
   public void intersectParallel() {
-    Plane p = new Plane();
+    Shape p = Plane.create();
     Ray r = Ray.create(Tuple.createPoint(0, 10, 0), Tuple.createVector(0, 0, 1));
     assertThat(p.intersect(r).length()).isEqualTo(0);
   }
@@ -34,7 +34,7 @@ public class PlaneTest {
   @Test
   // Scenario: Intersect with a coplanar ray
   public void intersectCoplanar() {
-    Plane p = new Plane();
+    Shape p = Plane.create();
     Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 0, 1));
     assertThat(p.intersect(r).length()).isEqualTo(0);
   }
@@ -42,7 +42,7 @@ public class PlaneTest {
   @Test
   // Scenario: A ray intersecting a plane from above
   public void intersectFromAbove() {
-    Plane p = new Plane();
+    Shape p = Plane.create();
     Ray r = Ray.create(Tuple.createPoint(0, 1, 0), Tuple.createVector(0, -1, 0));
     Intersections xs = p.intersect(r);
     assertThat(xs.length()).isEqualTo(1);
@@ -53,7 +53,7 @@ public class PlaneTest {
   @Test
   // Scenario: A ray intersecting a plane from below
   public void intersectFromBelow() {
-    Plane p = new Plane();
+    Shape p = Plane.create();
     Ray r = Ray.create(Tuple.createPoint(0, -1, 0), Tuple.createVector(0, 1, 0));
     Intersections xs = p.intersect(r);
     assertThat(xs.length()).isEqualTo(1);

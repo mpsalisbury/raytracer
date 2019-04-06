@@ -18,7 +18,7 @@ public class Intersections {
   private static final Shape ENVIRONMENT_SHAPE = makeEnvironment();
 
   private static Shape makeEnvironment() {
-    Shape env = new Sphere();
+    Shape env = Sphere.create();
     env.setTransform(Matrix.scaling(100, 100, 100));
     return env;
   }
@@ -82,13 +82,13 @@ public class Intersections {
   // Returns intersection of closest object t>0 that will cast a shadow.
   public Optional<Intersection> shadowHit() {
     return is.stream()
-        .filter(i -> i.shape().castsShadow())
+        .filter(i -> i.material().castsShadow())
         .filter(i -> i.t() >= 0.0)
         .min(comparingDouble(Intersection::t));
   }
 
   // Returns intersections objects that will cast a shadow.
   public Stream<Intersection> shadowHits() {
-    return is.stream().filter(i -> i.shape().castsShadow()).filter(i -> i.t() >= 0.0);
+    return is.stream().filter(i -> i.material().castsShadow()).filter(i -> i.t() >= 0.0);
   }
 }

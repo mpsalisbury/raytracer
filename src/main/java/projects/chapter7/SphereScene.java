@@ -7,6 +7,7 @@ import raytracer.Color;
 import raytracer.Light;
 import raytracer.Material;
 import raytracer.Matrix;
+import raytracer.Shape;
 import raytracer.Sphere;
 import raytracer.Tuple;
 import raytracer.World;
@@ -49,31 +50,31 @@ public class SphereScene {
     return w;
   }
 
-  private static Sphere createFloor() {
-    Sphere s = new Sphere();
+  private static Shape createFloor() {
+    Shape s = Sphere.create();
     s.setTransform(Matrix.scaling(10, 0.01, 10));
     s.setMaterial(Material.builder().setColor(Color.create(1, 0.9, 0.9)).setSpecular(0).build());
     return s;
   }
 
-  private static Sphere createLeftWall() {
-    Sphere s = new Sphere();
+  private static Shape createLeftWall() {
+    Shape s = Sphere.create();
     s.setTransform(
         Matrix.scaling(10, 0.01, 10).rotateX(Math.PI / 2).rotateY(-Math.PI / 4).translate(0, 0, 5));
     s.setMaterial(Material.builder().setColor(Color.create(1, 0.9, 0.9)).setSpecular(0).build());
     return s;
   }
 
-  private static Sphere createRightWall() {
-    Sphere s = new Sphere();
+  private static Shape createRightWall() {
+    Shape s = Sphere.create();
     s.setTransform(
         Matrix.scaling(10, 0.01, 10).rotateX(Math.PI / 2).rotateY(Math.PI / 4).translate(0, 0, 5));
     s.setMaterial(Material.builder().setColor(Color.create(1, 0.9, 0.9)).setSpecular(0).build());
     return s;
   }
 
-  private static Sphere createBall1() {
-    Sphere s = new Sphere();
+  private static Shape createBall1() {
+    Shape s = Sphere.create();
     s.setTransform(Matrix.translation(-0.5, 1, 0.5));
     s.setMaterial(
         Material.builder()
@@ -84,8 +85,8 @@ public class SphereScene {
     return s;
   }
 
-  private static Sphere createBall2() {
-    Sphere s = new Sphere();
+  private static Shape createBall2() {
+    Shape s = Sphere.create();
     s.setTransform(Matrix.scaling(0.5, 0.5, 0.5).translate(1.5, 0.5, -0.5));
     s.setMaterial(
         Material.builder()
@@ -96,8 +97,8 @@ public class SphereScene {
     return s;
   }
 
-  private static Sphere createBall3() {
-    Sphere s = new Sphere();
+  private static Shape createBall3() {
+    Shape s = Sphere.create();
     s.setTransform(Matrix.scaling(0.33, 0.33, 0.33).translate(-1.5, 0.33, -0.75));
     s.setMaterial(
         Material.builder()

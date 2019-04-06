@@ -22,6 +22,7 @@ public abstract class Material {
   private static final double DEFAULT_REFLECTIVITY = 0.0;
   private static final double DEFAULT_TRANSPARENCY = 0.0;
   private static final double DEFAULT_REFRACTIVE_INDEX = REFRACTIVE_INDEX_VACUUM;
+  private static final boolean DEFAULT_CASTS_SHADOW = true;
 
   public static Material create() {
     return AutoValue_Material.builder().build();
@@ -47,6 +48,8 @@ public abstract class Material {
 
   public abstract double refractiveIndex();
 
+  public abstract boolean castsShadow();
+
   public abstract Builder toBuilder();
 
   @AutoValue.Builder
@@ -71,6 +74,8 @@ public abstract class Material {
 
     public abstract Builder setRefractiveIndex(double refractiveIndex);
 
+    public abstract Builder setCastsShadow(boolean castsShadow);
+
     abstract Optional<Pattern> pattern();
 
     abstract Optional<Double> ambient();
@@ -86,6 +91,7 @@ public abstract class Material {
     abstract Optional<Double> transparency();
 
     abstract Optional<Double> refractiveIndex();
+    abstract Optional<Boolean> castsShadow();
 
     abstract Material autoBuild();
 
@@ -113,6 +119,9 @@ public abstract class Material {
       }
       if (!refractiveIndex().isPresent()) {
         setRefractiveIndex(DEFAULT_REFRACTIVE_INDEX);
+      }
+      if (!castsShadow().isPresent()) {
+        setCastsShadow(DEFAULT_CASTS_SHADOW);
       }
 
       Material material = autoBuild();

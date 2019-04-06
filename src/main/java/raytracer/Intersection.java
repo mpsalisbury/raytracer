@@ -99,34 +99,9 @@ public abstract class Intersection {
         schlickReflectance);
   }
 
-  // Adds another transform to the existing intersection.
-  public Intersection copyWithTransform(Matrix transform) {
-    Matrix inverseTransform = transform.invert();
-    Tuple newPoint = inverseTransform.times(point());
-    // TODO invertVectors (transpose first?)
-    Tuple newEyev = inverseTransform.times(eyev());
-    Tuple newNormalv = inverseTransform.times(normalv());
-    Tuple newReflectv = inverseTransform.times(reflectv());
-    Tuple newRefractv = inverseTransform.times(refractv());
-
-    return new AutoValue_Intersection(
-        t(),
-        shape(),
-        newPoint,
-        newEyev,
-        newNormalv,
-        inside(),
-        newReflectv,
-        material(),
-        n1(),
-        n2(),
-        isTotalInternalReflection(),
-        newRefractv,
-        schlickReflectance());
-  }
-
   public abstract double t();
 
+// TODO: use shapeId rather than shape, or switch to material ranges.
   public abstract Shape shape();
 
   public abstract Tuple point();

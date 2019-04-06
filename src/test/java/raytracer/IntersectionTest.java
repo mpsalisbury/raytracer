@@ -19,7 +19,7 @@ public class IntersectionTest {
   // Scenario: Precomputing the state of an intersection
   public void constructIntersection() {
     Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
-    Sphere s = new Sphere();
+    Shape s = Sphere.create();
     Intersection i = Intersection.create(r, 4, s);
     assertThat(i.t()).isWithin(EPSILON).of(4);
     assertThat(i.shape()).isEqualTo(s);
@@ -31,7 +31,7 @@ public class IntersectionTest {
   @Test
   // Scenario: Aggregating intersections
   public void aggregateIntersections() {
-    Sphere s = new Sphere();
+    Shape s = Sphere.create();
     Intersection i1 = Intersection.create(1);
     Intersection i2 = Intersection.create(2);
     Intersections xs = new Intersections(i1, i2);
@@ -44,7 +44,7 @@ public class IntersectionTest {
   // Scenario: Intersect sets the shape on the intersection
   public void intersectSetsShape() {
     Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
-    Sphere s = new Sphere();
+    Shape s = Sphere.create();
     Intersections xs = s.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
     assertThat(xs.get(0).shape()).isEqualTo(s);
@@ -54,7 +54,7 @@ public class IntersectionTest {
   @Test
   // Scenario: The hit, when all intersections have positive t
   public void hitAllPositive() {
-    Sphere s = new Sphere();
+    Shape s = Sphere.create();
     Intersection i1 = Intersection.create(1);
     Intersection i2 = Intersection.create(2);
     Intersections xs = new Intersections(i1, i2);
@@ -64,7 +64,7 @@ public class IntersectionTest {
   @Test
   // Scenario: The hit, when some intersections have negative t
   public void hitSomeNegative() {
-    Sphere s = new Sphere();
+    Shape s = Sphere.create();
     Intersection i1 = Intersection.create(-1);
     Intersection i2 = Intersection.create(1);
     Intersections xs = new Intersections(i2, i1);
@@ -74,7 +74,7 @@ public class IntersectionTest {
   @Test
   // Scenario: The hit, when all intersections have negative t
   public void hitAllNegative() {
-    Sphere s = new Sphere();
+    Shape s = Sphere.create();
     Intersection i1 = Intersection.create(-2);
     Intersection i2 = Intersection.create(-1);
     Intersections xs = new Intersections(i2, i1);
@@ -84,7 +84,7 @@ public class IntersectionTest {
   @Test
   // Scenario: The hit is always the lowest nonnegative intersection
   public void hitLowestNonNegative() {
-    Sphere s = new Sphere();
+    Shape s = Sphere.create();
     Intersection i1 = Intersection.create(5);
     Intersection i2 = Intersection.create(7);
     Intersection i3 = Intersection.create(-3);
@@ -101,7 +101,7 @@ public class IntersectionTest {
   // Scenario: The hit, when an intersection occurs on the outside
   public void hitIntersectOutside() {
     Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
-    Sphere shape = new Sphere();
+    Shape shape = Sphere.create();
     Intersection i = shape.intersect(r).get(0);
     assertThat(i.t()).isWithin(EPSILON).of(4);
     assertThat(i.inside()).isFalse();
@@ -111,7 +111,7 @@ public class IntersectionTest {
   // Scenario: The hit, when an intersection occurs on the inside
   public void hitIntersectInside() {
     Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 0, 1));
-    Sphere shape = new Sphere();
+    Shape shape = Sphere.create();
     Intersection i = shape.intersect(r).get(1);
     assertThat(i.t()).isWithin(EPSILON).of(1);
     assertThat(i.point()).isApproximatelyEqualTo(Tuple.createPoint(0, 0, 1));
@@ -124,7 +124,7 @@ public class IntersectionTest {
   @Test
   // Scenario: Precomputing the reflection vector
   public void computeReflectionVector() {
-    Shape shape = new Plane();
+    Shape shape = Plane.create();
     Ray r =
         Ray.create(
             Tuple.createPoint(0, 1, -1),
@@ -139,17 +139,17 @@ public class IntersectionTest {
   public void computeRefractiveIndices() {
     World w = new World();
 
-    Shape a = new Sphere();
+    Shape a = Sphere.create();
     a.setTransform(Matrix.scaling(2, 2, 2));
     a.setMaterial(Material.builder().setTransparency(1.0).setRefractiveIndex(1.5).build());
     w.addShape(a);
 
-    Shape b = new Sphere();
+    Shape b = Sphere.create();
     b.setTransform(Matrix.translation(0, 0, -0.25));
     b.setMaterial(Material.builder().setTransparency(1.0).setRefractiveIndex(2.0).build());
     w.addShape(b);
 
-    Shape c = new Sphere();
+    Shape c = Sphere.create();
     c.setTransform(Matrix.translation(0, 0, 0.25));
     c.setMaterial(Material.builder().setTransparency(1.0).setRefractiveIndex(2.5).build());
     w.addShape(c);

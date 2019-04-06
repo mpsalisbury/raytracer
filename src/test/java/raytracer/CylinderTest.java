@@ -32,7 +32,7 @@ public class CylinderTest {
 
   // Asserts that ray(px,py,pz, vx,vy,vz) misses default cylinder.
   private void assertRayMisses(double px, double py, double pz, double vx, double vy, double vz) {
-    Shape c = new Cylinder();
+    Shape c = Cylinder.create();
     Ray r = Ray.create(Tuple.createPoint(px, py, pz), Tuple.createVector(vx, vy, vz));
     Intersections xs = c.intersect(r);
     assertThat(xs.length()).isEqualTo(0);
@@ -62,7 +62,7 @@ public class CylinderTest {
   // Asserts that ray(px,py,pz, vx,vy,vz) hits default cylinder at t's t1, t2.
   private void assertRayIntersection(
       double px, double py, double pz, double vx, double vy, double vz, double t1, double t2) {
-    Shape c = new Cylinder();
+    Shape c = Cylinder.create();
     Ray r = Ray.create(Tuple.createPoint(px, py, pz), Tuple.createVector(vx, vy, vz));
     Intersections xs = c.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
@@ -83,7 +83,7 @@ public class CylinderTest {
 
   // Asserts that the normal at point (px,py,pz) is vector(nx,ny,nz).
   private void assertNormal(double px, double py, double pz, double nx, double ny, double nz) {
-    Shape c = new Cylinder();
+    Shape c = Cylinder.create();
     assertThat(c.normalAt(Tuple.createPoint(px, py, pz))).isEqualTo(Tuple.createVector(nx, ny, nz));
   }
 }

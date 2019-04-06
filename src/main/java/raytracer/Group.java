@@ -29,12 +29,7 @@ public class Group extends Shape {
   }
 
   @Override
-  public DoubleStream localIntersect(Ray ray) {
-    throw new UnsupportedOperationException("Group.localIntersect() should not be called");
-  }
-
-  @Override
-  public Tuple localNormalAt(Tuple point) {
-    throw new UnsupportedOperationException("Group.localNormalAt() should not be called");
+  public Tuple normalAt(Tuple point) {
+    throw new UnsupportedOperationException();
   }
 }

@@ -5,6 +5,7 @@ import raytracer.Canvas;
 import raytracer.Color;
 import raytracer.Matrix;
 import raytracer.Ray;
+import raytracer.Shape;
 import raytracer.Sphere;
 import raytracer.Tuple;
 
@@ -18,7 +19,7 @@ public class Silhouette {
   }
 
   // Sphere is (by default) at origin with unit radius.
-  private final Sphere shape;
+  private final Shape sphere;
   // Camera is looking in +Z towards sphere with film behind it.
 
   // Z location of the camera.
@@ -31,9 +32,9 @@ public class Silhouette {
   private final int filmPixels;
 
   private Silhouette(Matrix transform) {
-    Sphere sphere = new Sphere();
+    Shape sphere = Sphere.create();
     sphere.setTransform(transform);
-    this.shape = sphere;
+    this.sphere = sphere;
     this.cameraZ = -2;
     this.filmZ = 3;
     this.filmSize = 3;
@@ -45,7 +46,7 @@ public class Silhouette {
     canvas.forEachIndex(
         (x, y) -> {
           Ray cameraRay = getCameraRayForPixel(x, y);
-          boolean hit = shape.intersect(cameraRay).hit().isPresent();
+          boolean hit = sphere.intersect(cameraRay).hit().isPresent();
           if (hit) {
             canvas.setPixel(x, y, Color.RED);
           }

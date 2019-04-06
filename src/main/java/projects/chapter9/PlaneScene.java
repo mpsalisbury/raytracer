@@ -52,22 +52,20 @@ public class PlaneScene {
   }
 
   private static Shape createFloor() {
-    Plane p = new Plane();
-    p.setMaterial(Material.builder().setColor(Color.create(1, 0.9, 0.9)).setSpecular(0).build());
-    p.setCastsShadow(false);
+    Shape p = Plane.create();
+    p.setMaterial(Material.builder().setColor(Color.create(1, 0.9, 0.9)).setSpecular(0).setCastsShadow(false).build());
     return p;
   }
 
   private static Shape createCeiling() {
-    Plane p = new Plane();
+    Shape p = Plane.create();
     p.setTransform(Matrix.rotationX(Math.PI).translate(0, 2, 0));
-    p.setMaterial(Material.builder().setColor(Color.create(1, 0.9, 0.9)).setSpecular(0).build());
-    p.setCastsShadow(false);
+    p.setMaterial(Material.builder().setColor(Color.create(1, 0.9, 0.9)).setSpecular(0).setCastsShadow(false).build());
     return p;
   }
 
-  private static Sphere createBall1() {
-    Sphere s = new Sphere();
+  private static Shape createBall1() {
+    Shape s = Sphere.create();
     s.setTransform(Matrix.translation(-0.5, 0.33, 0.5));
     s.setMaterial(
         Material.builder()
@@ -78,8 +76,8 @@ public class PlaneScene {
     return s;
   }
 
-  private static Sphere createBall2() {
-    Sphere s = new Sphere();
+  private static Shape createBall2() {
+    Shape s = Sphere.create();
     s.setTransform(Matrix.scaling(0.5, 0.5, 0.5).translate(1.5, 0.5, -0.5));
     s.setMaterial(
         Material.builder()
@@ -90,8 +88,8 @@ public class PlaneScene {
     return s;
   }
 
-  private static Sphere createBall3() {
-    Sphere s = new Sphere();
+  private static Shape createBall3() {
+    Shape s = Sphere.create();
     s.setTransform(Matrix.scaling(0.33, 0.33, 0.33).translate(-1.5, 0.33, -0.75));
     s.setMaterial(
         Material.builder()

@@ -4,7 +4,11 @@ import java.util.Optional;
 import java.util.stream.DoubleStream;
 
 // Cone centered at origin with bottom radius 1, top at y=1, bottom at y=-1.
-public class Cone extends Shape {
+public class Cone extends Geometry {
+
+  public static Shape create() {
+    return new GeometryShape(new Cone());
+  }
 
   // Define cone from y={-2..0} then translate up y+1.
   private static final Tuple BOTTOM_NORMAL = Tuple.createVector(0, -1, 0);
@@ -15,12 +19,13 @@ public class Cone extends Shape {
   private static final double Y_SHIFT = 1;
   private static final double EPSILON = 1.0e-5;
 
-  protected Matrix startingTransform() {
+  @Override
+  public Matrix baseTransform() {
     return Matrix.translation(0, Y_SHIFT, 0);
   }
 
   @Override
-  public DoubleStream localIntersect(Ray ray) {
+  public DoubleStream intersect(Ray ray) {
     return DoubleStream.concat(intersectWalls(ray), intersectCap(ray));
   }
 
@@ -77,7 +82,7 @@ public class Cone extends Shape {
   }
 
   @Override
-  public Tuple localNormalAt(Tuple point) {
+  public Tuple normalAt(Tuple point) {
     double y = point.y();
     if (Math.abs(y - BOTTOM_Y) < EPSILON) {
       return BOTTOM_NORMAL;

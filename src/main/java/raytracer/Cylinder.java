@@ -7,7 +7,11 @@ import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 // Cylinder centered at origin with radius 1, top at y=1, bottom at y=-1.
-public class Cylinder extends Shape {
+public class Cylinder extends Geometry {
+
+  public static Shape create() {
+    return new GeometryShape(new Cylinder());
+  }
 
   private static final Tuple TOP_NORMAL = Tuple.createVector(0, 1, 0);
   private static final Tuple BOTTOM_NORMAL = Tuple.createVector(0, -1, 0);
@@ -18,7 +22,7 @@ public class Cylinder extends Shape {
   private static final double EPSILON = 1.0e-5;
 
   @Override
-  public DoubleStream localIntersect(Ray ray) {
+  public DoubleStream intersect(Ray ray) {
     List<Double> wallTs = intersectWalls(ray).boxed().collect(Collectors.toList());
     List<Double> capTs = intersectCaps(ray).boxed().collect(Collectors.toList());
     if (capTs.isEmpty()) {
@@ -116,7 +120,7 @@ public class Cylinder extends Shape {
   }
 
   @Override
-  public Tuple localNormalAt(Tuple point) {
+  public Tuple normalAt(Tuple point) {
     double y = point.y();
     if (Math.abs(y - BOTTOM_Y) < EPSILON) {
       return BOTTOM_NORMAL;

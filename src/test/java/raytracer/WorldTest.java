@@ -27,7 +27,7 @@ public class WorldTest {
   public void defaultWorld() {
     Light light = Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE);
 
-    Sphere s1 = new Sphere();
+    Shape s1 = Sphere.create();
     s1.setMaterial(
         Material.builder()
             .setColor(Color.create(0.8, 1.0, 0.6))
@@ -35,7 +35,7 @@ public class WorldTest {
             .setSpecular(0.2)
             .build());
 
-    Sphere s2 = new Sphere();
+    Shape s2 = Sphere.create();
     s2.setTransform(Matrix.scaling(0.5, 0.5, 0.5));
 
     World w = World.createDefault();
@@ -164,7 +164,7 @@ public class WorldTest {
   // Scenario: The reflected color for a reflective material
   public void reflectedColorForReflectiveMaterial() {
     World w = World.createDefault();
-    Shape shape = new Plane();
+    Shape shape = Plane.create();
     shape.setMaterial(shape.material().toBuilder().setReflectivity(0.5).build());
     shape.setTransform(Matrix.translation(0, -1, 0));
     w.addShape(shape);
@@ -181,7 +181,7 @@ public class WorldTest {
   // Scenario: shade_hit() with a reflective material
   public void shadeHitWithReflectiveMaterial() {
     World w = World.createDefault();
-    Shape shape = new Plane();
+    Shape shape = Plane.create();
     shape.setMaterial(shape.material().toBuilder().setReflectivity(0.5).build());
     shape.setTransform(Matrix.translation(0, -1, 0));
     w.addShape(shape);
@@ -197,11 +197,11 @@ public class WorldTest {
   // Scenario: color_at() with mutually reflective surfaces
   public void colorAtMututallyReflective() {
     World w = new World();
-    Shape lower = new Plane();
+    Shape lower = Plane.create();
     lower.setMaterial(lower.material().toBuilder().setReflectivity(1).build());
     lower.setTransform(Matrix.translation(0, -1, 0));
     w.addShape(lower);
-    Shape upper = new Plane();
+    Shape upper = Plane.create();
     upper.setMaterial(upper.material().toBuilder().setReflectivity(1).build());
     upper.setTransform(Matrix.translation(0, 1, 0));
     w.addShape(upper);
@@ -214,7 +214,7 @@ public class WorldTest {
   // Scenario: The reflected color at the maximum recursive depth
   public void reflectedColorAtMaxDepth() {
     World w = World.createDefault();
-    Shape shape = new Plane();
+    Shape shape = Plane.create();
     shape.setMaterial(shape.material().toBuilder().setReflectivity(0.5).build());
     shape.setTransform(Matrix.translation(0, -1, 0));
     w.addShape(shape);
@@ -280,12 +280,12 @@ public class WorldTest {
   public void shadeHitWithTransparent() {
     World w = World.createDefault();
 
-    Shape floor = new Plane();
+    Shape floor = Plane.create();
     floor.setTransform(Matrix.translation(0, -1, 0));
     floor.setMaterial(Material.builder().setTransparency(0.5).setRefractiveIndex(1.5).build());
     w.addShape(floor);
 
-    Shape ball = new Sphere();
+    Shape ball = Sphere.create();
     ball.setTransform(Matrix.translation(0, -3.5, -0.5));
     ball.setMaterial(Material.builder().setColor(Color.create(1, 0, 0)).setAmbient(0.5).build());
     w.addShape(ball);
@@ -306,7 +306,7 @@ public class WorldTest {
   public void shadeHitWithReflectiveTransparent() {
     World w = World.createDefault();
 
-    Shape floor = new Plane();
+    Shape floor = Plane.create();
     floor.setTransform(Matrix.translation(0, -1, 0));
     floor.setMaterial(
         Material.builder()
@@ -316,7 +316,7 @@ public class WorldTest {
             .build());
     w.addShape(floor);
 
-    Shape ball = new Sphere();
+    Shape ball = Sphere.create();
     ball.setTransform(Matrix.translation(0, -3.5, -0.5));
     ball.setMaterial(Material.builder().setColor(Color.create(1, 0, 0)).setAmbient(0.5).build());
     w.addShape(ball);

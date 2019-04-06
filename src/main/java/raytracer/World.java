@@ -16,7 +16,7 @@ public class World {
   public static World createDefault() {
     Light light = Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE);
 
-    Sphere s1 = new Sphere();
+    Shape s1 = Sphere.create();
     s1.setMaterial(
         Material.builder()
             .setColor(Color.create(0.8, 1.0, 0.6))
@@ -24,7 +24,7 @@ public class World {
             .setSpecular(0.2)
             .build());
 
-    Sphere s2 = new Sphere();
+    Shape s2 = Sphere.create();
     s2.setTransform(Matrix.scaling(0.5, 0.5, 0.5));
 
     World w = new World();

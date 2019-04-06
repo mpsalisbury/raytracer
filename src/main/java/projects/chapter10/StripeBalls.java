@@ -51,18 +51,18 @@ public class StripeBalls {
   }
 
   private static Shape createFloor() {
-    Plane p = new Plane();
+    Shape p = Plane.create();
     p.setMaterial(
         Material.builder()
             .setPattern(Pattern.createRing(Color.create(1, 0.9, 0.9), Color.create(0.1, 0.3, 0.3)))
             .setSpecular(0)
+            .setCastsShadow(false)
             .build());
-    p.setCastsShadow(false);
     return p;
   }
 
-  private static Sphere createBall1() {
-    Sphere s = new Sphere();
+  private static Shape createBall1() {
+    Shape s = Sphere.create();
     s.setTransform(Matrix.translation(-0.5, 1, 0.5));
     s.setMaterial(
         Material.builder()
@@ -82,8 +82,8 @@ public class StripeBalls {
     return s;
   }
 
-  private static Sphere createBall2() {
-    Sphere s = new Sphere();
+  private static Shape createBall2() {
+    Shape s = Sphere.create();
     s.setTransform(Matrix.scaling(0.5, 0.5, 0.5).translate(1.5, 0.5, -0.5));
     s.setMaterial(
         Material.builder()
@@ -97,8 +97,8 @@ public class StripeBalls {
     return s;
   }
 
-  private static Sphere createBall3() {
-    Sphere s = new Sphere();
+  private static Shape createBall3() {
+    Shape s = Sphere.create();
     s.setTransform(Matrix.scaling(0.33, 0.33, 0.33).translate(-1.5, 0.33, -0.75));
     s.setMaterial(
         Material.builder()

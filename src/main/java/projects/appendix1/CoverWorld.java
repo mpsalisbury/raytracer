@@ -105,7 +105,7 @@ public class CoverWorld {
 
   // White backdrop.
   private static Shape backdrop() {
-    Shape backdrop = new Plane();
+    Shape backdrop = Plane.create();
     backdrop.setMaterial(
         Material.builder()
             .setColor(Color.WHITE)
@@ -118,7 +118,7 @@ public class CoverWorld {
   }
 
   private static Shape sphere1() {
-    Shape s = new Sphere();
+    Shape s = Sphere.create();
     s.setMaterial(
         Material.builder()
             .setColor(Color.create(0.373, 0.404, 0.550))
@@ -135,119 +135,119 @@ public class CoverWorld {
   }
 
   private static Shape cube1() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(whiteMaterial());
     c.setTransform(mediumObject().translate(4, 0, 0));
     return c;
   }
 
   private static Shape cube2() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(blueMaterial());
     c.setTransform(largeObject().translate(8.5, 1.5, -0.5));
     return c;
   }
 
   private static Shape cube3() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(redMaterial());
     c.setTransform(largeObject().translate(0, 0, 4));
     return c;
   }
 
   private static Shape cube4() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(whiteMaterial());
     c.setTransform(smallObject().translate(4, 0, 4));
     return c;
   }
 
   private static Shape cube5() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(purpleMaterial());
     c.setTransform(mediumObject().translate(7.5, 0.5, 4));
     return c;
   }
 
   private static Shape cube6() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(whiteMaterial());
     c.setTransform(mediumObject().translate(-0.25, 0.25, 8));
     return c;
   }
 
   private static Shape cube7() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(blueMaterial());
     c.setTransform(largeObject().translate(4, 1, 7.5));
     return c;
   }
 
   private static Shape cube8() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(redMaterial());
     c.setTransform(mediumObject().translate(10, 2, 7.5));
     return c;
   }
 
   private static Shape cube9() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(whiteMaterial());
     c.setTransform(smallObject().translate(8, 2, 12));
     return c;
   }
 
   private static Shape cube10() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(whiteMaterial());
     c.setTransform(smallObject().translate(20, 1, 9));
     return c;
   }
 
   private static Shape cube11() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(blueMaterial());
     c.setTransform(largeObject().translate(-0.5, -5, 0.25));
     return c;
   }
 
   private static Shape cube12() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(redMaterial());
     c.setTransform(largeObject().translate(4, -4, 0));
     return c;
   }
 
   private static Shape cube13() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(whiteMaterial());
     c.setTransform(largeObject().translate(8.5, -4, 0));
     return c;
   }
 
   private static Shape cube14() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(blueMaterial());
     c.setTransform(largeObject().translate(0, -4, 4));
     return c;
   }
 
   private static Shape cube15() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(purpleMaterial());
     c.setTransform(largeObject().translate(-0.5, -4.5, 8));
     return c;
   }
 
   private static Shape cube16() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(whiteMaterial());
     c.setTransform(largeObject().translate(0, -8, 4));
     return c;
   }
 
   private static Shape cube17() {
-    Shape c = new Cube();
+    Shape c = Cube.create();
     c.setMaterial(whiteMaterial());
     c.setTransform(largeObject().translate(-0.5, -8.5, 8));
     return c;

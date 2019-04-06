@@ -51,7 +51,7 @@ public class CylinderScene {
   }
 
   private static Shape createFloor() {
-    Plane p = new Plane();
+    Shape p = Plane.create();
     p.setMaterial(
         Material.builder()
             .setPattern(
@@ -65,7 +65,7 @@ public class CylinderScene {
   }
 
   private static Shape createCylinder1() {
-    Shape s = new Cylinder();
+    Shape s = Cylinder.create();
     s.setTransform(Matrix.rotationZ(Math.PI / 6).translate(-0.5, 1, 0.5));
     // TODO: make this an opaque cube. Not working.
     s.setMaterial(Material.builder().setColor(Color.create(0.8, 0.1, 0.1)).build());
@@ -73,7 +73,7 @@ public class CylinderScene {
   }
 
   private static Shape createCylinder2() {
-    Shape s = new Cylinder();
+    Shape s = Cylinder.create();
     s.setTransform(Matrix.scaling(0.5, 0.5, 0.5).rotateY(-Math.PI / 6).translate(1.5, 0.5, -0.5));
     s.setMaterial(
         Material.builder()
@@ -88,7 +88,7 @@ public class CylinderScene {
   }
 
   private static Shape createCylinder3() {
-    Shape s = new Cylinder();
+    Shape s = Cylinder.create();
     s.setTransform(Matrix.scaling(0.33, 0.33, 0.33).translate(-1.5, 0.33, -0.75));
     s.setMaterial(
         Material.builder()

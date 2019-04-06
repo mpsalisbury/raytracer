@@ -10,6 +10,7 @@ import raytracer.Material;
 import raytracer.Matrix;
 import raytracer.Ray;
 import raytracer.Sphere;
+import raytracer.Shape;
 import raytracer.Tuple;
 
 // Render a sphere.
@@ -22,7 +23,7 @@ public class BlueBall {
   }
 
   // Sphere is (by default) at origin with unit radius.
-  private final Sphere shape;
+  private final Shape shape;
   // Light source
   private final Light light = Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE);
 
@@ -38,7 +39,7 @@ public class BlueBall {
   private final int filmPixels;
 
   private BlueBall(Matrix transform) {
-    Sphere sphere = new Sphere();
+    Shape sphere = Sphere.create();
     sphere.setTransform(transform);
     sphere.setMaterial(Material.builder().setColor(Color.create(1, 0.2, 1)).build());
     this.shape = sphere;

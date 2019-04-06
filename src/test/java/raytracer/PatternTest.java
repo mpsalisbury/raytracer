@@ -66,7 +66,7 @@ public class PatternTest {
   @Test
   // Scenario: Stripes with a pattern transformation
   public void stripePatternTransform() {
-    Shape object = new Sphere();
+    Shape object = Sphere.create();
     Pattern pattern = Pattern.createStripe(WHITE, BLACK);
     pattern.setTransform(Matrix.scaling(2, 2, 2));
     assertThat(pattern.colorAt(Tuple.createPoint(1.5, 0, 0))).isEqualTo(WHITE);
