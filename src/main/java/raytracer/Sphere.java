@@ -7,7 +7,6 @@ public class Sphere extends Geometry {
 
   public static Shape create() {
     return new Shape(new Sphere());
-    //return new GeometryShape(new Sphere());
   }
 
   public static Shape createGlass() {

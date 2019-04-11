@@ -6,13 +6,6 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class Intersection {
 
-  public static Intersection create(Ray ray, double t, ShapeOld shape) {
-    Tuple point = ray.position(t);
-    Tuple normalv = shape.normalAt(point);
-    Material material = shape.material();
-    return create(ray, t, normalv, material, System.identityHashCode(shape));
-  }
-
   public static Intersection create(MaterialIntersection i) {
     return create(i.ray(), i.t(), i.normalv(), i.material(), i.shapeId());
   }

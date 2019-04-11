@@ -19,7 +19,7 @@ public class Intersections {
     return new Intersections(inputIs.map(i -> Intersection.create(i)));
   }
 
-  public Intersections(Stream<Intersection> inputIs) {
+  private Intersections(Stream<Intersection> inputIs) {
     Stream<Intersection> sortedIs = inputIs.sorted(comparing(Intersection::t));
     this.is = propagateRefractiveIndices(sortedIs)
         .collect(Collectors.toList());
