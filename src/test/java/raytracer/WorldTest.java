@@ -22,6 +22,28 @@ public class WorldTest {
     assertThat(w.getShapes()).isEmpty();
   }
 
+  public static World createDefaultWorld() {
+    Light light = Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE);
+
+    Shape s1 = Sphere.create();
+    s1.setMaterial(
+        Material.builder()
+            .setColor(Color.create(0.8, 1.0, 0.6))
+            .setDiffuse(0.7)
+            .setSpecular(0.2)
+            .build());
+
+    Shape s2 = Sphere.create();
+    s2.setTransform(Matrix.scaling(0.5, 0.5, 0.5));
+
+    World w = new World();
+    w.addLight(light);
+    w.addShape(s1);
+    w.addShape(s2);
+    return w;
+  }
+
+  /*
   @Test
   // Scenario: The default world
   public void defaultWorld() {
@@ -42,11 +64,12 @@ public class WorldTest {
     assertThat(w.getLights()).containsExactly(light);
     assertThat(w.getShapes()).containsExactly(s1, s2);
   }
+  */
 
   @Test
   // Scenario: Intersect a world with a ray
   public void intersect() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
     Intersections xs = w.intersect(r);
     assertThat(xs.length()).isEqualTo(4);
@@ -59,9 +82,9 @@ public class WorldTest {
   @Test
   // Scenario: Shading an intersection
   public void shadingOutside() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
-    Shape shape = Iterables.get(w.getShapes(), 0);
+    Intersectable shape = Iterables.get(w.getShapes(), 0);
     Intersection i = shape.intersect(r).get(0);
     assertThat(i.t()).isWithin(EPSILON).of(4);
     assertThat(w.shadeHit(i, 0)).isApproximatelyEqualTo(Color.create(0.38066, 0.47583, 0.2855));
@@ -70,11 +93,11 @@ public class WorldTest {
   @Test
   // Scenario: Shading an intersection from the inside
   public void shadingInside() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     w.clearLights();
     w.addLight(Light.create(Tuple.createPoint(0, 0.25, 0), Color.WHITE));
     Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 0, 1));
-    Shape shape = Iterables.get(w.getShapes(), 1);
+    Intersectable shape = Iterables.get(w.getShapes(), 1);
     Intersection i = shape.intersect(r).get(1);
     assertThat(i.t()).isWithin(EPSILON).of(0.5);
     assertThat(w.shadeHit(i, 0)).isApproximatelyEqualTo(Color.create(0.90498, 0.90498, 0.90498));
@@ -83,7 +106,7 @@ public class WorldTest {
   @Test
   // Scenario: The color when a ray misses
   public void colorWhenRayMisses() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 1, 0));
     assertThat(w.colorAt(r, 0)).isEqualTo(Color.create(0, 0, 0));
   }
@@ -91,7 +114,7 @@ public class WorldTest {
   @Test
   // Scenario: The color when a ray hits
   public void colorWhenRayHits() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
     assertThat(w.colorAt(r, 0)).isApproximatelyEqualTo(Color.create(0.38066, 0.47583, 0.2855));
   }
@@ -99,7 +122,7 @@ public class WorldTest {
   @Test
   // Scenario: The color with an intersection behind the ray
   public void colorWithIntersectionBehindRay() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
 
     Shape outer = Iterables.get(w.getShapes(), 0);
     outer.setMaterial(outer.material().toBuilder().setAmbient(1).build());
@@ -116,7 +139,7 @@ public class WorldTest {
   @Test
   // Scenario: There is no shadow when nothing is collinear with point and light
   public void noShadowWhenNothingBlocking() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Tuple p = Tuple.createPoint(0, 10, 0);
     Light l = Iterables.get(w.getLights(), 0);
     assertThat(w.isShadowed(p, l)).isFalse();
@@ -125,7 +148,7 @@ public class WorldTest {
   @Test
   // Scenario: The shadow when an object is between the point and the light
   public void shadowWhenBlocking() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Tuple p = Tuple.createPoint(10, -10, 10);
     Light l = Iterables.get(w.getLights(), 0);
     assertThat(w.isShadowed(p, l)).isTrue();
@@ -134,7 +157,7 @@ public class WorldTest {
   @Test
   // Scenario: There is no shadow when an object is behind the light
   public void noShadowWhenObjectBehindLight() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Tuple p = Tuple.createPoint(-20, 20, -20);
     Light l = Iterables.get(w.getLights(), 0);
     assertThat(w.isShadowed(p, l)).isFalse();
@@ -143,7 +166,7 @@ public class WorldTest {
   @Test
   // Scenario: There is no shadow when an object is behind the point
   public void noShadowWhenObjectBehindPoint() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Tuple p = Tuple.createPoint(-2, 2, -2);
     Light l = Iterables.get(w.getLights(), 0);
     assertThat(w.isShadowed(p, l)).isFalse();
@@ -152,7 +175,7 @@ public class WorldTest {
   @Test
   // Scenario: The reflected color for a nonreflective material
   public void reflectedColorForNonreflectiveMaterial() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Shape shape = Iterables.get(w.getShapes(), 0);
     shape.setMaterial(shape.material().toBuilder().setAmbient(1).build());
     Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 0, 1));
@@ -163,7 +186,7 @@ public class WorldTest {
   @Test
   // Scenario: The reflected color for a reflective material
   public void reflectedColorForReflectiveMaterial() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Shape shape = Plane.create();
     shape.setMaterial(shape.material().toBuilder().setReflectivity(0.5).build());
     shape.setTransform(Matrix.translation(0, -1, 0));
@@ -180,7 +203,7 @@ public class WorldTest {
   @Test
   // Scenario: shade_hit() with a reflective material
   public void shadeHitWithReflectiveMaterial() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Shape shape = Plane.create();
     shape.setMaterial(shape.material().toBuilder().setReflectivity(0.5).build());
     shape.setTransform(Matrix.translation(0, -1, 0));
@@ -213,7 +236,7 @@ public class WorldTest {
   @Test
   // Scenario: The reflected color at the maximum recursive depth
   public void reflectedColorAtMaxDepth() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Shape shape = Plane.create();
     shape.setMaterial(shape.material().toBuilder().setReflectivity(0.5).build());
     shape.setTransform(Matrix.translation(0, -1, 0));
@@ -229,8 +252,8 @@ public class WorldTest {
   @Test
   // Scenario: The refracted color with an opaque surface
   public void refractedColorOnOpaque() {
-    World w = World.createDefault();
-    Shape shape = Iterables.get(w.getShapes(), 0);
+    World w = createDefaultWorld();
+    Intersectable shape = Iterables.get(w.getShapes(), 0);
     Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
     Intersection i = w.intersect(r).get(0);
     assertThat(w.refractedColor(i, 5)).isEqualTo(Color.BLACK);
@@ -239,7 +262,7 @@ public class WorldTest {
   @Test
   // Scenario: The refracted color at the maximum recursive depth
   public void refractedColorAtMaxDepth() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Shape shape = Iterables.get(w.getShapes(), 0);
     shape.setMaterial(Material.builder().setTransparency(1.0).setRefractiveIndex(1.5).build());
     Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
@@ -251,7 +274,7 @@ public class WorldTest {
   @Test
   // Scenario: The refracted color under total internal reflection
   public void refractedColorAtTotalInternalReflection() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Shape shape = Iterables.get(w.getShapes(), 0);
     shape.setMaterial(Material.builder().setTransparency(1.0).setRefractiveIndex(1.5).build());
     Ray r = Ray.create(Tuple.createPoint(0, 0, 1 / Math.sqrt(2)), Tuple.createVector(0, 1, 0));
@@ -263,7 +286,7 @@ public class WorldTest {
   @Test
   // Scenario: The refracted color with a refracted ray
   public void refractedColorWithRefractedRay() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
     Shape a = Iterables.get(w.getShapes(), 0);
     a.setMaterial(
         Material.builder().setAmbient(1.0).setPattern(new PatternTest.TestPattern()).build());
@@ -278,7 +301,7 @@ public class WorldTest {
   @Test
   // Scenario: shade_hit() with a transparent material
   public void shadeHitWithTransparent() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
 
     Shape floor = Plane.create();
     floor.setTransform(Matrix.translation(0, -1, 0));
@@ -304,7 +327,7 @@ public class WorldTest {
   @Test
   // Scenario: shade_hit() with a reflective, transparent material
   public void shadeHitWithReflectiveTransparent() {
-    World w = World.createDefault();
+    World w = createDefaultWorld();
 
     Shape floor = Plane.create();
     floor.setTransform(Matrix.translation(0, -1, 0));

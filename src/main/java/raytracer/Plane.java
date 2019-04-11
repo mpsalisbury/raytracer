@@ -6,9 +6,9 @@ import java.util.stream.DoubleStream;
 public class Plane extends Geometry {
 
   public static Shape create() {
-    return new GeometryShape(new Plane());
+    return new Shape(new Plane());
   }
-  
+
   private static final Tuple NORMAL = Tuple.createVector(0, 1, 0);
   private static final double EPSILON = 1.0e-5;
 

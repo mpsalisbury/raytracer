@@ -91,6 +91,7 @@ public abstract class Material {
     abstract Optional<Double> transparency();
 
     abstract Optional<Double> refractiveIndex();
+
     abstract Optional<Boolean> castsShadow();
 
     abstract Material autoBuild();

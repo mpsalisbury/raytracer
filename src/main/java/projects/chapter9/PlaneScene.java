@@ -53,14 +53,24 @@ public class PlaneScene {
 
   private static Shape createFloor() {
     Shape p = Plane.create();
-    p.setMaterial(Material.builder().setColor(Color.create(1, 0.9, 0.9)).setSpecular(0).setCastsShadow(false).build());
+    p.setMaterial(
+        Material.builder()
+            .setColor(Color.create(1, 0.9, 0.9))
+            .setSpecular(0)
+            .setCastsShadow(false)
+            .build());
     return p;
   }
 
   private static Shape createCeiling() {
     Shape p = Plane.create();
     p.setTransform(Matrix.rotationX(Math.PI).translate(0, 2, 0));
-    p.setMaterial(Material.builder().setColor(Color.create(1, 0.9, 0.9)).setSpecular(0).setCastsShadow(false).build());
+    p.setMaterial(
+        Material.builder()
+            .setColor(Color.create(1, 0.9, 0.9))
+            .setSpecular(0)
+            .setCastsShadow(false)
+            .build());
     return p;
   }
 

@@ -83,7 +83,7 @@ public class CylinderTest {
 
   // Asserts that the normal at point (px,py,pz) is vector(nx,ny,nz).
   private void assertNormal(double px, double py, double pz, double nx, double ny, double nz) {
-    Shape c = Cylinder.create();
+    Geometry c = new Cylinder();
     assertThat(c.normalAt(Tuple.createPoint(px, py, pz))).isEqualTo(Tuple.createVector(nx, ny, nz));
   }
 }

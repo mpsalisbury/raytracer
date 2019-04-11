@@ -9,7 +9,7 @@ import java.util.stream.DoubleStream;
 public class Cube extends Geometry {
 
   public static Shape create() {
-    return new GeometryShape(new Cube());
+    return new Shape(new Cube());
   }
 
   // Normals in order +x, -x, +y, -y, +z, -z.

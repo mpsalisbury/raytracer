@@ -10,29 +10,9 @@ public class World {
   private static final int DEFAULT_MAX_BOUNCES = 4;
 
   private List<Light> lights = new ArrayList<>();
+  // TODO: Use Group?
   private List<Shape> shapes = new ArrayList<>();
 
-  // TODO: Move to testing.
-  public static World createDefault() {
-    Light light = Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE);
-
-    Shape s1 = Sphere.create();
-    s1.setMaterial(
-        Material.builder()
-            .setColor(Color.create(0.8, 1.0, 0.6))
-            .setDiffuse(0.7)
-            .setSpecular(0.2)
-            .build());
-
-    Shape s2 = Sphere.create();
-    s2.setTransform(Matrix.scaling(0.5, 0.5, 0.5));
-
-    World w = new World();
-    w.addLight(light);
-    w.addShape(s1);
-    w.addShape(s2);
-    return w;
-  }
 
   public Iterable<Light> getLights() {
     return lights;
@@ -55,7 +35,8 @@ public class World {
   }
 
   public Intersections intersect(Ray ray) {
-    return new Intersections(shapes.stream().flatMap(s -> s.intersectStream(ray)));
+    //return new Intersections(shapes.stream().flatMap(s -> s.intersectStream(ray)));
+    return Intersections.create(shapes.stream().flatMap(s -> s.intersectStream(ray)));
   }
 
   public Color shadeHit(Intersection i, int remainingBounces) {

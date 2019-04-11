@@ -67,7 +67,7 @@ public class CubeTest {
 
   // Asserts that the normal of the default cube at point px,py,pz is nx,ny,nz.
   private void assertPointNormal(double px, double py, double pz, double nx, double ny, double nz) {
-    Shape c = Cube.create();
+    Geometry c = new Cube();
     assertThat(c.normalAt(Tuple.createPoint(px, py, pz))).isEqualTo(Tuple.createVector(nx, ny, nz));
   }
 }

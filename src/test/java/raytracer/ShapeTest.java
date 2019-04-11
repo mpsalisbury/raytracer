@@ -4,6 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static raytracer.MatrixSubject.assertThat;
 import static raytracer.TupleSubject.assertThat;
 
+import java.util.stream.DoubleStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -14,17 +15,31 @@ public class ShapeTest {
 
   static final double EPSILON = 1.0e-5;
 
+  private Shape createTestShape() {
+    return new Shape(new TestGeometry());
+  }
+
+  private static class TestGeometry extends Geometry {
+    public DoubleStream intersect(Ray localRay) {
+      return DoubleStream.empty();
+    }
+
+    public Tuple normalAt(Tuple point) {
+      return Tuple.createVector(point.x(), point.y(), point.z());
+    }
+  }
+
   @Test
   // Scenario: The default transformation
   public void defaultTransform() {
-    Shape s = Shape.createTest();
+    Shape s = createTestShape();
     assertThat(s.transform()).isApproximatelyEqualTo(Matrix.identity());
   }
 
   @Test
   // Scenario: Assigning a transformation
   public void assignTransform() {
-    Shape s = Shape.createTest();
+    Shape s = createTestShape();
     s.setTransform(Matrix.translation(2, 3, 4));
     assertThat(s.transform()).isApproximatelyEqualTo(Matrix.translation(2, 3, 4));
   }
@@ -32,14 +47,14 @@ public class ShapeTest {
   @Test
   // Scenario: The default material
   public void defaultMaterial() {
-    Shape s = Shape.createTest();
+    Shape s = createTestShape();
     assertThat(s.material()).isEqualTo(Material.create());
   }
 
   @Test
   // Scenario: Assigning a material
   public void assignMaterial() {
-    Shape s = Shape.createTest();
+    Shape s = createTestShape();
     Material m = Material.builder().setAmbient(1).build();
     s.setMaterial(m);
     assertThat(s.material()).isEqualTo(m);

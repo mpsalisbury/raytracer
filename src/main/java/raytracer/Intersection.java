@@ -6,18 +6,28 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class Intersection {
 
+  public static Intersection create(Ray ray, double t, ShapeOld shape) {
+    Tuple point = ray.position(t);
+    Tuple normalv = shape.normalAt(point);
+    Material material = shape.material();
+    return create(ray, t, normalv, material, System.identityHashCode(shape));
+  }
+
+  public static Intersection create(MaterialIntersection i) {
+    return create(i.ray(), i.t(), i.normalv(), i.material(), i.shapeId());
+  }
+
   // Shape is lowest-level shape responsible for this intersection.
-  public static Intersection create(Ray ray, double t, Shape shape) {
+  // Visible for testing.
+  public static Intersection create(Ray ray, double t, Tuple normalv, Material material, int shapeId) {
     Tuple point = ray.position(t);
     Tuple eyev = ray.direction().times(-1);
-    Tuple normalv = shape.normalAt(point);
     boolean inside = false;
     if (normalv.dot(eyev) < 0.0) {
       inside = true;
       normalv = normalv.times(-1);
     }
     Tuple reflectv = ray.direction().reflect(normalv);
-    Material material = shape.material();
 
     // Default values for refraction. These are set in copyWithMaterials().
     double n1 = Material.REFRACTIVE_INDEX_VACUUM;
@@ -28,7 +38,7 @@ public abstract class Intersection {
 
     return new AutoValue_Intersection(
         t,
-        shape,
+        shapeId,
         point,
         eyev,
         normalv,
@@ -46,7 +56,7 @@ public abstract class Intersection {
   public static Intersection create(double t) {
     return new AutoValue_Intersection(
         t,
-        Shape.createTest(),
+        12345,
         Tuple.createPoint(0, 0, 0),
         Tuple.createVector(0, 0, 0),
         Tuple.createVector(0, 0, 0),
@@ -85,7 +95,7 @@ public abstract class Intersection {
 
     return new AutoValue_Intersection(
         t(),
-        shape(),
+        shapeId(),
         point(),
         eyev(),
         normalv(),
@@ -101,8 +111,9 @@ public abstract class Intersection {
 
   public abstract double t();
 
-// TODO: use shapeId rather than shape, or switch to material ranges.
-  public abstract Shape shape();
+  // TODO: switch to material ranges.
+
+  public abstract int shapeId();
 
   public abstract Tuple point();
 

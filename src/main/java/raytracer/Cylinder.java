@@ -10,7 +10,7 @@ import java.util.stream.DoubleStream;
 public class Cylinder extends Geometry {
 
   public static Shape create() {
-    return new GeometryShape(new Cylinder());
+    return new Shape(new Cylinder());
   }
 
   private static final Tuple TOP_NORMAL = Tuple.createVector(0, 1, 0);

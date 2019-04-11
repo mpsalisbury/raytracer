@@ -9,8 +9,8 @@ import raytracer.Light;
 import raytracer.Material;
 import raytracer.Matrix;
 import raytracer.Ray;
-import raytracer.Sphere;
 import raytracer.Shape;
+import raytracer.Sphere;
 import raytracer.Tuple;
 
 // Render a sphere.

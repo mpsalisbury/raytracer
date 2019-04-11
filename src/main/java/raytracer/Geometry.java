@@ -4,13 +4,9 @@ import java.util.Objects;
 import java.util.stream.DoubleStream;
 
 public abstract class Geometry {
-  
-  public Matrix baseTransform() {
-    return Matrix.identity();
-  }
 
   // Returns stream of t values where given ray intersects this shape.
-  public abstract DoubleStream intersect(Ray localRay);
+  public abstract DoubleStream intersect(Ray ray);
 
   // Returns the vector normal at the given point on this shape.
   public abstract Tuple normalAt(Tuple point);

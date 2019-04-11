@@ -1,11 +1,10 @@
 package raytracer;
 
-import java.util.Objects;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 
 // Shape build directly from Geometry.
-public class GeometryShape extends Shape {
+public class GeometryShape extends ShapeOld {
   private Geometry geometry;
 
   public GeometryShape(Geometry geometry) {
@@ -15,12 +14,13 @@ public class GeometryShape extends Shape {
 
   @Override
   public void setTransform(Matrix transform) {
-    super.setTransform(transform.times(geometry.baseTransform()));
+    super.setTransform(transform); //.times(geometry.baseTransform()));
   }
 
   @Override
   public Stream<Intersection> intersectStream(Ray ray) {
-    return geometry.intersect(ray.transform(inverseTransform))
+    return geometry
+        .intersect(ray.transform(inverseTransform))
         .mapToObj(t -> Intersection.create(ray, t, this));
   }
 

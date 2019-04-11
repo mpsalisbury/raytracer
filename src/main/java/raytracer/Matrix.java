@@ -309,6 +309,14 @@ public class Matrix {
     return s;
   }
 
+  // Returns a new matrix with the given row zeroed.
+  // Used to zero the 'w' row of a 4x4 matrix.
+  public Matrix zeroRow(int row) {
+    Matrix m = Matrix.create(numRows, numCols, values);
+    m.forEachCol(col -> m.set(row, col, 0));
+    return m;
+  }
+
   public boolean isInvertible() {
     return determinant() != 0.0;
   }

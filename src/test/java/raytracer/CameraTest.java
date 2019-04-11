@@ -72,7 +72,7 @@ public class CameraTest {
   @Test
   // Scenario: Rendering a world with a camera
   public void renderWorldPixel() {
-    World w = World.createDefault();
+    World w = WorldTest.createDefaultWorld();
     Tuple from = Tuple.createPoint(0, 0, -5);
     Tuple to = Tuple.createPoint(0, 0, 0);
     Tuple up = Tuple.createVector(0, 1, 0);

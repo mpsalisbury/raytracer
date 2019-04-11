@@ -3,7 +3,6 @@ package raytracer;
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingDouble;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,49 +13,66 @@ import java.util.stream.Stream;
 // Describes a collection of Intersections
 public class Intersections {
 
-  // Shape containing environment material.
-  private static final Shape ENVIRONMENT_SHAPE = makeEnvironment();
-
-  private static Shape makeEnvironment() {
-    Shape env = Sphere.create();
-    env.setTransform(Matrix.scaling(100, 100, 100));
-    return env;
-  }
-
   private List<Intersection> is;
 
+  public static Intersections create(Stream<MaterialIntersection> inputIs) {
+    return new Intersections(inputIs.map(i -> Intersection.create(i)));
+  }
+
   public Intersections(Stream<Intersection> inputIs) {
-    // Ordered list of shapes containing current intersection along ray.
+    Stream<Intersection> sortedIs = inputIs.sorted(comparing(Intersection::t));
+    this.is = propagateRefractiveIndices(sortedIs)
+        .collect(Collectors.toList());
+  }
+
+  private static Stream<Intersection> propagateRefractiveIndices(Stream<Intersection> inputIs) {
+    return new ProcessIntersections().propagateRefractiveIndices(inputIs);
+  }
+
+  private static class ProcessIntersections {
+    // Ordered list of <shapeId, material> of current intersection along ray.
     // Each successive intersection either passes into a new shape or
     // out of an existing shape on the stack. With each transition we
     // will establish the in and out refractiveIndex in the intersection.
-    LinkedList<Shape> shapeStack = new LinkedList<>();
-    shapeStack.add(ENVIRONMENT_SHAPE);
-    List<Intersection> sortedIs =
-        inputIs.sorted(comparing(Intersection::t)).collect(Collectors.toList());
-    List<Intersection> materialIs = new ArrayList<>();
-    // TODO only continue if material is not opaque.
-    // TODO prioritize nesting of shapes.
-    for (Intersection i : sortedIs) {
-      if (shapeStack.contains(i.shape())) {
-        // if we already saw this shape, ray is exiting
-        shapeStack.remove(i.shape());
-        Shape lastShape = shapeStack.peekLast();
-        double n1 = i.material().refractiveIndex();
-        double n2 = lastShape.material().refractiveIndex();
-        materialIs.add(i.copyWithMaterials(n1, n2));
+    LinkedList<Intersection> intersectionStack = new LinkedList<>();
+
+    // Environment material for handling material nesting.
+    private static final double ENVIRONMENT_REFRACTIVE_INDEX = Material.REFRACTIVE_INDEX_VACUUM;
+
+    public double getLastRefractiveIndex() {
+      if (intersectionStack.isEmpty()) {
+        return ENVIRONMENT_REFRACTIVE_INDEX;
       } else {
-        // if shape not already seen, ray is entering
-        Shape lastShape = shapeStack.peekLast();
-        double n1 = lastShape.material().refractiveIndex();
-        double n2 = i.material().refractiveIndex();
-        // This shape is now latest in stack.
-        shapeStack.add(i.shape());
-        materialIs.add(i.copyWithMaterials(n1, n2));
+        return intersectionStack.peekLast().material().refractiveIndex();
       }
     }
-    ;
-    this.is = materialIs;
+
+    public Stream<Intersection> propagateRefractiveIndices(Stream<Intersection> inputIs) {
+      List<Intersection> is = inputIs.collect(Collectors.toList());
+
+      Stream.Builder<Intersection> materialIs = Stream.builder();
+      // TODO only continue if material is not opaque.
+      // TODO prioritize nesting of shapes.
+      for (Intersection i : is) {
+        Optional<Intersection> matchedI =
+            intersectionStack.stream().filter(si -> si.shapeId() == i.shapeId()).findAny();
+        if (matchedI.isPresent()) {
+          // if we already saw this shape, ray is exiting
+          intersectionStack.remove(matchedI.get());
+          double n1 = i.material().refractiveIndex();
+          double n2 = getLastRefractiveIndex();
+          materialIs.add(i.copyWithMaterials(n1, n2));
+        } else {
+          // if shape not already seen, ray is entering
+          double n1 = getLastRefractiveIndex();
+          double n2 = i.material().refractiveIndex();
+          // This shape is now latest in stack.
+          intersectionStack.add(i);
+          materialIs.add(i.copyWithMaterials(n1, n2));
+        }
+      }
+      return materialIs.build();
+    }
   }
 
   public Intersections(Intersection... is) {
