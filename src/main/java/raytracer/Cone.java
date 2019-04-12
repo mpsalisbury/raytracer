@@ -7,7 +7,7 @@ import java.util.stream.DoubleStream;
 public class Cone extends Geometry {
 
   public static Shape create() {
-    return new Shape(new Cone());
+    return new GeometryShape(new Cone());
   }
 
   // Define cone from y={-2..0} then translate up y+1.
@@ -18,7 +18,7 @@ public class Cone extends Geometry {
   private static final double RADIUS2 = RADIUS * RADIUS;
   private static final double Y_SHIFT = 1;
   private static final double EPSILON = 1.0e-5;
-  private static final Matrix Y_SHIFT_TRANSFORM = Matrix.translation(0,-Y_SHIFT,0);
+  private static final Matrix Y_SHIFT_TRANSFORM = Matrix.translation(0, -Y_SHIFT, 0);
 
   @Override
   public DoubleStream intersect(Ray ray) {

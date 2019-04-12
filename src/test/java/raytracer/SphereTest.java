@@ -74,8 +74,8 @@ public class SphereTest {
     Shape s = Sphere.create();
     Intersections xs = s.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
-//    assertThat(xs.get(0).shape()).isEqualTo(s);
-//    assertThat(xs.get(1).shape()).isEqualTo(s);
+    //    assertThat(xs.get(0).shape()).isEqualTo(s);
+    //    assertThat(xs.get(1).shape()).isEqualTo(s);
   }
 
   @Test
@@ -157,26 +157,26 @@ public class SphereTest {
     assertThat(n).isEqualTo(n.normalize());
   }
 
-/*
-// TODO reinstate
-  @Test
-  // Scenario: Computing the normal on a translated sphere
-  public void normalOnTranslated() {
-    Shape s = Sphere.create();
-    s.setTransform(Matrix.translation(0, 1, 0));
-    Tuple n = s.normalAt(Tuple.createPoint(0, 1.70711, -0.70711));
-    assertThat(n).isApproximatelyEqualTo(Tuple.createVector(0, 0.70711, -0.70711));
-  }
+  /*
+  // TODO reinstate
+    @Test
+    // Scenario: Computing the normal on a translated sphere
+    public void normalOnTranslated() {
+      Shape s = Sphere.create();
+      s.setTransform(Matrix.translation(0, 1, 0));
+      Tuple n = s.normalAt(Tuple.createPoint(0, 1.70711, -0.70711));
+      assertThat(n).isApproximatelyEqualTo(Tuple.createVector(0, 0.70711, -0.70711));
+    }
 
-  @Test
-  // Scenario: Computing the normal on a transformed sphere
-  public void normalOnTransformed() {
-    Shape s = Sphere.create();
-    s.setTransform(Matrix.rotationZ(Math.PI / 5).scale(1, 0.5, 1));
-    Tuple n = s.normalAt(Tuple.createPoint(0, 1 / Math.sqrt(2), -1 / Math.sqrt(2)));
-    assertThat(n).isApproximatelyEqualTo(Tuple.createVector(0, 0.97014, -0.24254));
-  }
-*/
+    @Test
+    // Scenario: Computing the normal on a transformed sphere
+    public void normalOnTransformed() {
+      Shape s = Sphere.create();
+      s.setTransform(Matrix.rotationZ(Math.PI / 5).scale(1, 0.5, 1));
+      Tuple n = s.normalAt(Tuple.createPoint(0, 1 / Math.sqrt(2), -1 / Math.sqrt(2)));
+      assertThat(n).isApproximatelyEqualTo(Tuple.createVector(0, 0.97014, -0.24254));
+    }
+  */
 
   @Test
   // Scenario: A sphere has a default material

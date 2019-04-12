@@ -12,8 +12,8 @@ public class ConeTest {
 
   private static final double EPSILON = 1.0e-5;
 
-// TODO: How to test transformed geometry?
-  
+  // TODO: How to test transformed geometry?
+
   @Test
   // Scenario Outline: A ray misses a cone
   public void rayMisses() {
@@ -74,6 +74,7 @@ public class ConeTest {
   // Asserts that the normal at point (px,py,pz) is vector(nx,ny,nz).
   private void assertNormal(double px, double py, double pz, double nx, double ny, double nz) {
     Geometry c = new Cone();
-    assertThat(c.normalAt(Tuple.createPoint(px, py, pz)).normalize()).isEqualTo(Tuple.createVector(nx, ny, nz).normalize());
+    assertThat(c.normalAt(Tuple.createPoint(px, py, pz)).normalize())
+        .isEqualTo(Tuple.createVector(nx, ny, nz).normalize());
   }
 }

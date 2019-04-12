@@ -67,7 +67,6 @@ public class ConeScene {
   private static Shape createCone1() {
     Shape s = Cone.create();
     s.setTransform(Matrix.rotationZ(Math.PI / 6).translate(-0.5, 1, 1.5));
-    // TODO: make this an opaque cube. Not working.
     s.setMaterial(Material.builder().setColor(Color.create(0.8, 0.1, 0.1)).build());
     return s;
   }

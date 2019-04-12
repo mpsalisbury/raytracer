@@ -5,30 +5,54 @@ import java.util.List;
 import java.util.stream.Stream;
 
 // A collection of shapes.
-public class Group implements Intersectable {
+public class Group implements Shape {
 
   // Wraps group of shapes with single transform.
   private TransformedIntersectable transformed;
-  private List<Intersectable> shapes = new ArrayList<>();
+  private List<Shape> shapes = new ArrayList<>();
 
-  public Group() {
+  public static Group create() {
+    return new Group();
+  }
+
+  private Group() {
     transformed = new TransformedIntersectable(new GroupIntersectable());
   }
 
-  public void add(Intersectable s) {
+  public void add(Shape s) {
     shapes.add(s);
   }
 
-  public List<Intersectable> shapes() {
+  public List<Shape> shapes() {
     return shapes;
   }
 
+  @Override
   public Matrix transform() {
     return transformed.transform();
   }
 
+  @Override
   public void setTransform(Matrix transform) {
     transformed.setTransform(transform);
+  }
+
+  @Override
+  public Material material() {
+    // Seems silly to ask for the material of a group.
+    // We'll give the material of the first shape.
+    if (shapes.isEmpty()) {
+      return Material.create();
+    } else {
+      return shapes.get(0).material();
+    }
+  }
+
+  @Override
+  public void setMaterial(Material m) {
+    for (Shape s : shapes) {
+      s.setMaterial(m);
+    }
   }
 
   @Override

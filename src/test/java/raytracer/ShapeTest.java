@@ -16,7 +16,7 @@ public class ShapeTest {
   static final double EPSILON = 1.0e-5;
 
   private Shape createTestShape() {
-    return new Shape(new TestGeometry());
+    return new GeometryShape(new TestGeometry());
   }
 
   private static class TestGeometry extends Geometry {

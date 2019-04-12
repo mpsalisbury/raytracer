@@ -12,7 +12,8 @@ public abstract class Intersection {
 
   // Shape is lowest-level shape responsible for this intersection.
   // Visible for testing.
-  public static Intersection create(Ray ray, double t, Tuple normalv, Material material, int shapeId) {
+  public static Intersection create(
+      Ray ray, double t, Tuple normalv, Material material, int shapeId) {
     Tuple point = ray.position(t);
     Tuple eyev = ray.direction().times(-1);
     boolean inside = false;

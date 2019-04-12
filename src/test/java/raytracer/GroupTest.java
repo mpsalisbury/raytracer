@@ -18,7 +18,7 @@ public class GroupTest {
   @Test
   // Scenario: Creating a new group
   public void construct() {
-    Group g = new Group();
+    Group g = Group.create();
     assertThat(g.transform()).isApproximatelyEqualTo(Matrix.identity());
     assertThat(g.shapes()).isEmpty();
   }
@@ -26,8 +26,8 @@ public class GroupTest {
   @Test
   // Scenario: Adding a child to a group
   public void addChild() {
-    Group g = new Group();
-    Intersectable s = Sphere.create();
+    Group g = Group.create();
+    Shape s = Sphere.create();
     g.add(s);
     assertThat(g.shapes()).contains(s);
   }
@@ -35,7 +35,7 @@ public class GroupTest {
   @Test
   // Scenario: Intersecting a ray with an empty group
   public void intersectEmpty() {
-    Group g = new Group();
+    Group g = Group.create();
     Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 0, 1));
     assertThat(g.intersect(r).all()).isEmpty();
   }
@@ -49,7 +49,7 @@ public class GroupTest {
     Shape s3 = Sphere.create();
     s3.setTransform(Matrix.translation(5, 0, 0));
 
-    Group g = new Group();
+    Group g = Group.create();
     g.add(s1);
     g.add(s2);
     g.add(s3);
@@ -59,19 +59,19 @@ public class GroupTest {
 
     assertThat(xs.length()).isEqualTo(4);
     assertThat(xs.get(0).t()).isWithin(EPSILON).of(1);
-  //  assertThat(xs.get(0).shape()).isEqualTo(s2);
+    //  assertThat(xs.get(0).shape()).isEqualTo(s2);
     assertThat(xs.get(1).t()).isWithin(EPSILON).of(3);
-  //  assertThat(xs.get(1).shape()).isEqualTo(s2);
+    //  assertThat(xs.get(1).shape()).isEqualTo(s2);
     assertThat(xs.get(2).t()).isWithin(EPSILON).of(4);
-  //  assertThat(xs.get(2).shape()).isEqualTo(s1);
+    //  assertThat(xs.get(2).shape()).isEqualTo(s1);
     assertThat(xs.get(3).t()).isWithin(EPSILON).of(6);
-  //  assertThat(xs.get(3).shape()).isEqualTo(s1);
+    //  assertThat(xs.get(3).shape()).isEqualTo(s1);
   }
 
   @Test
   // Scenario: Intersecting a transformed group
   public void intersectTransformedGroup() {
-    Group g = new Group();
+    Group g = Group.create();
     g.setTransform(Matrix.scaling(2, 2, 2));
 
     Shape s = Sphere.create();
@@ -89,7 +89,7 @@ public class GroupTest {
   @Test
   // Scenario: Finding the normal on a child object
   public void normalTransformedGroup() {
-    Group g = new Group();
+    Group g = Group.create();
     g.setTransform(Matrix.scaling(2, 2, 2));
 
     Shape s = Sphere.create();

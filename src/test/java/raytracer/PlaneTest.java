@@ -47,7 +47,7 @@ public class PlaneTest {
     Intersections xs = p.intersect(r);
     assertThat(xs.length()).isEqualTo(1);
     assertThat(xs.get(0).t()).isWithin(EPSILON).of(1);
-//    assertThat(xs.get(0).shape()).isEqualTo(p);
+    //    assertThat(xs.get(0).shape()).isEqualTo(p);
   }
 
   @Test
@@ -58,6 +58,6 @@ public class PlaneTest {
     Intersections xs = p.intersect(r);
     assertThat(xs.length()).isEqualTo(1);
     assertThat(xs.get(0).t()).isWithin(EPSILON).of(1);
-//    assertThat(xs.get(0).shape()).isEqualTo(p);
+    //    assertThat(xs.get(0).shape()).isEqualTo(p);
   }
 }

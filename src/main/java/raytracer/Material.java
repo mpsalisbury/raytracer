@@ -23,9 +23,10 @@ public abstract class Material {
   private static final double DEFAULT_TRANSPARENCY = 0.0;
   private static final double DEFAULT_REFRACTIVE_INDEX = REFRACTIVE_INDEX_VACUUM;
   private static final boolean DEFAULT_CASTS_SHADOW = true;
+  private static final Material DEFAULT_MATERIAL = AutoValue_Material.builder().build();
 
   public static Material create() {
-    return AutoValue_Material.builder().build();
+    return DEFAULT_MATERIAL;
   }
 
   public static Builder builder() {

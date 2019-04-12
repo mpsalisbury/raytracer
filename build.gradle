@@ -128,6 +128,11 @@ task cones(type:JavaExec) {
   main = 'projects.chapter13.ConeScene'
 }
 
+task hexagon(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter14.HexagonScene'
+}
+
 task cover(type:JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
   main = 'projects.appendix1.CoverWorld'

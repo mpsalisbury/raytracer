@@ -21,8 +21,7 @@ public class Intersections {
 
   private Intersections(Stream<Intersection> inputIs) {
     Stream<Intersection> sortedIs = inputIs.sorted(comparing(Intersection::t));
-    this.is = propagateRefractiveIndices(sortedIs)
-        .collect(Collectors.toList());
+    this.is = propagateRefractiveIndices(sortedIs).collect(Collectors.toList());
   }
 
   private static Stream<Intersection> propagateRefractiveIndices(Stream<Intersection> inputIs) {

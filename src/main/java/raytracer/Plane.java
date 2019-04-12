@@ -6,7 +6,7 @@ import java.util.stream.DoubleStream;
 public class Plane extends Geometry {
 
   public static Shape create() {
-    return new Shape(new Plane());
+    return new GeometryShape(new Plane());
   }
 
   private static final Tuple NORMAL = Tuple.createVector(0, 1, 0);

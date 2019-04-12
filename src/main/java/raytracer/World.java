@@ -13,7 +13,6 @@ public class World {
   // TODO: Use Group?
   private List<Shape> shapes = new ArrayList<>();
 
-
   public Iterable<Light> getLights() {
     return lights;
   }
@@ -35,7 +34,7 @@ public class World {
   }
 
   public Intersections intersect(Ray ray) {
-    //return new Intersections(shapes.stream().flatMap(s -> s.intersectStream(ray)));
+    // return new Intersections(shapes.stream().flatMap(s -> s.intersectStream(ray)));
     return Intersections.create(shapes.stream().flatMap(s -> s.intersectStream(ray)));
   }
 

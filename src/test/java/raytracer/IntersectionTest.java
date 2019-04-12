@@ -25,7 +25,7 @@ public class IntersectionTest {
     Material material = Material.create();
     Intersection i = Intersection.create(r, t, s.normalAt(point), material, 123);
     assertThat(i.t()).isWithin(EPSILON).of(t);
-//    assertThat(i.shape()).isEqualTo(s);
+    //    assertThat(i.shape()).isEqualTo(s);
     assertThat(i.point()).isApproximatelyEqualTo(Tuple.createPoint(0, 0, -1));
     assertThat(i.eyev()).isApproximatelyEqualTo(Tuple.createVector(0, 0, -1));
     assertThat(i.normalv()).isApproximatelyEqualTo(Tuple.createVector(0, 0, -1));
@@ -50,8 +50,8 @@ public class IntersectionTest {
     Shape s = Sphere.create();
     Intersections xs = s.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
-//    assertThat(xs.get(0).shape()).isEqualTo(s);
-//    assertThat(xs.get(1).shape()).isEqualTo(s);
+    //    assertThat(xs.get(0).shape()).isEqualTo(s);
+    //    assertThat(xs.get(1).shape()).isEqualTo(s);
   }
 
   @Test
