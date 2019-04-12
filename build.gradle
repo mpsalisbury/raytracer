@@ -133,6 +133,11 @@ task hexagon(type:JavaExec) {
   main = 'projects.chapter14.HexagonScene'
 }
 
+task csg(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter16.CsgScene'
+}
+
 task cover(type:JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
   main = 'projects.appendix1.CoverWorld'
