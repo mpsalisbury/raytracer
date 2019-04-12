@@ -2,6 +2,7 @@ package raytracer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static raytracer.ColorSubject.assertThat;
+import static raytracer.Testing.EPSILON;
 import static raytracer.TupleSubject.assertThat;
 
 import org.junit.Test;
@@ -11,9 +12,6 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 // Feature: Camera
 public class CameraTest {
-
-  // TODO: Factor out Testing.EPSILON, Testing.ISQRT2
-  static final double EPSILON = 1.0e-5;
 
   @Test
   // Scenario: Constructing a camera

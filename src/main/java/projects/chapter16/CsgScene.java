@@ -1,9 +1,9 @@
 package projects.chapter16;
 
 import raytracer.AppUtil;
+import raytracer.CSG;
 import raytracer.Camera;
 import raytracer.Canvas;
-import raytracer.CSG;
 import raytracer.Color;
 import raytracer.Light;
 import raytracer.Material;
@@ -82,7 +82,7 @@ public class CsgScene {
     Shape right = Sphere.create();
     right.setTransform(Matrix.translation(+0.5, 0, 0));
     Shape csg = CSG.createIntersection(left, right);
-    csg.setTransform(Matrix.rotationY(Math.PI/8).translate(0, 1, 4));
+    csg.setTransform(Matrix.rotationY(Math.PI / 8).translate(0, 1, 4));
     csg.setMaterial(Material.builder().setColor(Color.create(0.8, 0.1, 0.1)).build());
     return csg;
   }
@@ -93,7 +93,7 @@ public class CsgScene {
     Shape right = Sphere.create();
     right.setTransform(Matrix.translation(+0.5, 0, 0));
     Shape csg = CSG.createDifference(left, right);
-    csg.setTransform(Matrix.rotationY(Math.PI/4).translate(3,1,4));
+    csg.setTransform(Matrix.rotationY(Math.PI / 4).translate(3, 1, 4));
     csg.setMaterial(Material.builder().setColor(Color.create(0.8, 0.1, 0.1)).build());
     return csg;
   }

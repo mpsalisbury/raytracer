@@ -1,7 +1,7 @@
 package raytracer;
 
-// import static com.google.common.truth.Fact.simpleFact;
 import static com.google.common.truth.Truth.assertAbout;
+import static raytracer.Testing.EPSILON;
 
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.Subject;
@@ -24,8 +24,6 @@ public final class MatrixSubject extends Subject<MatrixSubject, Matrix> {
   private MatrixSubject(FailureMetadata failureMetadata, @NullableDecl Matrix subject) {
     super(failureMetadata, subject);
   }
-
-  private static final double EPSILON = 1.0e-5;
 
   public void isApproximatelyEqualTo(Matrix other) {
     isApproximatelyEqualTo(EPSILON, other);

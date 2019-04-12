@@ -2,6 +2,7 @@ package raytracer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static raytracer.MatrixSubject.assertThat;
+import static raytracer.Testing.EPSILON;
 import static raytracer.TupleSubject.assertThat;
 
 import org.junit.Test;
@@ -11,8 +12,6 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 // Feature: Planes
 public class PlaneTest {
-
-  static final double EPSILON = 1.0e-5;
 
   @Test
   // Scenario: The normal of a plane is constant everywhere

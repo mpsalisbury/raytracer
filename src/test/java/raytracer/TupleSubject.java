@@ -1,7 +1,7 @@
 package raytracer;
 
-// import static com.google.common.truth.Fact.simpleFact;
 import static com.google.common.truth.Truth.assertAbout;
+import static raytracer.Testing.EPSILON;
 
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.Subject;
@@ -23,8 +23,6 @@ public final class TupleSubject extends Subject<TupleSubject, Tuple> {
   private TupleSubject(FailureMetadata failureMetadata, @NullableDecl Tuple subject) {
     super(failureMetadata, subject);
   }
-
-  private static final double EPSILON = 1.0e-5;
 
   public void isApproximatelyEqualTo(Tuple other) {
     isApproximatelyEqualTo(EPSILON, other);

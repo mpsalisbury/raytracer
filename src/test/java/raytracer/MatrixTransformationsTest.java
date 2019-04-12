@@ -12,8 +12,6 @@ import org.junit.runners.JUnit4;
 // Feature: Matrix Transformations
 public class MatrixTransformationsTest {
 
-  private static final double EPSILON = 1.0e-5;
-
   @Test
   // Scenario: Multiplying by a translation matrix
   public void translatePoint() {

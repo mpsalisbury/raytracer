@@ -1,6 +1,7 @@
 package raytracer;
 
 import static com.google.common.truth.Truth.assertThat;
+import static raytracer.Testing.EPSILON;
 import static raytracer.TupleSubject.assertThat;
 
 import org.junit.Test;
@@ -10,8 +11,6 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 // Feature: Tuples, Vectors, and Points
 public class TupleTest {
-
-  private static final double EPSILON = 1.0e-5;
 
   @Test
   // Scenario: A tuple with w=1.0 is a point

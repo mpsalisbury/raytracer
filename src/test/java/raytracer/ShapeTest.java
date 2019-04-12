@@ -13,8 +13,6 @@ import org.junit.runners.JUnit4;
 // Feature: AbstractShapes
 public class ShapeTest {
 
-  static final double EPSILON = 1.0e-5;
-
   private Shape createTestShape() {
     return new GeometryShape(new TestGeometry());
   }

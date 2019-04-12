@@ -2,6 +2,7 @@ package raytracer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth8.assertThat;
+import static raytracer.Testing.EPSILON;
 import static raytracer.TupleSubject.assertThat;
 
 import org.junit.Test;
@@ -11,8 +12,6 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 // Feature: Intersections
 public class IntersectionTest {
-
-  static final double EPSILON = 1.0e-5;
 
   @Test
   // Scenario: An intersection encapsulates t and shape

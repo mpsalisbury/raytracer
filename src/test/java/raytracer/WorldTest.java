@@ -2,6 +2,7 @@ package raytracer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static raytracer.ColorSubject.assertThat;
+import static raytracer.Testing.EPSILON;
 
 import com.google.common.collect.Iterables;
 import org.junit.Test;
@@ -11,8 +12,6 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 // Feature: World
 public class WorldTest {
-
-  private static final double EPSILON = 1.0e-5;
 
   @Test
   // Scenario: Creating a world
