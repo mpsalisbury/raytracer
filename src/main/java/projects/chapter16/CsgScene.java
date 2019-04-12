@@ -15,7 +15,7 @@ import raytracer.Sphere;
 import raytracer.Tuple;
 import raytracer.World;
 
-// Render a scene of cylinders on a plane.
+// Render a scene of CSG-composed shapes.
 public class CsgScene {
 
   public static void main(String[] args) {

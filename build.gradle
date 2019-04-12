@@ -138,6 +138,11 @@ task csg(type:JavaExec) {
   main = 'projects.chapter16.CsgScene'
 }
 
+task rhc(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter16.RoundHoleCubeScene'
+}
+
 task cover(type:JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
   main = 'projects.appendix1.CoverWorld'

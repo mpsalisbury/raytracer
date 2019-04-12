@@ -66,12 +66,20 @@ public class Matrix {
     return scaling(x, y, z).times(this);
   }
 
+  public Matrix scale(double s) {
+    return scale(s, s, s);
+  }
+
   public static Matrix scaling(double x, double y, double z) {
     Matrix s = identity();
     s.set(0, 0, x);
     s.set(1, 1, y);
     s.set(2, 2, z);
     return s;
+  }
+
+  public static Matrix scaling(double s) {
+    return scaling(s, s, s);
   }
 
   // Fluently append rotateX to this transform (premultiply).

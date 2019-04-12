@@ -6,7 +6,7 @@ import raytracer.Matrix;
 import raytracer.Shape;
 import raytracer.Sphere;
 
-// Render a scene of cylinders on a plane.
+// A hexagonal shape.
 public class Hexagon {
 
   public static Shape create() {
