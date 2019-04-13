@@ -71,7 +71,7 @@ public abstract class Camera {
     final double middleX = (hPixels() - 1) / 2.0;
     final double middleY = (vPixels() - 1) / 2.0;
 
-    double pX = (x - middleX) * pixelScale;
+    double pX = ((hPixels() - 1 - x) - middleX) * pixelScale;
     double pY = ((vPixels() - 1 - y) - middleY) * pixelScale;
 
     return Tuple.point(pX, pY, PZ);

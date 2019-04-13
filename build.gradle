@@ -88,12 +88,17 @@ task blueball(type:JavaExec) {
   main = 'projects.chapter6.BlueBall'
 }
 
-task sscene(type:JavaExec) {
+task sphere(type:JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
   main = 'projects.chapter7.SphereScene'
 }
 
-task pscene(type:JavaExec) {
+task sphere2(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter7.SphereScene2'
+}
+
+task plane(type:JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
   main = 'projects.chapter9.PlaneScene'
 }

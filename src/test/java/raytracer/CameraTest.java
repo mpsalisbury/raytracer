@@ -35,7 +35,7 @@ public class CameraTest {
   public void filmPointThroughCorner() {
     Camera c = Camera.create(201, 101, Math.PI / 2);
     Tuple p = c.filmPointForPixel(0, 0);
-    assertThat(p).isApproximatelyEqualTo(Tuple.point(-1, 0.5, -1));
+    assertThat(p).isApproximatelyEqualTo(Tuple.point(1, 0.5, -1));
   }
 
   @Test
@@ -53,7 +53,7 @@ public class CameraTest {
     Camera c = Camera.create(201, 101, Math.PI / 2);
     Ray r = c.rayForPixel(0, 0);
     assertThat(r.origin()).isApproximatelyEqualTo(Tuple.point(0, 0, 0));
-    assertThat(r.direction()).isApproximatelyEqualTo(Tuple.vector(-0.66666, 0.33333, -0.66666));
+    assertThat(r.direction()).isApproximatelyEqualTo(Tuple.vector(0.66666, 0.33333, -0.66666));
   }
 
   @Test
