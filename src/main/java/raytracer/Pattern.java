@@ -232,7 +232,7 @@ public abstract class Pattern {
 
     protected Color localColorAt(Tuple p) {
       Tuple noisyPoint =
-          Tuple.createPoint(
+          Tuple.point(
               p.x() + noiseMagnitude * noise(p.x(), p.y(), p.z()),
               p.y() + noiseMagnitude * noise(p.y(), p.z(), p.x()),
               p.z() + noiseMagnitude * noise(p.z(), p.x(), p.y()));

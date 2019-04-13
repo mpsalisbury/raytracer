@@ -23,7 +23,7 @@ public class ShapeTest {
     }
 
     public Tuple normalAt(Tuple point) {
-      return Tuple.createVector(point.x(), point.y(), point.z());
+      return Tuple.vector(point.x(), point.y(), point.z());
     }
   }
 

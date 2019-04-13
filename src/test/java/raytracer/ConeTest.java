@@ -37,7 +37,7 @@ public class ConeTest {
   private void assertRayIntersection(
       double px, double py, double pz, double vx, double vy, double vz, double... ts) {
     Shape c = Cone.create();
-    Ray r = Ray.create(Tuple.createPoint(px, py, pz), Tuple.createVector(vx, vy, vz));
+    Ray r = Ray.create(Tuple.point(px, py, pz), Tuple.vector(vx, vy, vz));
     Intersections xs = c.intersect(r);
     assertThat(xs.length()).isEqualTo(ts.length);
     for (int i = 0; i < xs.length(); ++i) {
@@ -73,7 +73,7 @@ public class ConeTest {
   // Asserts that the normal at point (px,py,pz) is vector(nx,ny,nz).
   private void assertNormal(double px, double py, double pz, double nx, double ny, double nz) {
     Geometry c = new Cone();
-    assertThat(c.normalAt(Tuple.createPoint(px, py, pz)).normalize())
-        .isEqualTo(Tuple.createVector(nx, ny, nz).normalize());
+    assertThat(c.normalAt(Tuple.point(px, py, pz)).normalize())
+        .isEqualTo(Tuple.vector(nx, ny, nz).normalize());
   }
 }

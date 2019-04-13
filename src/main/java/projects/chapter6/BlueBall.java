@@ -25,7 +25,7 @@ public class BlueBall {
   // Sphere is (by default) at origin with unit radius.
   private final Shape shape;
   // Light source
-  private final Light light = Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE);
+  private final Light light = Light.create(Tuple.point(-10, 10, -10), Color.WHITE);
 
   // Camera is looking in +Z towards sphere with film behind it.
 
@@ -68,8 +68,8 @@ public class BlueBall {
   }
 
   private Ray getCameraRayForPixel(int x, int y) {
-    Tuple cameraPos = Tuple.createPoint(0, 0, cameraZ);
-    Tuple filmPos = Tuple.createPoint(getFilmPos(x), getFilmPos(filmPixels - 1 - y), filmZ);
+    Tuple cameraPos = Tuple.point(0, 0, cameraZ);
+    Tuple filmPos = Tuple.point(getFilmPos(x), getFilmPos(filmPixels - 1 - y), filmZ);
     return Ray.create(cameraPos, filmPos.minus(cameraPos).normalize());
   }
 

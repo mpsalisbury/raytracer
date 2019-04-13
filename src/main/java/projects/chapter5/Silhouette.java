@@ -55,8 +55,8 @@ public class Silhouette {
   }
 
   private Ray getCameraRayForPixel(int x, int y) {
-    Tuple cameraPos = Tuple.createPoint(0, 0, cameraZ);
-    Tuple filmPos = Tuple.createPoint(getFilmPos(x), getFilmPos(y), filmZ);
+    Tuple cameraPos = Tuple.point(0, 0, cameraZ);
+    Tuple filmPos = Tuple.point(getFilmPos(x), getFilmPos(y), filmZ);
     return Ray.create(cameraPos, filmPos.minus(cameraPos).normalize());
   }
 

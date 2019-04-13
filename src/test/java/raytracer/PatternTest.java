@@ -26,30 +26,30 @@ public class PatternTest {
   // Scenario: A stripe pattern is constant in y
   public void stripeConstantInY() {
     Pattern pattern = Pattern.createStripe(WHITE, BLACK);
-    assertThat(pattern.colorAt(Tuple.createPoint(0, 0, 0))).isEqualTo(WHITE);
-    assertThat(pattern.colorAt(Tuple.createPoint(0, 1, 0))).isEqualTo(WHITE);
-    assertThat(pattern.colorAt(Tuple.createPoint(0, 2, 0))).isEqualTo(WHITE);
+    assertThat(pattern.colorAt(Tuple.point(0, 0, 0))).isEqualTo(WHITE);
+    assertThat(pattern.colorAt(Tuple.point(0, 1, 0))).isEqualTo(WHITE);
+    assertThat(pattern.colorAt(Tuple.point(0, 2, 0))).isEqualTo(WHITE);
   }
 
   @Test
   // Scenario: A stripe pattern is constant in z
   public void stripeConstantInZ() {
     Pattern pattern = Pattern.createStripe(WHITE, BLACK);
-    assertThat(pattern.colorAt(Tuple.createPoint(0, 0, 0))).isEqualTo(WHITE);
-    assertThat(pattern.colorAt(Tuple.createPoint(0, 0, 1))).isEqualTo(WHITE);
-    assertThat(pattern.colorAt(Tuple.createPoint(0, 0, 2))).isEqualTo(WHITE);
+    assertThat(pattern.colorAt(Tuple.point(0, 0, 0))).isEqualTo(WHITE);
+    assertThat(pattern.colorAt(Tuple.point(0, 0, 1))).isEqualTo(WHITE);
+    assertThat(pattern.colorAt(Tuple.point(0, 0, 2))).isEqualTo(WHITE);
   }
 
   @Test
   // Scenario: A stripe pattern alternates in x
   public void stripeAlternatesInX() {
     Pattern pattern = Pattern.createStripe(WHITE, BLACK);
-    assertThat(pattern.colorAt(Tuple.createPoint(-1.1, 0, 0))).isEqualTo(WHITE);
-    assertThat(pattern.colorAt(Tuple.createPoint(-1, 0, 0))).isEqualTo(BLACK);
-    assertThat(pattern.colorAt(Tuple.createPoint(-0.1, 0, 0))).isEqualTo(BLACK);
-    assertThat(pattern.colorAt(Tuple.createPoint(0, 0, 0))).isEqualTo(WHITE);
-    assertThat(pattern.colorAt(Tuple.createPoint(0.9, 0, 0))).isEqualTo(WHITE);
-    assertThat(pattern.colorAt(Tuple.createPoint(1, 0, 0))).isEqualTo(BLACK);
+    assertThat(pattern.colorAt(Tuple.point(-1.1, 0, 0))).isEqualTo(WHITE);
+    assertThat(pattern.colorAt(Tuple.point(-1, 0, 0))).isEqualTo(BLACK);
+    assertThat(pattern.colorAt(Tuple.point(-0.1, 0, 0))).isEqualTo(BLACK);
+    assertThat(pattern.colorAt(Tuple.point(0, 0, 0))).isEqualTo(WHITE);
+    assertThat(pattern.colorAt(Tuple.point(0.9, 0, 0))).isEqualTo(WHITE);
+    assertThat(pattern.colorAt(Tuple.point(1, 0, 0))).isEqualTo(BLACK);
   }
 
   /*
@@ -59,7 +59,7 @@ public class PatternTest {
     Shape object = new Sphere();
     object.setTransform(Matrix.scaling(2,2,2));
     Pattern pattern = Pattern.createStripe(WHITE, BLACK);
-    assertThat(pattern.colorAt(Tuple.createPoint(1.5, 0, 0))).isEqualTo(BLACK);
+    assertThat(pattern.colorAt(Tuple.point(1.5, 0, 0))).isEqualTo(BLACK);
   }
   */
 
@@ -69,7 +69,7 @@ public class PatternTest {
     Shape object = Sphere.create();
     Pattern pattern = Pattern.createStripe(WHITE, BLACK);
     pattern.setTransform(Matrix.scaling(2, 2, 2));
-    assertThat(pattern.colorAt(Tuple.createPoint(1.5, 0, 0))).isEqualTo(WHITE);
+    assertThat(pattern.colorAt(Tuple.point(1.5, 0, 0))).isEqualTo(WHITE);
   }
 
   @Test

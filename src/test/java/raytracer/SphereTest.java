@@ -16,7 +16,7 @@ public class SphereTest {
   @Test
   // Scenario: A ray intersects a sphere at two points
   public void intersectRay2Points() {
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Shape s = Sphere.create();
     Intersections xs = s.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
@@ -27,7 +27,7 @@ public class SphereTest {
   @Test
   // Scenario: A ray intersects a sphere at a tangent
   public void intersectRayTangent() {
-    Ray r = Ray.create(Tuple.createPoint(0, 1, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 1, -5), Tuple.vector(0, 0, 1));
     Shape s = Sphere.create();
     Intersections xs = s.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
@@ -38,7 +38,7 @@ public class SphereTest {
   @Test
   // Scenario: A ray misses a sphere
   public void intersectRayMiss() {
-    Ray r = Ray.create(Tuple.createPoint(0, 2, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 2, -5), Tuple.vector(0, 0, 1));
     Shape s = Sphere.create();
     Intersections xs = s.intersect(r);
     assertThat(xs.length()).isEqualTo(0);
@@ -47,7 +47,7 @@ public class SphereTest {
   @Test
   // Scenario: A ray originates inside a sphere
   public void intersectRayStartInside() {
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, 0), Tuple.vector(0, 0, 1));
     Shape s = Sphere.create();
     Intersections xs = s.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
@@ -58,7 +58,7 @@ public class SphereTest {
   @Test
   // Scenario: A sphere is behind a ray
   public void intersectRayStartPast() {
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, 5), Tuple.vector(0, 0, 1));
     Shape s = Sphere.create();
     Intersections xs = s.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
@@ -69,7 +69,7 @@ public class SphereTest {
   @Test
   // Scenario: Intersect sets the object on the intersection
   public void intersectSetsShape() {
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Shape s = Sphere.create();
     Intersections xs = s.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
@@ -96,7 +96,7 @@ public class SphereTest {
   @Test
   // Scenario: Intersecting a scaled sphere with a ray
   public void intersectScaled() {
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Shape s = Sphere.create();
     s.setTransform(Matrix.scaling(2, 2, 2));
     Intersections xs = s.intersect(r);
@@ -108,7 +108,7 @@ public class SphereTest {
   @Test
   // Scenario: Intersecting a translated sphere with a ray
   public void intersectTranslated() {
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Shape s = Sphere.create();
     s.setTransform(Matrix.translation(5, 0, 0));
     Intersections xs = s.intersect(r);
@@ -119,40 +119,40 @@ public class SphereTest {
   // Scenario: The normal on a sphere at a point on the x axis
   public void normalAtX() {
     Geometry s = new Sphere();
-    Tuple n = s.normalAt(Tuple.createPoint(1, 0, 0));
-    assertThat(n).isEqualTo(Tuple.createVector(1, 0, 0));
+    Tuple n = s.normalAt(Tuple.point(1, 0, 0));
+    assertThat(n).isEqualTo(Tuple.vector(1, 0, 0));
   }
 
   @Test
   // Scenario: The normal on a sphere at a point on the y axis
   public void normalAtY() {
     Geometry s = new Sphere();
-    Tuple n = s.normalAt(Tuple.createPoint(0, 1, 0));
-    assertThat(n).isEqualTo(Tuple.createVector(0, 1, 0));
+    Tuple n = s.normalAt(Tuple.point(0, 1, 0));
+    assertThat(n).isEqualTo(Tuple.vector(0, 1, 0));
   }
 
   @Test
   // Scenario: The normal on a sphere at a point on the z axis
   public void normalAtZ() {
     Geometry s = new Sphere();
-    Tuple n = s.normalAt(Tuple.createPoint(0, 0, 1));
-    assertThat(n).isEqualTo(Tuple.createVector(0, 0, 1));
+    Tuple n = s.normalAt(Tuple.point(0, 0, 1));
+    assertThat(n).isEqualTo(Tuple.vector(0, 0, 1));
   }
 
   @Test
   // Scenario: The normal on a sphere at a nonaxial point
   public void normalAtNonaxial() {
     Geometry s = new Sphere();
-    Tuple n = s.normalAt(Tuple.createPoint(1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)));
+    Tuple n = s.normalAt(Tuple.point(1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)));
     assertThat(n)
-        .isEqualTo(Tuple.createVector(1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)));
+        .isEqualTo(Tuple.vector(1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)));
   }
 
   @Test
   // Scenario: The normal is a normalized vector
   public void normalIsNormalized() {
     Geometry s = new Sphere();
-    Tuple n = s.normalAt(Tuple.createPoint(1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)));
+    Tuple n = s.normalAt(Tuple.point(1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)));
     assertThat(n).isEqualTo(n.normalize());
   }
 
@@ -163,8 +163,8 @@ public class SphereTest {
     public void normalOnTranslated() {
       Shape s = Sphere.create();
       s.setTransform(Matrix.translation(0, 1, 0));
-      Tuple n = s.normalAt(Tuple.createPoint(0, 1.70711, -0.70711));
-      assertThat(n).isApproximatelyEqualTo(Tuple.createVector(0, 0.70711, -0.70711));
+      Tuple n = s.normalAt(Tuple.point(0, 1.70711, -0.70711));
+      assertThat(n).isApproximatelyEqualTo(Tuple.vector(0, 0.70711, -0.70711));
     }
 
     @Test
@@ -172,8 +172,8 @@ public class SphereTest {
     public void normalOnTransformed() {
       Shape s = Sphere.create();
       s.setTransform(Matrix.rotationZ(Math.PI / 5).scale(1, 0.5, 1));
-      Tuple n = s.normalAt(Tuple.createPoint(0, 1 / Math.sqrt(2), -1 / Math.sqrt(2)));
-      assertThat(n).isApproximatelyEqualTo(Tuple.createVector(0, 0.97014, -0.24254));
+      Tuple n = s.normalAt(Tuple.point(0, 1 / Math.sqrt(2), -1 / Math.sqrt(2)));
+      assertThat(n).isApproximatelyEqualTo(Tuple.vector(0, 0.97014, -0.24254));
     }
   */
 

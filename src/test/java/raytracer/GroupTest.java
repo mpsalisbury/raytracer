@@ -35,7 +35,7 @@ public class GroupTest {
   // Scenario: Intersecting a ray with an empty group
   public void intersectEmpty() {
     Group g = Group.create();
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, 0), Tuple.vector(0, 0, 1));
     assertThat(g.intersect(r).all()).isEmpty();
   }
 
@@ -53,7 +53,7 @@ public class GroupTest {
     g.add(s2);
     g.add(s3);
 
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Intersections xs = g.intersect(r);
 
     assertThat(xs.length()).isEqualTo(4);
@@ -77,7 +77,7 @@ public class GroupTest {
     s.setTransform(Matrix.translation(5, 0, 0));
     g.add(s);
 
-    Ray r = Ray.create(Tuple.createPoint(10, 0, -10), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(10, 0, -10), Tuple.vector(0, 0, 1));
     Intersections xs = g.intersect(r);
 
     assertThat(xs.length()).isEqualTo(2);
@@ -95,11 +95,11 @@ public class GroupTest {
     s.setTransform(Matrix.translation(5, 0, 0));
     g.add(s);
 
-    Ray r = Ray.create(Tuple.createPoint(9, 0, -10), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(9, 0, -10), Tuple.vector(0, 0, 1));
     Intersections xs = g.intersect(r);
 
     assertThat(xs.length()).isEqualTo(2);
     assertThat(xs.get(0).normalv())
-        .isApproximatelyEqualTo(Tuple.createVector(-1, 0, -Math.sqrt(3)).normalize());
+        .isApproximatelyEqualTo(Tuple.vector(-1, 0, -Math.sqrt(3)).normalize());
   }
 }

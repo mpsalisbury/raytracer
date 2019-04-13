@@ -9,7 +9,7 @@ public class Plane extends Geometry {
     return new GeometryShape(new Plane());
   }
 
-  private static final Tuple NORMAL = Tuple.createVector(0, 1, 0);
+  private static final Tuple NORMAL = Tuple.vector(0, 1, 0);
   private static final double EPSILON = 1.0e-5;
 
   @Override

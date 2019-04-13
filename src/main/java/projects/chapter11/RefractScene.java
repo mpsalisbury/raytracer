@@ -35,14 +35,14 @@ public class RefractScene {
         600,
         300,
         Math.PI / 3,
-        Tuple.createPoint(0, 1.5, -5),
-        Tuple.createPoint(0, 1, 0),
-        Tuple.createVector(0, 1, 0));
+        Tuple.point(0, 1.5, -5),
+        Tuple.point(0, 1, 0),
+        Tuple.vector(0, 1, 0));
   }
 
   private static World createWorld() {
     World w = new World();
-    w.addLight(Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE));
+    w.addLight(Light.create(Tuple.point(-10, 10, -10), Color.WHITE));
     w.addShape(createFloor());
     w.addShape(createBall1());
     w.addShape(createBall2());

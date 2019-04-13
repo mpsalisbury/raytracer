@@ -22,7 +22,7 @@ public class WorldTest {
   }
 
   public static World createDefaultWorld() {
-    Light light = Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE);
+    Light light = Light.create(Tuple.point(-10, 10, -10), Color.WHITE);
 
     Shape s1 = Sphere.create();
     s1.setMaterial(
@@ -46,7 +46,7 @@ public class WorldTest {
   @Test
   // Scenario: The default world
   public void defaultWorld() {
-    Light light = Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE);
+    Light light = Light.create(Tuple.point(-10, 10, -10), Color.WHITE);
 
     Shape s1 = Sphere.create();
     s1.setMaterial(
@@ -69,7 +69,7 @@ public class WorldTest {
   // Scenario: Intersect a world with a ray
   public void intersect() {
     World w = createDefaultWorld();
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Intersections xs = w.intersect(r);
     assertThat(xs.length()).isEqualTo(4);
     assertThat(xs.get(0).t()).isWithin(EPSILON).of(4);
@@ -82,7 +82,7 @@ public class WorldTest {
   // Scenario: Shading an intersection
   public void shadingOutside() {
     World w = createDefaultWorld();
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Intersectable shape = Iterables.get(w.getShapes(), 0);
     Intersection i = shape.intersect(r).get(0);
     assertThat(i.t()).isWithin(EPSILON).of(4);
@@ -94,8 +94,8 @@ public class WorldTest {
   public void shadingInside() {
     World w = createDefaultWorld();
     w.clearLights();
-    w.addLight(Light.create(Tuple.createPoint(0, 0.25, 0), Color.WHITE));
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 0, 1));
+    w.addLight(Light.create(Tuple.point(0, 0.25, 0), Color.WHITE));
+    Ray r = Ray.create(Tuple.point(0, 0, 0), Tuple.vector(0, 0, 1));
     Intersectable shape = Iterables.get(w.getShapes(), 1);
     Intersection i = shape.intersect(r).get(1);
     assertThat(i.t()).isWithin(EPSILON).of(0.5);
@@ -106,7 +106,7 @@ public class WorldTest {
   // Scenario: The color when a ray misses
   public void colorWhenRayMisses() {
     World w = createDefaultWorld();
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 1, 0));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 1, 0));
     assertThat(w.colorAt(r, 0)).isEqualTo(Color.create(0, 0, 0));
   }
 
@@ -114,7 +114,7 @@ public class WorldTest {
   // Scenario: The color when a ray hits
   public void colorWhenRayHits() {
     World w = createDefaultWorld();
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     assertThat(w.colorAt(r, 0)).isApproximatelyEqualTo(Color.create(0.38066, 0.47583, 0.2855));
   }
 
@@ -129,17 +129,17 @@ public class WorldTest {
     Shape inner = Iterables.get(w.getShapes(), 1);
     inner.setMaterial(inner.material().toBuilder().setAmbient(1).build());
 
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 0.75), Tuple.createVector(0, 0, -1));
+    Ray r = Ray.create(Tuple.point(0, 0, 0.75), Tuple.vector(0, 0, -1));
     // TODO Which point is appropriate to use here?
     assertThat(w.colorAt(r, 0))
-        .isApproximatelyEqualTo(inner.material().pattern().colorAt(Tuple.createPoint(0, 0, 0)));
+        .isApproximatelyEqualTo(inner.material().pattern().colorAt(Tuple.point(0, 0, 0)));
   }
 
   @Test
   // Scenario: There is no shadow when nothing is collinear with point and light
   public void noShadowWhenNothingBlocking() {
     World w = createDefaultWorld();
-    Tuple p = Tuple.createPoint(0, 10, 0);
+    Tuple p = Tuple.point(0, 10, 0);
     Light l = Iterables.get(w.getLights(), 0);
     assertThat(w.isShadowed(p, l)).isFalse();
   }
@@ -148,7 +148,7 @@ public class WorldTest {
   // Scenario: The shadow when an object is between the point and the light
   public void shadowWhenBlocking() {
     World w = createDefaultWorld();
-    Tuple p = Tuple.createPoint(10, -10, 10);
+    Tuple p = Tuple.point(10, -10, 10);
     Light l = Iterables.get(w.getLights(), 0);
     assertThat(w.isShadowed(p, l)).isTrue();
   }
@@ -157,7 +157,7 @@ public class WorldTest {
   // Scenario: There is no shadow when an object is behind the light
   public void noShadowWhenObjectBehindLight() {
     World w = createDefaultWorld();
-    Tuple p = Tuple.createPoint(-20, 20, -20);
+    Tuple p = Tuple.point(-20, 20, -20);
     Light l = Iterables.get(w.getLights(), 0);
     assertThat(w.isShadowed(p, l)).isFalse();
   }
@@ -166,7 +166,7 @@ public class WorldTest {
   // Scenario: There is no shadow when an object is behind the point
   public void noShadowWhenObjectBehindPoint() {
     World w = createDefaultWorld();
-    Tuple p = Tuple.createPoint(-2, 2, -2);
+    Tuple p = Tuple.point(-2, 2, -2);
     Light l = Iterables.get(w.getLights(), 0);
     assertThat(w.isShadowed(p, l)).isFalse();
   }
@@ -177,7 +177,7 @@ public class WorldTest {
     World w = createDefaultWorld();
     Shape shape = Iterables.get(w.getShapes(), 0);
     shape.setMaterial(shape.material().toBuilder().setAmbient(1).build());
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, 0), Tuple.vector(0, 0, 1));
     Intersection i = shape.intersect(r).get(0);
     assertThat(w.reflectedColor(i, 0)).isApproximatelyEqualTo(Color.create(0, 0, 0));
   }
@@ -192,8 +192,8 @@ public class WorldTest {
     w.addShape(shape);
     Ray r =
         Ray.create(
-            Tuple.createPoint(0, 0, -3),
-            Tuple.createVector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+            Tuple.point(0, 0, -3),
+            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
     Intersection i = shape.intersect(r).get(0);
     assertThat(w.reflectedColor(i, 1))
         .isApproximatelyEqualTo(Color.create(0.19033, 0.23791, 0.14275));
@@ -209,8 +209,8 @@ public class WorldTest {
     w.addShape(shape);
     Ray r =
         Ray.create(
-            Tuple.createPoint(0, 0, -3),
-            Tuple.createVector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+            Tuple.point(0, 0, -3),
+            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
     Intersection i = shape.intersect(r).get(0);
     assertThat(w.shadeHit(i, 1)).isApproximatelyEqualTo(Color.create(0.87676, 0.92434, 0.82917));
   }
@@ -227,7 +227,7 @@ public class WorldTest {
     upper.setMaterial(upper.material().toBuilder().setReflectivity(1).build());
     upper.setTransform(Matrix.translation(0, 1, 0));
     w.addShape(upper);
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 1, 0));
+    Ray r = Ray.create(Tuple.point(0, 0, 0), Tuple.vector(0, 1, 0));
     // should terminate;
     w.colorAt(r);
   }
@@ -242,8 +242,8 @@ public class WorldTest {
     w.addShape(shape);
     Ray r =
         Ray.create(
-            Tuple.createPoint(0, 0, -3),
-            Tuple.createVector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+            Tuple.point(0, 0, -3),
+            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
     Intersection i = shape.intersect(r).get(0);
     assertThat(w.reflectedColor(i, 0)).isEqualTo(Color.BLACK);
   }
@@ -253,7 +253,7 @@ public class WorldTest {
   public void refractedColorOnOpaque() {
     World w = createDefaultWorld();
     Intersectable shape = Iterables.get(w.getShapes(), 0);
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Intersection i = w.intersect(r).get(0);
     assertThat(w.refractedColor(i, 5)).isEqualTo(Color.BLACK);
   }
@@ -264,7 +264,7 @@ public class WorldTest {
     World w = createDefaultWorld();
     Shape shape = Iterables.get(w.getShapes(), 0);
     shape.setMaterial(Material.builder().setTransparency(1.0).setRefractiveIndex(1.5).build());
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Intersection i = w.intersect(r).get(0);
     assertThat(i.t()).isWithin(EPSILON).of(4);
     assertThat(w.refractedColor(i, 0)).isEqualTo(Color.BLACK);
@@ -276,7 +276,7 @@ public class WorldTest {
     World w = createDefaultWorld();
     Shape shape = Iterables.get(w.getShapes(), 0);
     shape.setMaterial(Material.builder().setTransparency(1.0).setRefractiveIndex(1.5).build());
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 1 / Math.sqrt(2)), Tuple.createVector(0, 1, 0));
+    Ray r = Ray.create(Tuple.point(0, 0, 1 / Math.sqrt(2)), Tuple.vector(0, 1, 0));
     Intersection i = w.intersect(r).get(1);
     assertThat(i.t()).isWithin(EPSILON).of(1 / Math.sqrt(2));
     assertThat(w.refractedColor(i, 5)).isEqualTo(Color.BLACK);
@@ -291,7 +291,7 @@ public class WorldTest {
         Material.builder().setAmbient(1.0).setPattern(new PatternTest.TestPattern()).build());
     Shape b = Iterables.get(w.getShapes(), 1);
     b.setMaterial(Material.builder().setTransparency(1.0).setRefractiveIndex(1.5).build());
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 0.1), Tuple.createVector(0, 1, 0));
+    Ray r = Ray.create(Tuple.point(0, 0, 0.1), Tuple.vector(0, 1, 0));
     Intersection i = w.intersect(r).get(2);
     assertThat(i.t()).isWithin(EPSILON).of(0.4899);
     assertThat(w.refractedColor(i, 5)).isApproximatelyEqualTo(Color.create(0, 0.99888, 0.04722));
@@ -314,8 +314,8 @@ public class WorldTest {
 
     Ray r =
         Ray.create(
-            Tuple.createPoint(0, 0, -3),
-            Tuple.createVector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+            Tuple.point(0, 0, -3),
+            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
     Intersection i = w.intersect(r).get(0);
     assertThat(i.t()).isWithin(EPSILON).of(Math.sqrt(2));
     //    assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(0.93642, 0.68643,
@@ -345,8 +345,8 @@ public class WorldTest {
 
     Ray r =
         Ray.create(
-            Tuple.createPoint(0, 0, -3),
-            Tuple.createVector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+            Tuple.point(0, 0, -3),
+            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
     Intersection i = w.intersect(r).get(0);
     assertThat(i.t()).isWithin(EPSILON).of(Math.sqrt(2));
     // assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(0.93391, 0.69643, 0.69243));

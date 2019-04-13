@@ -13,7 +13,7 @@ public class LightTest {
   @Test
   // Scenario: A point light has a position and intensity
   public void constructLight() {
-    Tuple position = Tuple.createPoint(0, 0, 0);
+    Tuple position = Tuple.point(0, 0, 0);
     Color intensity = Color.WHITE;
     Light light = Light.create(position, intensity);
     assertThat(light.position()).isEqualTo(position);

@@ -34,15 +34,15 @@ public class PlaneScene {
         600,
         300,
         Math.PI / 3,
-        Tuple.createPoint(0, 1.5, -5),
-        Tuple.createPoint(0, 1, 0),
-        Tuple.createVector(0, 1, 0));
+        Tuple.point(0, 1.5, -5),
+        Tuple.point(0, 1, 0),
+        Tuple.vector(0, 1, 0));
   }
 
   private static World createWorld() {
     World w = new World();
-    w.addLight(Light.create(Tuple.createPoint(-10, 10, -10), Color.WHITE));
-    w.addLight(Light.create(Tuple.createPoint(-10, -3, 10), Color.create(0.3, 0.3, 0.3)));
+    w.addLight(Light.create(Tuple.point(-10, 10, -10), Color.WHITE));
+    w.addLight(Light.create(Tuple.point(-10, -3, 10), Color.create(0.3, 0.3, 0.3)));
     w.addShape(createFloor());
     w.addShape(createCeiling());
     w.addShape(createBall1());

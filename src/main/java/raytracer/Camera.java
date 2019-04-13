@@ -43,7 +43,7 @@ public abstract class Camera {
     return c;
   }
 
-  private static final Tuple CAMERA_POS = Tuple.createPoint(0, 0, 0);
+  private static final Tuple CAMERA_POS = Tuple.point(0, 0, 0);
 
   public Ray rayForPixel(int x, int y) {
     Tuple filmPoint = filmPointForPixel(x, y);
@@ -74,6 +74,6 @@ public abstract class Camera {
     double pX = (x - middleX) * pixelScale;
     double pY = ((vPixels() - 1 - y) - middleY) * pixelScale;
 
-    return Tuple.createPoint(pX, pY, PZ);
+    return Tuple.point(pX, pY, PZ);
   }
 }

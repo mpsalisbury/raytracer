@@ -15,12 +15,12 @@ public class Cube extends Geometry {
   // Normals in order +x, -x, +y, -y, +z, -z.
   private static final List<Tuple> NORMALS =
       Lists.newArrayList(
-          Tuple.createVector(1, 0, 0),
-          Tuple.createVector(-1, 0, 0),
-          Tuple.createVector(0, 1, 0),
-          Tuple.createVector(0, -1, 0),
-          Tuple.createVector(0, 0, 1),
-          Tuple.createVector(0, 0, -1));
+          Tuple.vector(1, 0, 0),
+          Tuple.vector(-1, 0, 0),
+          Tuple.vector(0, 1, 0),
+          Tuple.vector(0, -1, 0),
+          Tuple.vector(0, 0, 1),
+          Tuple.vector(0, 0, -1));
   private static final double EPSILON = 1.0e-5;
 
   @Override

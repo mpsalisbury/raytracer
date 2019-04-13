@@ -17,7 +17,7 @@ public class IntersectionTest {
   // Scenario: An intersection encapsulates t and shape
   // Scenario: Precomputing the state of an intersection
   public void constructIntersection() {
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Geometry s = new Sphere();
     double t = 4;
     Tuple point = r.position(t);
@@ -25,9 +25,9 @@ public class IntersectionTest {
     Intersection i = Intersection.create(r, t, s.normalAt(point), material, 123);
     assertThat(i.t()).isWithin(EPSILON).of(t);
     //    assertThat(i.shape()).isEqualTo(s);
-    assertThat(i.point()).isApproximatelyEqualTo(Tuple.createPoint(0, 0, -1));
-    assertThat(i.eyev()).isApproximatelyEqualTo(Tuple.createVector(0, 0, -1));
-    assertThat(i.normalv()).isApproximatelyEqualTo(Tuple.createVector(0, 0, -1));
+    assertThat(i.point()).isApproximatelyEqualTo(Tuple.point(0, 0, -1));
+    assertThat(i.eyev()).isApproximatelyEqualTo(Tuple.vector(0, 0, -1));
+    assertThat(i.normalv()).isApproximatelyEqualTo(Tuple.vector(0, 0, -1));
   }
 
   @Test
@@ -45,7 +45,7 @@ public class IntersectionTest {
   @Test
   // Scenario: Intersect sets the shape on the intersection
   public void intersectSetsShape() {
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Shape s = Sphere.create();
     Intersections xs = s.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
@@ -102,7 +102,7 @@ public class IntersectionTest {
   @Test
   // Scenario: The hit, when an intersection occurs on the outside
   public void hitIntersectOutside() {
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -5), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -5), Tuple.vector(0, 0, 1));
     Shape shape = Sphere.create();
     Intersection i = shape.intersect(r).get(0);
     assertThat(i.t()).isWithin(EPSILON).of(4);
@@ -112,14 +112,14 @@ public class IntersectionTest {
   @Test
   // Scenario: The hit, when an intersection occurs on the inside
   public void hitIntersectInside() {
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, 0), Tuple.vector(0, 0, 1));
     Shape shape = Sphere.create();
     Intersection i = shape.intersect(r).get(1);
     assertThat(i.t()).isWithin(EPSILON).of(1);
-    assertThat(i.point()).isApproximatelyEqualTo(Tuple.createPoint(0, 0, 1));
-    assertThat(i.eyev()).isApproximatelyEqualTo(Tuple.createVector(0, 0, -1));
+    assertThat(i.point()).isApproximatelyEqualTo(Tuple.point(0, 0, 1));
+    assertThat(i.eyev()).isApproximatelyEqualTo(Tuple.vector(0, 0, -1));
     // Normal would have been (0,0,1), but is inverted on the inside.
-    assertThat(i.normalv()).isApproximatelyEqualTo(Tuple.createVector(0, 0, -1));
+    assertThat(i.normalv()).isApproximatelyEqualTo(Tuple.vector(0, 0, -1));
     assertThat(i.inside()).isTrue();
   }
 
@@ -129,11 +129,11 @@ public class IntersectionTest {
     Shape shape = Plane.create();
     Ray r =
         Ray.create(
-            Tuple.createPoint(0, 1, -1),
-            Tuple.createVector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+            Tuple.point(0, 1, -1),
+            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
     Intersection i = shape.intersect(r).get(0);
     assertThat(i.reflectv())
-        .isApproximatelyEqualTo(Tuple.createVector(0, 1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+        .isApproximatelyEqualTo(Tuple.vector(0, 1 / Math.sqrt(2), 1 / Math.sqrt(2)));
   }
 
   @Test
@@ -156,7 +156,7 @@ public class IntersectionTest {
     c.setMaterial(Material.builder().setTransparency(1.0).setRefractiveIndex(2.5).build());
     w.addShape(c);
 
-    Ray r = Ray.create(Tuple.createPoint(0, 0, -4), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0, -4), Tuple.vector(0, 0, 1));
     Intersections xs = w.intersect(r);
 
     assertThat(xs.length()).isEqualTo(6);
@@ -190,7 +190,7 @@ public class IntersectionTest {
   // Scenario: The Schlick approximation under total internal reflection
   public void schlickWithTotalInternalReflection() {
     Shape shape = Sphere.createGlass();
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 1 / Math.sqrt(2)), Tuple.createVector(0, 1, 0));
+    Ray r = Ray.create(Tuple.point(0, 0, 1 / Math.sqrt(2)), Tuple.vector(0, 1, 0));
     Intersection i = shape.intersect(r).get(1);
     assertThat(i.t()).isWithin(EPSILON).of(1 / Math.sqrt(2));
     assertThat(i.schlickReflectance()).isWithin(EPSILON).of(1.0);
@@ -200,7 +200,7 @@ public class IntersectionTest {
   // Scenario: The Schlick approximation with a perpendicular viewing angle
   public void schlickWithPerpendicularViewingAngle() {
     Shape shape = Sphere.createGlass();
-    Ray r = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(0, 1, 0));
+    Ray r = Ray.create(Tuple.point(0, 0, 0), Tuple.vector(0, 1, 0));
     Intersection i = shape.intersect(r).get(1);
     assertThat(i.t()).isWithin(EPSILON).of(1);
     assertThat(i.schlickReflectance()).isWithin(EPSILON).of(0.04258);
@@ -210,7 +210,7 @@ public class IntersectionTest {
   // Scenario: The Schlick approximation with small angle and n2 > n1
   public void schlickWithSmallAngle() {
     Shape shape = Sphere.createGlass();
-    Ray r = Ray.create(Tuple.createPoint(0, 0.99, -2), Tuple.createVector(0, 0, 1));
+    Ray r = Ray.create(Tuple.point(0, 0.99, -2), Tuple.vector(0, 0, 1));
     Intersection i = shape.intersect(r).get(0);
     assertThat(i.t()).isWithin(EPSILON).of(1.85893);
     assertThat(i.schlickReflectance()).isWithin(EPSILON).of(0.49019);

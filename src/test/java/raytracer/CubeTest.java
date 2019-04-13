@@ -26,7 +26,7 @@ public class CubeTest {
   private void assertRayIntersection(
       double px, double py, double pz, double vx, double vy, double vz, double t1, double t2) {
     Shape c = Cube.create();
-    Ray r = Ray.create(Tuple.createPoint(px, py, pz), Tuple.createVector(vx, vy, vz));
+    Ray r = Ray.create(Tuple.point(px, py, pz), Tuple.vector(vx, vy, vz));
     Intersections xs = c.intersect(r);
     assertThat(xs.length()).isEqualTo(2);
     assertThat(xs.get(0).t()).isEqualTo(t1);
@@ -47,7 +47,7 @@ public class CubeTest {
   // Asserts that ray(px,py,pz, vx,vy,vz) misses default cube.
   private void assertRayMisses(double px, double py, double pz, double vx, double vy, double vz) {
     Shape c = Cube.create();
-    Ray r = Ray.create(Tuple.createPoint(px, py, pz), Tuple.createVector(vx, vy, vz));
+    Ray r = Ray.create(Tuple.point(px, py, pz), Tuple.vector(vx, vy, vz));
     Intersections xs = c.intersect(r);
     assertThat(xs.length()).isEqualTo(0);
   }
@@ -68,6 +68,6 @@ public class CubeTest {
   // Asserts that the normal of the default cube at point px,py,pz is nx,ny,nz.
   private void assertPointNormal(double px, double py, double pz, double nx, double ny, double nz) {
     Geometry c = new Cube();
-    assertThat(c.normalAt(Tuple.createPoint(px, py, pz))).isEqualTo(Tuple.createVector(nx, ny, nz));
+    assertThat(c.normalAt(Tuple.point(px, py, pz))).isEqualTo(Tuple.vector(nx, ny, nz));
   }
 }

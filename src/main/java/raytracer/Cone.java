@@ -11,7 +11,7 @@ public class Cone extends Geometry {
   }
 
   // Define cone from y={-2..0} then translate up y+1.
-  private static final Tuple BOTTOM_NORMAL = Tuple.createVector(0, -1, 0);
+  private static final Tuple BOTTOM_NORMAL = Tuple.vector(0, -1, 0);
   private static final double TOP_Y = 0;
   private static final double BOTTOM_Y = -2;
   private static final double RADIUS = 1;
@@ -74,7 +74,7 @@ public class Cone extends Geometry {
 
   private boolean isPInCone(Ray ray, double t) {
     Tuple point = ray.position(t);
-    Tuple originToPoint = Tuple.createVector(point.x(), 0, point.z());
+    Tuple originToPoint = Tuple.vector(point.x(), 0, point.z());
     return originToPoint.dot(originToPoint) < RADIUS2;
   }
 
@@ -85,6 +85,6 @@ public class Cone extends Geometry {
       return BOTTOM_NORMAL;
     }
     double normalY = Math.sqrt(point.x() * point.x() + point.z() * point.z());
-    return Tuple.createVector(point.x(), normalY, point.z());
+    return Tuple.vector(point.x(), normalY, point.z());
   }
 }

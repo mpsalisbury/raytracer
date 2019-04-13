@@ -27,7 +27,7 @@ public class TupleTest {
   @Test
   // Scenario: point() creates tuples with w=1
   public void constructPoint() {
-    Tuple p = Tuple.createPoint(4, -4, 3);
+    Tuple p = Tuple.point(4, -4, 3);
     assertThat(p).isEqualTo(Tuple.create(4, -4, 3, 1));
   }
 
@@ -46,7 +46,7 @@ public class TupleTest {
   @Test
   // Scenario: vector() creates tuples with w=0
   public void constructVector() {
-    Tuple v = Tuple.createVector(4, -4, 3);
+    Tuple v = Tuple.vector(4, -4, 3);
     assertThat(v).isEqualTo(Tuple.create(4, -4, 3, 0));
   }
 
@@ -61,33 +61,33 @@ public class TupleTest {
   @Test
   // Scenario: Subtracting two points
   public void SubtractPoints() {
-    Tuple p1 = Tuple.createPoint(3, 2, 1);
-    Tuple p2 = Tuple.createPoint(5, 6, 7);
-    assertThat(p1.minus(p2)).isEqualTo(Tuple.createVector(-2, -4, -6));
+    Tuple p1 = Tuple.point(3, 2, 1);
+    Tuple p2 = Tuple.point(5, 6, 7);
+    assertThat(p1.minus(p2)).isEqualTo(Tuple.vector(-2, -4, -6));
   }
 
   @Test
   // Scenario: Subtracting a vector from a point
   public void SubtractVectorFromPoint() {
-    Tuple p = Tuple.createPoint(3, 2, 1);
-    Tuple v = Tuple.createVector(5, 6, 7);
-    assertThat(p.minus(v)).isEqualTo(Tuple.createPoint(-2, -4, -6));
+    Tuple p = Tuple.point(3, 2, 1);
+    Tuple v = Tuple.vector(5, 6, 7);
+    assertThat(p.minus(v)).isEqualTo(Tuple.point(-2, -4, -6));
   }
 
   @Test
   // Scenario: Subtracting two vectors
   public void SubtractVectors() {
-    Tuple v1 = Tuple.createVector(3, 2, 1);
-    Tuple v2 = Tuple.createVector(5, 6, 7);
-    assertThat(v1.minus(v2)).isEqualTo(Tuple.createVector(-2, -4, -6));
+    Tuple v1 = Tuple.vector(3, 2, 1);
+    Tuple v2 = Tuple.vector(5, 6, 7);
+    assertThat(v1.minus(v2)).isEqualTo(Tuple.vector(-2, -4, -6));
   }
 
   @Test
   // Scenario: Subtracting a vector from the zero vector
   public void SubtractVectorFromZero() {
-    Tuple zero = Tuple.createVector(0, 0, 0);
-    Tuple v = Tuple.createVector(1, -2, 3);
-    assertThat(zero.minus(v)).isEqualTo(Tuple.createVector(-1, 2, -3));
+    Tuple zero = Tuple.vector(0, 0, 0);
+    Tuple v = Tuple.vector(1, -2, 3);
+    assertThat(zero.minus(v)).isEqualTo(Tuple.vector(-1, 2, -3));
   }
 
   @Test
@@ -115,38 +115,38 @@ public class TupleTest {
   @Test
   // Scenario: Computing the magnitude of vectors
   public void magnitude() {
-    Tuple v = Tuple.createVector(1, 0, 0);
+    Tuple v = Tuple.vector(1, 0, 0);
     assertThat(v.magnitude()).isWithin(EPSILON).of(1);
 
-    v = Tuple.createVector(0, 1, 0);
+    v = Tuple.vector(0, 1, 0);
     assertThat(v.magnitude()).isWithin(EPSILON).of(1);
 
-    v = Tuple.createVector(0, 0, 1);
+    v = Tuple.vector(0, 0, 1);
     assertThat(v.magnitude()).isWithin(EPSILON).of(1);
 
-    v = Tuple.createVector(1, 2, 3);
+    v = Tuple.vector(1, 2, 3);
     assertThat(v.magnitude()).isWithin(EPSILON).of(Math.sqrt(14));
 
-    v = Tuple.createVector(-1, -2, -3);
+    v = Tuple.vector(-1, -2, -3);
     assertThat(v.magnitude()).isWithin(EPSILON).of(Math.sqrt(14));
   }
 
   @Test
   // Scenario: Normalize vectors
   public void normalize() {
-    Tuple v = Tuple.createVector(4, 0, 0);
-    assertThat(v.normalize()).isEqualTo(Tuple.createVector(1, 0, 0));
+    Tuple v = Tuple.vector(4, 0, 0);
+    assertThat(v.normalize()).isEqualTo(Tuple.vector(1, 0, 0));
 
-    v = Tuple.createVector(1, 2, 3);
+    v = Tuple.vector(1, 2, 3);
     assertThat(v.normalize())
-        .isApproximatelyEqualTo(EPSILON, Tuple.createVector(0.26726, 0.53452, 0.80178));
+        .isApproximatelyEqualTo(EPSILON, Tuple.vector(0.26726, 0.53452, 0.80178));
     //            vector(1/√14,   2/√14,   3/√14)
   }
 
   @Test
   // Scenario: The magnitude of a normalized vector
   public void magnitudeOfNormalize() {
-    Tuple v = Tuple.createVector(1, 2, 3);
+    Tuple v = Tuple.vector(1, 2, 3);
     Tuple norm = v.normalize();
     assertThat(norm.magnitude()).isWithin(EPSILON).of(1);
   }
@@ -154,33 +154,33 @@ public class TupleTest {
   @Test
   // Scenario: The dot product of two tuples
   public void dotProduct() {
-    Tuple a = Tuple.createVector(1, 2, 3);
-    Tuple b = Tuple.createVector(2, 3, 4);
+    Tuple a = Tuple.vector(1, 2, 3);
+    Tuple b = Tuple.vector(2, 3, 4);
     assertThat(a.dot(b)).isWithin(EPSILON).of(20);
   }
 
   @Test
   // Scenario: The cross product of two vectors
   public void crossProduct() {
-    Tuple a = Tuple.createVector(1, 2, 3);
-    Tuple b = Tuple.createVector(2, 3, 4);
-    assertThat(a.cross(b)).isEqualTo(Tuple.createVector(-1, 2, -1));
-    assertThat(b.cross(a)).isEqualTo(Tuple.createVector(1, -2, 1));
+    Tuple a = Tuple.vector(1, 2, 3);
+    Tuple b = Tuple.vector(2, 3, 4);
+    assertThat(a.cross(b)).isEqualTo(Tuple.vector(-1, 2, -1));
+    assertThat(b.cross(a)).isEqualTo(Tuple.vector(1, -2, 1));
   }
 
   @Test
   // Scenario: Reflecting a vector approaching at 45°
   public void reflect1() {
-    Tuple v = Tuple.createVector(1, -1, 0);
-    Tuple n = Tuple.createVector(0, 1, 0);
-    assertThat(v.reflect(n)).isEqualTo(Tuple.createVector(1, 1, 0));
+    Tuple v = Tuple.vector(1, -1, 0);
+    Tuple n = Tuple.vector(0, 1, 0);
+    assertThat(v.reflect(n)).isEqualTo(Tuple.vector(1, 1, 0));
   }
 
   @Test
   // Scenario: Reflecting a vector off a slanted surface
   public void reflect2() {
-    Tuple v = Tuple.createVector(0, -1, 0);
-    Tuple n = Tuple.createVector(1, 1, 0).normalize();
-    assertThat(v.reflect(n)).isApproximatelyEqualTo(EPSILON, Tuple.createVector(1, 0, 0));
+    Tuple v = Tuple.vector(0, -1, 0);
+    Tuple n = Tuple.vector(1, 1, 0).normalize();
+    assertThat(v.reflect(n)).isApproximatelyEqualTo(EPSILON, Tuple.vector(1, 0, 0));
   }
 }

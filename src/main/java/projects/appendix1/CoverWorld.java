@@ -26,9 +26,9 @@ public class CoverWorld {
         400,
         400,
         0.785,
-        Tuple.createPoint(-6, 6, -10),
-        Tuple.createPoint(6, 0, 6),
-        Tuple.createVector(-0.45, 1, 0));
+        Tuple.point(-6, 6, -10),
+        Tuple.point(6, 0, 6),
+        Tuple.vector(-0.45, 1, 0));
   }
 
   public static World getWorld() {
@@ -58,11 +58,11 @@ public class CoverWorld {
   }
 
   private static Light light1() {
-    return Light.create(Tuple.createPoint(50, 100, -50), Color.WHITE);
+    return Light.create(Tuple.point(50, 100, -50), Color.WHITE);
   }
 
   private static Light light2() {
-    return Light.create(Tuple.createPoint(-400, 50, -10), Color.create(0.2, 0.2, 0.2));
+    return Light.create(Tuple.point(-400, 50, -10), Color.create(0.2, 0.2, 0.2));
   }
 
   private static Material whiteMaterial() {

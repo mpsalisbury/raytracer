@@ -13,8 +13,8 @@ public class Cylinder extends Geometry {
     return new GeometryShape(new Cylinder());
   }
 
-  private static final Tuple TOP_NORMAL = Tuple.createVector(0, 1, 0);
-  private static final Tuple BOTTOM_NORMAL = Tuple.createVector(0, -1, 0);
+  private static final Tuple TOP_NORMAL = Tuple.vector(0, 1, 0);
+  private static final Tuple BOTTOM_NORMAL = Tuple.vector(0, -1, 0);
   private static final double TOP_Y = 1;
   private static final double BOTTOM_Y = -1;
   private static final double RADIUS = 1;
@@ -54,7 +54,7 @@ public class Cylinder extends Geometry {
     if (!ray.direction().isVertical()) {
       return false;
     }
-    Tuple originToPoint = Tuple.createVector(ray.origin().x(), 0, ray.origin().z());
+    Tuple originToPoint = Tuple.vector(ray.origin().x(), 0, ray.origin().z());
     return originToPoint.dot(originToPoint) < RADIUS2;
   }
 
@@ -80,8 +80,8 @@ public class Cylinder extends Geometry {
   // Returns empty stream if no intersection.
   public DoubleStream intersectWalls(Ray ray) {
     // Flatten ray in y dimension.
-    Tuple fro = Tuple.createVector(ray.origin().x(), 0, ray.origin().z());
-    Tuple frd = Tuple.createVector(ray.direction().x(), 0, ray.direction().z());
+    Tuple fro = Tuple.vector(ray.origin().x(), 0, ray.origin().z());
+    Tuple frd = Tuple.vector(ray.direction().x(), 0, ray.direction().z());
     double a = frd.dot(frd);
     double b = 2.0 * (frd.dot(fro));
     double c = fro.dot(fro) - RADIUS2;
@@ -128,6 +128,6 @@ public class Cylinder extends Geometry {
     if (Math.abs(y - TOP_Y) < EPSILON) {
       return TOP_NORMAL;
     }
-    return Tuple.createVector(point.x(), 0, point.z());
+    return Tuple.vector(point.x(), 0, point.z());
   }
 }

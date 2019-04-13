@@ -9,17 +9,17 @@ public abstract class Tuple {
   private static final double POINT_W = 1.0;
   private static final double VECTOR_W = 0.0;
   private static final Tuple ZERO = create(0, 0, 0, VECTOR_W);
-  private static final Tuple UNIT_VERTICAL = createVector(0, 1, 0);
+  private static final Tuple UNIT_VERTICAL = vector(0, 1, 0);
 
   public static Tuple create(double x, double y, double z, double w) {
     return new AutoValue_Tuple(x, y, z, w);
   }
 
-  public static Tuple createPoint(double x, double y, double z) {
+  public static Tuple point(double x, double y, double z) {
     return new AutoValue_Tuple(x, y, z, POINT_W);
   }
 
-  public static Tuple createVector(double x, double y, double z) {
+  public static Tuple vector(double x, double y, double z) {
     return new AutoValue_Tuple(x, y, z, VECTOR_W);
   }
 
@@ -84,7 +84,7 @@ public abstract class Tuple {
   public Tuple cross(Tuple t) {
     // todo assert isVector();
     // todo assert t.isVector();
-    return createVector(
+    return vector(
         y() * t.z() - z() * t.y(), z() * t.x() - x() * t.z(), x() * t.y() - y() * t.x());
   }
 

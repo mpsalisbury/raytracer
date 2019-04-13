@@ -21,7 +21,7 @@ public class RoundHoleCube {
     Shape sphere = Sphere.create();
     sphere.setTransform(Matrix.scaling(Math.sqrt(2)));
     sphere.setMaterial(
-        Material.builder().setColor(Color.BLACK).setReflectivity(0.7).setSpecular(300).build());
+        Material.builder().setColor(Color.BLACK).setReflectivity(0.5).setSpecular(300).build());
     return sphere;
   }
 

@@ -27,7 +27,7 @@ public abstract class Intersection {
     double n1 = Material.REFRACTIVE_INDEX_VACUUM;
     double n2 = Material.REFRACTIVE_INDEX_VACUUM;
     boolean isTotalInternalReflection = false;
-    Tuple refractv = Tuple.createVector(0, 0, 1);
+    Tuple refractv = Tuple.vector(0, 0, 1);
     double schlickReflectance = 0.0;
 
     return new AutoValue_Intersection(
@@ -51,16 +51,16 @@ public abstract class Intersection {
     return new AutoValue_Intersection(
         t,
         12345,
-        Tuple.createPoint(0, 0, 0),
-        Tuple.createVector(0, 0, 0),
-        Tuple.createVector(0, 0, 0),
+        Tuple.point(0, 0, 0),
+        Tuple.vector(0, 0, 0),
+        Tuple.vector(0, 0, 0),
         false,
-        Tuple.createVector(0, 0, 0),
+        Tuple.vector(0, 0, 0),
         Material.create(),
         Material.REFRACTIVE_INDEX_VACUUM,
         Material.REFRACTIVE_INDEX_VACUUM,
         false,
-        Tuple.createVector(0, 0, 0),
+        Tuple.vector(0, 0, 0),
         1.0);
   }
 

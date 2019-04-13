@@ -25,7 +25,7 @@ public class CSGTest {
   @Test
   // Scenario Outline: Filtering a list of intersections
   public void chooseIntersections() {
-    Ray ray = Ray.create(Tuple.createPoint(0, 0, 0), Tuple.createVector(1, 0, 0));
+    Ray ray = Ray.create(Tuple.point(0, 0, 0), Tuple.vector(1, 0, 0));
 
     Shape union = CSG.createUnion(leftShape(), rightShape());
     assertIntersections(ray, union, -1.5, 1.5);

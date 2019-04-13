@@ -27,14 +27,14 @@ public class CameraTest {
   public void filmPointThroughCenter() {
     Camera c = Camera.create(201, 101, Math.PI / 2);
     Tuple p = c.filmPointForPixel(100, 50);
-    assertThat(p).isApproximatelyEqualTo(Tuple.createPoint(0, 0, -1));
+    assertThat(p).isApproximatelyEqualTo(Tuple.point(0, 0, -1));
   }
 
   @Test
   public void filmPointThroughCorner() {
     Camera c = Camera.create(201, 101, Math.PI / 2);
     Tuple p = c.filmPointForPixel(0, 0);
-    assertThat(p).isApproximatelyEqualTo(Tuple.createPoint(-1, 0.5, -1));
+    assertThat(p).isApproximatelyEqualTo(Tuple.point(-1, 0.5, -1));
   }
 
   @Test
@@ -42,8 +42,8 @@ public class CameraTest {
   public void rayThroughCenter() {
     Camera c = Camera.create(201, 101, Math.PI / 2);
     Ray r = c.rayForPixel(100, 50);
-    assertThat(r.origin()).isApproximatelyEqualTo(Tuple.createPoint(0, 0, 0));
-    assertThat(r.direction()).isApproximatelyEqualTo(Tuple.createVector(0, 0, -1));
+    assertThat(r.origin()).isApproximatelyEqualTo(Tuple.point(0, 0, 0));
+    assertThat(r.direction()).isApproximatelyEqualTo(Tuple.vector(0, 0, -1));
   }
 
   @Test
@@ -51,9 +51,9 @@ public class CameraTest {
   public void rayThroughCorner() {
     Camera c = Camera.create(201, 101, Math.PI / 2);
     Ray r = c.rayForPixel(0, 0);
-    assertThat(r.origin()).isApproximatelyEqualTo(Tuple.createPoint(0, 0, 0));
+    assertThat(r.origin()).isApproximatelyEqualTo(Tuple.point(0, 0, 0));
     assertThat(r.direction())
-        .isApproximatelyEqualTo(Tuple.createVector(-0.66666, 0.33333, -0.66666));
+        .isApproximatelyEqualTo(Tuple.vector(-0.66666, 0.33333, -0.66666));
   }
 
   @Test
@@ -62,18 +62,18 @@ public class CameraTest {
     Matrix transform = Matrix.translation(0, -2, 5).rotateY(Math.PI / 4);
     Camera c = Camera.create(201, 101, Math.PI / 2, transform);
     Ray r = c.rayForPixel(100, 50);
-    assertThat(r.origin()).isApproximatelyEqualTo(Tuple.createPoint(0, 2, -5));
+    assertThat(r.origin()).isApproximatelyEqualTo(Tuple.point(0, 2, -5));
     assertThat(r.direction())
-        .isApproximatelyEqualTo(Tuple.createVector(1 / Math.sqrt(2), 0, -1 / Math.sqrt(2)));
+        .isApproximatelyEqualTo(Tuple.vector(1 / Math.sqrt(2), 0, -1 / Math.sqrt(2)));
   }
 
   @Test
   // Scenario: Rendering a world with a camera
   public void renderWorldPixel() {
     World w = WorldTest.createDefaultWorld();
-    Tuple from = Tuple.createPoint(0, 0, -5);
-    Tuple to = Tuple.createPoint(0, 0, 0);
-    Tuple up = Tuple.createVector(0, 1, 0);
+    Tuple from = Tuple.point(0, 0, -5);
+    Tuple to = Tuple.point(0, 0, 0);
+    Tuple up = Tuple.vector(0, 1, 0);
     Camera camera = Camera.create(11, 11, Math.PI / 2, from, to, up);
     Canvas image = camera.render(w);
     assertThat(image.pixel(5, 5)).isApproximatelyEqualTo(Color.create(0.38066, 0.47583, 0.2855));

@@ -9,7 +9,7 @@ import raytracer.Tuple;
 public class Clock {
 
   public static void main(String[] args) {
-    Tuple handTip = Tuple.createPoint(0, 1, 0);
+    Tuple handTip = Tuple.point(0, 1, 0);
     Matrix rotation = Matrix.rotationZ(Math.PI / 6);
 
     Canvas canvas = new Canvas(200, 200);

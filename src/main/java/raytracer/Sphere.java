@@ -19,7 +19,7 @@ public class Sphere extends Geometry {
     return sphere;
   }
 
-  private static final Tuple CENTER = Tuple.createPoint(0, 0, 0);
+  private static final Tuple CENTER = Tuple.point(0, 0, 0);
 
   @Override
   public DoubleStream intersect(Ray ray) {
