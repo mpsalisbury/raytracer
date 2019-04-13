@@ -23,12 +23,7 @@ public class CoverWorld {
 
   public static Camera getCamera() {
     return Camera.create(
-        400,
-        400,
-        0.785,
-        Tuple.point(-6, 6, -10),
-        Tuple.point(6, 0, 6),
-        Tuple.vector(-0.45, 1, 0));
+        400, 400, 0.785, Tuple.point(-6, 6, -10), Tuple.point(6, 0, 6), Tuple.vector(-0.45, 1, 0));
   }
 
   public static World getWorld() {

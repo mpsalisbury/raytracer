@@ -2,6 +2,7 @@ package raytracer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static raytracer.MatrixSubject.assertThat;
+import static raytracer.Testing.ISQRT2;
 import static raytracer.TupleSubject.assertThat;
 
 import org.junit.Test;
@@ -74,8 +75,7 @@ public class MatrixTransformationsTest {
     Matrix rotateX45 = Matrix.rotationX(Math.PI / 4);
     Matrix rotateX90 = Matrix.rotationX(Math.PI / 2);
     Tuple p = Tuple.point(0, 1, 0);
-    assertThat(rotateX45.times(p))
-        .isApproximatelyEqualTo(Tuple.point(0, 1.0 / Math.sqrt(2), 1.0 / Math.sqrt(2)));
+    assertThat(rotateX45.times(p)).isApproximatelyEqualTo(Tuple.point(0, ISQRT2, ISQRT2));
     assertThat(rotateX90.times(p)).isApproximatelyEqualTo(Tuple.point(0, 0, 1));
   }
 
@@ -84,8 +84,7 @@ public class MatrixTransformationsTest {
   public void inverseRotateX() {
     Matrix rotateX45 = Matrix.rotationX(Math.PI / 4);
     Tuple p = Tuple.point(0, 1, 0);
-    assertThat(rotateX45.invert().times(p))
-        .isApproximatelyEqualTo(Tuple.point(0, 1.0 / Math.sqrt(2), -1.0 / Math.sqrt(2)));
+    assertThat(rotateX45.invert().times(p)).isApproximatelyEqualTo(Tuple.point(0, ISQRT2, -ISQRT2));
   }
 
   @Test
@@ -94,8 +93,7 @@ public class MatrixTransformationsTest {
     Matrix rotateY45 = Matrix.rotationY(Math.PI / 4);
     Matrix rotateY90 = Matrix.rotationY(Math.PI / 2);
     Tuple p = Tuple.point(0, 0, 1);
-    assertThat(rotateY45.times(p))
-        .isApproximatelyEqualTo(Tuple.point(1.0 / Math.sqrt(2), 0, 1.0 / Math.sqrt(2)));
+    assertThat(rotateY45.times(p)).isApproximatelyEqualTo(Tuple.point(ISQRT2, 0, ISQRT2));
     assertThat(rotateY90.times(p)).isApproximatelyEqualTo(Tuple.point(1, 0, 0));
   }
 
@@ -105,8 +103,7 @@ public class MatrixTransformationsTest {
     Matrix rotateZ45 = Matrix.rotationZ(Math.PI / 4);
     Matrix rotateZ90 = Matrix.rotationZ(Math.PI / 2);
     Tuple p = Tuple.point(0, 1, 0);
-    assertThat(rotateZ45.times(p))
-        .isApproximatelyEqualTo(Tuple.point(-1.0 / Math.sqrt(2), 1.0 / Math.sqrt(2), 0));
+    assertThat(rotateZ45.times(p)).isApproximatelyEqualTo(Tuple.point(-ISQRT2, ISQRT2, 0));
     assertThat(rotateZ90.times(p)).isApproximatelyEqualTo(Tuple.point(-1, 0, 0));
   }
 

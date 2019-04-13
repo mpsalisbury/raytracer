@@ -3,6 +3,8 @@ package raytracer;
 import static com.google.common.truth.Truth.assertThat;
 import static raytracer.ColorSubject.assertThat;
 import static raytracer.Testing.EPSILON;
+import static raytracer.Testing.ISQRT2;
+import static raytracer.Testing.SQRT2;
 
 import com.google.common.collect.Iterables;
 import org.junit.Test;
@@ -190,10 +192,7 @@ public class WorldTest {
     shape.setMaterial(shape.material().toBuilder().setReflectivity(0.5).build());
     shape.setTransform(Matrix.translation(0, -1, 0));
     w.addShape(shape);
-    Ray r =
-        Ray.create(
-            Tuple.point(0, 0, -3),
-            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+    Ray r = Ray.create(Tuple.point(0, 0, -3), Tuple.vector(0, -ISQRT2, ISQRT2));
     Intersection i = shape.intersect(r).get(0);
     assertThat(w.reflectedColor(i, 1))
         .isApproximatelyEqualTo(Color.create(0.19033, 0.23791, 0.14275));
@@ -207,10 +206,7 @@ public class WorldTest {
     shape.setMaterial(shape.material().toBuilder().setReflectivity(0.5).build());
     shape.setTransform(Matrix.translation(0, -1, 0));
     w.addShape(shape);
-    Ray r =
-        Ray.create(
-            Tuple.point(0, 0, -3),
-            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+    Ray r = Ray.create(Tuple.point(0, 0, -3), Tuple.vector(0, -ISQRT2, ISQRT2));
     Intersection i = shape.intersect(r).get(0);
     assertThat(w.shadeHit(i, 1)).isApproximatelyEqualTo(Color.create(0.87676, 0.92434, 0.82917));
   }
@@ -240,10 +236,7 @@ public class WorldTest {
     shape.setMaterial(shape.material().toBuilder().setReflectivity(0.5).build());
     shape.setTransform(Matrix.translation(0, -1, 0));
     w.addShape(shape);
-    Ray r =
-        Ray.create(
-            Tuple.point(0, 0, -3),
-            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+    Ray r = Ray.create(Tuple.point(0, 0, -3), Tuple.vector(0, -ISQRT2, ISQRT2));
     Intersection i = shape.intersect(r).get(0);
     assertThat(w.reflectedColor(i, 0)).isEqualTo(Color.BLACK);
   }
@@ -276,9 +269,9 @@ public class WorldTest {
     World w = createDefaultWorld();
     Shape shape = Iterables.get(w.getShapes(), 0);
     shape.setMaterial(Material.builder().setTransparency(1.0).setRefractiveIndex(1.5).build());
-    Ray r = Ray.create(Tuple.point(0, 0, 1 / Math.sqrt(2)), Tuple.vector(0, 1, 0));
+    Ray r = Ray.create(Tuple.point(0, 0, ISQRT2), Tuple.vector(0, 1, 0));
     Intersection i = w.intersect(r).get(1);
-    assertThat(i.t()).isWithin(EPSILON).of(1 / Math.sqrt(2));
+    assertThat(i.t()).isWithin(EPSILON).of(ISQRT2);
     assertThat(w.refractedColor(i, 5)).isEqualTo(Color.BLACK);
   }
 
@@ -312,12 +305,9 @@ public class WorldTest {
     ball.setMaterial(Material.builder().setColor(Color.create(1, 0, 0)).setAmbient(0.5).build());
     w.addShape(ball);
 
-    Ray r =
-        Ray.create(
-            Tuple.point(0, 0, -3),
-            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+    Ray r = Ray.create(Tuple.point(0, 0, -3), Tuple.vector(0, -ISQRT2, ISQRT2));
     Intersection i = w.intersect(r).get(0);
-    assertThat(i.t()).isWithin(EPSILON).of(Math.sqrt(2));
+    assertThat(i.t()).isWithin(EPSILON).of(SQRT2);
     //    assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(0.93642, 0.68643,
     // 0.68643));
     assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(1.20377, 0.68643, 0.68643));
@@ -343,12 +333,9 @@ public class WorldTest {
     ball.setMaterial(Material.builder().setColor(Color.create(1, 0, 0)).setAmbient(0.5).build());
     w.addShape(ball);
 
-    Ray r =
-        Ray.create(
-            Tuple.point(0, 0, -3),
-            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+    Ray r = Ray.create(Tuple.point(0, 0, -3), Tuple.vector(0, -ISQRT2, ISQRT2));
     Intersection i = w.intersect(r).get(0);
-    assertThat(i.t()).isWithin(EPSILON).of(Math.sqrt(2));
+    assertThat(i.t()).isWithin(EPSILON).of(SQRT2);
     // assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(0.93391, 0.69643, 0.69243));
     assertThat(w.shadeHit(i, 5)).isApproximatelyEqualTo(Color.create(1.19001, 0.69643, 0.69243));
   }

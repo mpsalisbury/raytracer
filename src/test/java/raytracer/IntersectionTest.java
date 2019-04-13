@@ -3,6 +3,7 @@ package raytracer;
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth8.assertThat;
 import static raytracer.Testing.EPSILON;
+import static raytracer.Testing.ISQRT2;
 import static raytracer.TupleSubject.assertThat;
 
 import org.junit.Test;
@@ -127,13 +128,9 @@ public class IntersectionTest {
   // Scenario: Precomputing the reflection vector
   public void computeReflectionVector() {
     Shape shape = Plane.create();
-    Ray r =
-        Ray.create(
-            Tuple.point(0, 1, -1),
-            Tuple.vector(0, -1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+    Ray r = Ray.create(Tuple.point(0, 1, -1), Tuple.vector(0, -ISQRT2, ISQRT2));
     Intersection i = shape.intersect(r).get(0);
-    assertThat(i.reflectv())
-        .isApproximatelyEqualTo(Tuple.vector(0, 1 / Math.sqrt(2), 1 / Math.sqrt(2)));
+    assertThat(i.reflectv()).isApproximatelyEqualTo(Tuple.vector(0, ISQRT2, ISQRT2));
   }
 
   @Test
@@ -190,9 +187,9 @@ public class IntersectionTest {
   // Scenario: The Schlick approximation under total internal reflection
   public void schlickWithTotalInternalReflection() {
     Shape shape = Sphere.createGlass();
-    Ray r = Ray.create(Tuple.point(0, 0, 1 / Math.sqrt(2)), Tuple.vector(0, 1, 0));
+    Ray r = Ray.create(Tuple.point(0, 0, ISQRT2), Tuple.vector(0, 1, 0));
     Intersection i = shape.intersect(r).get(1);
-    assertThat(i.t()).isWithin(EPSILON).of(1 / Math.sqrt(2));
+    assertThat(i.t()).isWithin(EPSILON).of(ISQRT2);
     assertThat(i.schlickReflectance()).isWithin(EPSILON).of(1.0);
   }
 

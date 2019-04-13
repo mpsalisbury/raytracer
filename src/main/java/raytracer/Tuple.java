@@ -84,8 +84,7 @@ public abstract class Tuple {
   public Tuple cross(Tuple t) {
     // todo assert isVector();
     // todo assert t.isVector();
-    return vector(
-        y() * t.z() - z() * t.y(), z() * t.x() - x() * t.z(), x() * t.y() - y() * t.x());
+    return vector(y() * t.z() - z() * t.y(), z() * t.x() - x() * t.z(), x() * t.y() - y() * t.x());
   }
 
   public Tuple reflect(Tuple normal) {

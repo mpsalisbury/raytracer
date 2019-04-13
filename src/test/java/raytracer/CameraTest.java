@@ -3,6 +3,7 @@ package raytracer;
 import static com.google.common.truth.Truth.assertThat;
 import static raytracer.ColorSubject.assertThat;
 import static raytracer.Testing.EPSILON;
+import static raytracer.Testing.ISQRT2;
 import static raytracer.TupleSubject.assertThat;
 
 import org.junit.Test;
@@ -52,8 +53,7 @@ public class CameraTest {
     Camera c = Camera.create(201, 101, Math.PI / 2);
     Ray r = c.rayForPixel(0, 0);
     assertThat(r.origin()).isApproximatelyEqualTo(Tuple.point(0, 0, 0));
-    assertThat(r.direction())
-        .isApproximatelyEqualTo(Tuple.vector(-0.66666, 0.33333, -0.66666));
+    assertThat(r.direction()).isApproximatelyEqualTo(Tuple.vector(-0.66666, 0.33333, -0.66666));
   }
 
   @Test
@@ -63,8 +63,7 @@ public class CameraTest {
     Camera c = Camera.create(201, 101, Math.PI / 2, transform);
     Ray r = c.rayForPixel(100, 50);
     assertThat(r.origin()).isApproximatelyEqualTo(Tuple.point(0, 2, -5));
-    assertThat(r.direction())
-        .isApproximatelyEqualTo(Tuple.vector(1 / Math.sqrt(2), 0, -1 / Math.sqrt(2)));
+    assertThat(r.direction()).isApproximatelyEqualTo(Tuple.vector(ISQRT2, 0, -ISQRT2));
   }
 
   @Test

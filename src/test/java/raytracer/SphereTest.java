@@ -144,8 +144,7 @@ public class SphereTest {
   public void normalAtNonaxial() {
     Geometry s = new Sphere();
     Tuple n = s.normalAt(Tuple.point(1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)));
-    assertThat(n)
-        .isEqualTo(Tuple.vector(1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)));
+    assertThat(n).isEqualTo(Tuple.vector(1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)));
   }
 
   @Test
@@ -172,7 +171,7 @@ public class SphereTest {
     public void normalOnTransformed() {
       Shape s = Sphere.create();
       s.setTransform(Matrix.rotationZ(Math.PI / 5).scale(1, 0.5, 1));
-      Tuple n = s.normalAt(Tuple.point(0, 1 / Math.sqrt(2), -1 / Math.sqrt(2)));
+      Tuple n = s.normalAt(Tuple.point(0, ISQRT2, -ISQRT2));
       assertThat(n).isApproximatelyEqualTo(Tuple.vector(0, 0.97014, -0.24254));
     }
   */
