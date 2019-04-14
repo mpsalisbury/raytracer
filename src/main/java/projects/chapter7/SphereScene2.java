@@ -44,10 +44,10 @@ public class SphereScene2 {
     World w = new World();
     w.addLight(Light.create(Tuple.point(-10, 10, -10), Color.WHITE));
     w.addShape(createFloor());
-    w.addShape(createBall(-1,0,Color.create(1,0.1,0.2)));
-    w.addShape(createBall(0,0,Color.create(0.2,1,0.1)));
-    w.addShape(createBall(1,0,Color.create(0.1,0.2,1)));
-    w.addShape(createBall(0,1,Color.create(1,0.2,1)));
+    w.addShape(createBall(-1, 0, Color.create(1, 0.1, 0.2)));
+    w.addShape(createBall(0, 0, Color.create(0.2, 1, 0.1)));
+    w.addShape(createBall(1, 0, Color.create(0.1, 0.2, 1)));
+    w.addShape(createBall(0, 1, Color.create(1, 0.2, 1)));
     return w;
   }
 
@@ -68,12 +68,7 @@ public class SphereScene2 {
   private static Shape createBall(double x, double z, Color color) {
     Shape s = Sphere.create();
     s.setTransform(Matrix.scaling(0.1).translate(x, 0.1, z));
-    s.setMaterial(
-        Material.builder()
-            .setColor(color)
-            .setDiffuse(0.7)
-            .setSpecular(0.3)
-            .build());
+    s.setMaterial(Material.builder().setColor(color).setDiffuse(0.7).setSpecular(0.3).build());
     return s;
   }
 
