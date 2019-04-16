@@ -12,6 +12,11 @@ public class GeometryIntersectable implements Intersectable {
     this.geometry = geometry;
   }
 
+  // VisibleForTesting
+  public Geometry geometry() {
+    return geometry;
+  }
+
   public Material material() {
     return material;
   }

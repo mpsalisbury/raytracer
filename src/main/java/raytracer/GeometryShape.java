@@ -12,6 +12,11 @@ public class GeometryShape implements Shape {
     this.transformed = new TransformedIntersectable(this.geometry);
   }
 
+  // VisibleForTesting
+  public Geometry geometry() {
+    return geometry.geometry();
+  }
+
   @Override
   public Matrix transform() {
     return transformed.transform();

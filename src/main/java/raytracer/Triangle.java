@@ -16,6 +16,10 @@ public abstract class Triangle extends Geometry {
     return new AutoValue_Triangle(p1, p2, p3);
   }
 
+  public Shape asShape() {
+    return new GeometryShape(this);
+  }
+
   public abstract Tuple p1();
 
   public abstract Tuple p2();

@@ -41,6 +41,7 @@ dependencies {
   annotationProcessor 'com.google.auto.value:auto-value:1.6.2'
   compileOnly 'com.google.auto.value:auto-value-annotations:1.6.2'
   implementation 'com.google.guava:guava:27.0.1-jre'
+  implementation 'com.google.flogger:flogger:0.4'
   testImplementation "com.google.truth:truth:0.43"
   testImplementation "com.google.truth.extensions:truth-java8-extension:0.43"
   testImplementation "junit:junit:4.12"
