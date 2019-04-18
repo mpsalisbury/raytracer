@@ -27,14 +27,7 @@ public class GeometryIntersectable implements Intersectable {
 
   @Override
   public Stream<MaterialIntersection> intersectStream(Ray ray) {
-    return geometry
-        .intersect(ray)
-        .mapToObj(
-            t -> {
-              Tuple normalv = geometry.normalAt(ray.position(t));
-              int shapeId = System.identityHashCode(GeometryIntersectable.this);
-              return MaterialIntersection.create(ray, t, normalv, material, shapeId);
-            });
+    return geometry.intersectStream(ray).map(i -> i.copyWithMaterial(material));
   }
 
   @Override

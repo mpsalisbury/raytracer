@@ -1,8 +1,11 @@
 package raytracer;
 
 // import com.google.common.flogger.FluentLogger;
+import com.google.auto.value.AutoValue;
+import com.google.common.base.Joiner;
 import com.google.common.base.Verify;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Range;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,6 +17,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.ToDoubleFunction;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
+import javax.annotation.Nullable;
 
 public class ObjFile {
   // TODO: fix
@@ -49,6 +57,47 @@ public class ObjFile {
         group.add(subgroup.asShape());
       }
     }
+    return group;
+  }
+
+  // Returns cube-oid bounding box containing all triangles.
+  public Shape boundingBox() {
+    Range<Double> xRange = getRange(p -> p.x());
+    Range<Double> yRange = getRange(p -> p.y());
+    Range<Double> zRange = getRange(p -> p.z());
+    return makeBoundingBox(xRange, yRange, zRange);
+  }
+
+  private Range<Double> getRange(ToDoubleFunction<Tuple> getCoord) {
+    double min = forEachTriangleVertex().mapToDouble(getCoord).min().orElse(0);
+    double max = forEachTriangleVertex().mapToDouble(getCoord).max().orElse(0);
+    return Range.closed(min, max);
+  }
+
+  private Stream<Tuple> forEachTriangleVertex() {
+    return groups
+        .values()
+        .stream()
+        .flatMap(g -> g.triangles())
+        .flatMap(t -> Stream.of(t.p1(), t.p2(), t.p3()));
+  }
+
+  // Returns a cube-oid with the given dimension ranges.
+  private Shape makeBoundingBox(Range<Double> xRange, Range<Double> yRange, Range<Double> zRange) {
+    double xSize = xRange.upperEndpoint() - xRange.lowerEndpoint();
+    double xMiddle = (xRange.upperEndpoint() + xRange.lowerEndpoint()) / 2;
+    double ySize = yRange.upperEndpoint() - yRange.lowerEndpoint();
+    double yMiddle = (yRange.upperEndpoint() + yRange.lowerEndpoint()) / 2;
+    double zSize = zRange.upperEndpoint() - zRange.lowerEndpoint();
+    double zMiddle = (zRange.upperEndpoint() + zRange.lowerEndpoint()) / 2;
+    Matrix transform =
+        Matrix.scaling(xSize / 2, ySize / 2, zSize / 2).translate(xMiddle, yMiddle, zMiddle);
+
+    // TODO: wrap cube with another transform so that this transform stays fixed.
+    Shape cube = Cube.create();
+    cube.setTransform(transform);
+    Group group = Group.create();
+    group.add(cube);
     return group;
   }
 
@@ -117,6 +166,10 @@ public class ObjFile {
     public Triangle getTriangle(int i) {
       return triangles.get(i - 1);
     }
+
+    public Stream<Triangle> triangles() {
+      return triangles.stream();
+    }
   }
 
   public static class ParsingException extends Exception {
@@ -140,6 +193,8 @@ public class ObjFile {
     private TriangleGroup currentGroup;
     private List<CommandParser> commandParsers;
 
+    private static final Pattern VERTEX_NORMAL_PATTERN = Pattern.compile("(\\d*)/\\d*/(\\d*)");
+
     public FileParser(Reader rawReader) {
       this.reader = new BufferedReader(rawReader);
       this.objfile = new ObjFile();
@@ -159,7 +214,7 @@ public class ObjFile {
         if (line == null) {
           break;
         }
-        String[] terms = line.split(" ");
+        String[] terms = line.split("\\s+");
         // Note: even split of empty string produces one term.
         Verify.verify(terms.length != 0);
         getParser(terms[0]).parse(terms);
@@ -174,6 +229,10 @@ public class ObjFile {
         }
       }
       return new UnknownCommandParser();
+    }
+
+    private String joinTerms(String[] terms) {
+      return Joiner.on(' ').join(terms);
     }
 
     private abstract class CommandParser {
@@ -241,7 +300,9 @@ public class ObjFile {
       @Override
       public void parse(String[] terms) throws ParsingException {
         if (terms.length != 4) {
-          throw new ParsingException("Vertex command must be of form 'v [x] [y] [z]");
+          throw new ParsingException(
+              String.format(
+                  "Vertex command must be of form 'v [x] [y] [z] (was %s)", joinTerms(terms)));
         }
         double x = parseDouble(terms[1]);
         double y = parseDouble(terms[2]);
@@ -278,16 +339,43 @@ public class ObjFile {
       @Override
       public void parse(String[] terms) throws ParsingException {
         if (terms.length < 4) {
-          throw new ParsingException("Face command must be of form 'f [i1] [i2] [i3] ...");
+          throw new ParsingException(
+              "Face command must be of form 'f [i1] [i2] [i3] ...' or 'f 1/2/3 4/5/6 7/8/9 ...'");
         }
-        Tuple p1 = objfile.getVertex(parseInt(terms[1]));
+        VertexNormal p1 = parseCorner(terms[1]);
         for (int i = 2; i < terms.length - 1; ++i) {
-          Tuple p2 = objfile.getVertex(parseInt(terms[i]));
-          Tuple p3 = objfile.getVertex(parseInt(terms[i + 1]));
-          currentGroup.triangles.add(Triangle.createRaw(p1, p2, p3));
+          VertexNormal p2 = parseCorner(terms[i]);
+          VertexNormal p3 = parseCorner(terms[i + 1]);
+          Triangle triangle = createTriangle(p1, p2, p3);
+          currentGroup.triangles.add(triangle);
+        }
+      }
+
+      private VertexNormal parseCorner(String term) throws ParsingException {
+        Matcher matcher = VERTEX_NORMAL_PATTERN.matcher(term);
+        if (matcher.matches()) {
+          int vertexIndex = parseInt(matcher.group(1));
+          Tuple vertex = objfile.getVertex(vertexIndex);
+          int normalIndex = parseInt(matcher.group(2));
+          Tuple normal = objfile.getNormal(normalIndex);
+          return VertexNormal.create(vertex, normal);
+        } else {
+          int vertexIndex = parseInt(term);
+          Tuple vertex = objfile.getVertex(vertexIndex);
+          return VertexNormal.create(vertex, null);
+        }
+      }
+
+      private Triangle createTriangle(VertexNormal p1, VertexNormal p2, VertexNormal p3) {
+        if (p1.normal() == null || p2.normal() == null || p3.normal() == null) {
+          return Triangle.createRaw(p1.vertex(), p2.vertex(), p3.vertex());
+        } else {
+          return Triangle.createRaw(
+              p1.vertex(), p2.vertex(), p3.vertex(), p1.normal(), p2.normal(), p3.normal());
         }
       }
     }
+
     // Parses a group command.
     private class GroupParser extends CommandParser {
       @Override
@@ -304,5 +392,18 @@ public class ObjFile {
         currentGroup = objfile.ensureGroup(newGroupName);
       }
     }
+  }
+
+  // Used by FaceParser
+  @AutoValue
+  public abstract static class VertexNormal {
+    public static VertexNormal create(Tuple vertex, Tuple normal) {
+      return new AutoValue_ObjFile_VertexNormal(vertex, normal);
+    }
+
+    public abstract Tuple vertex();
+
+    @Nullable
+    public abstract Tuple normal();
   }
 }

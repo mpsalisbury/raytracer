@@ -139,6 +139,11 @@ task hexagon(type:JavaExec) {
   main = 'projects.chapter14.HexagonScene'
 }
 
+task teapot(type:JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  main = 'projects.chapter15.TeapotScene'
+}
+
 task csg(type:JavaExec) {
   classpath = sourceSets.main.runtimeClasspath
   main = 'projects.chapter16.CsgScene'

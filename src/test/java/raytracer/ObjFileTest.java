@@ -1,6 +1,7 @@
 package raytracer;
 
 import static com.google.common.truth.Truth.assertThat;
+import static raytracer.Testing.EPSILON;
 
 import java.io.IOException;
 import java.util.List;
@@ -144,7 +145,6 @@ public class ObjFileTest {
     assertThat(objFile.getNormal(3)).isEqualTo(Tuple.vector(1, 2, 3));
   }
 
-  /*
   @Test
   // Scenario: Faces with normals
   public void faceNormal() throws Exception {
@@ -182,5 +182,31 @@ public class ObjFileTest {
     assertThat(triangle2.n2()).isEqualTo(objFile.getNormal(1));
     assertThat(triangle2.n3()).isEqualTo(objFile.getNormal(2));
   }
-  */
+
+  @Test
+  // Scenario: Bounding box
+  public void boundingBox() throws Exception {
+    String input =
+        String.join("\n", "v 0 0 0", "v 0 0 1", "v 1 0 1", "v 1 1 0", "f 1 2 3", "f 2 3 4");
+    ObjFile objFile = ObjFile.parseContent(input);
+    Shape box = objFile.boundingBox();
+
+    Ray xRay = Ray.create(Tuple.point(-1, 0.5, 0.5), Tuple.vector(1, 0, 0));
+    Intersections xxs = box.intersect(xRay);
+    assertThat(xxs.length()).isEqualTo(2);
+    assertThat(xxs.get(0).t()).isWithin(EPSILON).of(1);
+    assertThat(xxs.get(1).t()).isWithin(EPSILON).of(2);
+
+    Ray yRay = Ray.create(Tuple.point(0.5, -1, 0.5), Tuple.vector(0, 1, 0));
+    Intersections yxs = box.intersect(yRay);
+    assertThat(yxs.length()).isEqualTo(2);
+    assertThat(yxs.get(0).t()).isWithin(EPSILON).of(1);
+    assertThat(yxs.get(1).t()).isWithin(EPSILON).of(2);
+
+    Ray zRay = Ray.create(Tuple.point(0.5, 0.5, -1), Tuple.vector(0, 0, 1));
+    Intersections zxs = box.intersect(zRay);
+    assertThat(zxs.length()).isEqualTo(2);
+    assertThat(zxs.get(0).t()).isWithin(EPSILON).of(1);
+    assertThat(zxs.get(1).t()).isWithin(EPSILON).of(2);
+  }
 }

@@ -1,6 +1,7 @@
 package raytracer;
 
 import com.google.auto.value.AutoValue;
+import javax.annotation.Nullable;
 
 // Describes a Ray/Object intersection with material.
 @AutoValue
@@ -21,10 +22,16 @@ public abstract class MaterialIntersection {
   public abstract Tuple normalv();
 
   // Material at this hit point.
+  @Nullable
   public abstract Material material();
 
   // Id of the shape that produced this intersection, used to couple with other intersections of the
   // same shape.
   // TODO: Use intersection ranges instead to avoid need for this.
   public abstract int shapeId();
+
+  // Sets material in copy of this MaterialIntersection.
+  public MaterialIntersection copyWithMaterial(Material material) {
+    return new AutoValue_MaterialIntersection(ray(), t(), normalv(), material, shapeId());
+  }
 }

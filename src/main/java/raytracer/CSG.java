@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// A CSG combination of two shapes.
+// A constructive-solid-geometry combination of two shapes.
 public class CSG implements Shape {
 
   public static CSG createUnion(Shape left, Shape right) {
