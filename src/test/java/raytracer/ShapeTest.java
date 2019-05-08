@@ -18,10 +18,17 @@ public class ShapeTest {
   }
 
   private static class TestGeometry extends Geometry {
+    @Override
+    public Range3 getRange() {
+      return Range3.createEmpty();
+    }
+
+    @Override
     public DoubleStream intersect(Ray localRay) {
       return DoubleStream.empty();
     }
 
+    @Override
     public Tuple normalAt(Tuple point) {
       return Tuple.vector(point.x(), point.y(), point.z());
     }

@@ -7,6 +7,7 @@ import com.google.common.base.Verify;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,6 +39,9 @@ public class ObjFile {
   public static ObjFile parseResource(String resourceFilename)
       throws IOException, ParsingException {
     InputStream inputStream = ObjFile.class.getResourceAsStream(resourceFilename);
+    if (inputStream == null) {
+      throw new FileNotFoundException("Can't load resource " + resourceFilename);
+    }
     return parse(new InputStreamReader(inputStream));
   }
 

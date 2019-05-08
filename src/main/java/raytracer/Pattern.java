@@ -88,7 +88,6 @@ public abstract class Pattern {
       return color;
     }
 
-    // TODO move part to parent.
     @Override
     public boolean equals(Object obj) {
       if (obj == null) {
@@ -138,7 +137,6 @@ public abstract class Pattern {
     // Returns value from 0..1 representing colorA..colorB.
     public abstract double colorMixAt(Tuple p);
 
-    // TODO move part to parent.
     @Override
     public boolean equals(Object obj) {
       if (obj == null) {

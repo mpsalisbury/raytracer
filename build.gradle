@@ -17,6 +17,7 @@ java {
   targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+// TODO: factor out library from executables
 jar {
   version = '0.1'
   //includes {

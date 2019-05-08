@@ -22,6 +22,11 @@ public class Sphere extends Geometry {
   private static final Tuple CENTER = Tuple.point(0, 0, 0);
 
   @Override
+  public Range3 getRange() {
+    return Range3.create(-1, 1, -1, 1, -1, 1);
+  }
+
+  @Override
   public DoubleStream intersect(Ray ray) {
     Tuple sphereToRay = ray.origin().minus(CENTER);
     double a = ray.direction().dot(ray.direction());

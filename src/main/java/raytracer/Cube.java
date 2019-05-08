@@ -24,6 +24,11 @@ public class Cube extends Geometry {
   private static final double EPSILON = 1.0e-5;
 
   @Override
+  public Range3 getRange() {
+    return Range3.create(-1, 1, -1, 1, -1, 1);
+  }
+
+  @Override
   public DoubleStream intersect(Ray ray) {
     List<Double> xRange =
         Lists.newArrayList(

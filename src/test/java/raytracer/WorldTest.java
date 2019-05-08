@@ -287,7 +287,7 @@ public class WorldTest {
     Ray r = Ray.create(Tuple.point(0, 0, 0.1), Tuple.vector(0, 1, 0));
     Intersection i = w.intersect(r).get(2);
     assertThat(i.t()).isWithin(EPSILON).of(0.4899);
-    assertThat(w.refractedColor(i, 5)).isApproximatelyEqualTo(Color.create(0, 0.99888, 0.04722));
+    assertThat(w.refractedColor(i, 5)).isApproximatelyEqualTo(Color.create(0, 0.48990, 0.87178));
   }
 
   @Test

@@ -1,6 +1,7 @@
 package raytracer;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 
 // Describes a Point/Vector tuple.
 @AutoValue
@@ -48,12 +49,12 @@ public abstract class Tuple {
   }
 
   public double magnitude() {
-    // todo assert isVector();
+    Preconditions.checkState(isVector(), "magnitude() requires Tuple be a vector");
     return Math.sqrt(x() * x() + y() * y() + z() * z() + w() * w());
   }
 
   public Tuple normalize() {
-    // todo assert isVector();
+    Preconditions.checkState(isVector(), "normalize() requires Tuple be a vector");
     return dividedBy(magnitude());
   }
 
@@ -82,14 +83,14 @@ public abstract class Tuple {
   }
 
   public Tuple cross(Tuple t) {
-    // todo assert isVector();
-    // todo assert t.isVector();
+    Preconditions.checkState(isVector(), "cross() requires Tuple be a vector");
+    Preconditions.checkArgument(t.isVector(), "cross(t) requires Tuple be a vector");
     return vector(y() * t.z() - z() * t.y(), z() * t.x() - x() * t.z(), x() * t.y() - y() * t.x());
   }
 
   public Tuple reflect(Tuple normal) {
-    // todo assert isVector();
-    // todo assert normal.isVector();
+    Preconditions.checkState(isVector(), "normal() requires Tuple be a vector");
+    Preconditions.checkArgument(normal.isVector(), "reflect(normal) requires Tuple be a vector");
     return minus(normal.times(2.0 * dot(normal)));
   }
 }

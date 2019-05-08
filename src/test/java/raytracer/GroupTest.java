@@ -3,6 +3,7 @@ package raytracer;
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth8.assertThat;
 import static raytracer.MatrixSubject.assertThat;
+import static raytracer.Range3Subject.assertThat;
 import static raytracer.Testing.EPSILON;
 import static raytracer.TupleSubject.assertThat;
 
@@ -29,6 +30,25 @@ public class GroupTest {
     Shape s = Sphere.create();
     g.add(s);
     assertThat(g.shapes()).contains(s);
+  }
+
+  @Test
+  // Scenario: Appropriate bounding box coverage.
+  public void boundingBox() {
+    Group g = Group.create();
+    Shape s = Sphere.create();
+    g.add(s);
+    assertThat(g.boundingBox().getRange())
+        .isApproximatelyEqualTo(Range3.create(-1, 1, -1, 1, -1, 1));
+
+    s.setTransform(Matrix.translation(5, 0, 0));
+    g.resetBoundingBox();
+    assertThat(g.boundingBox().getRange())
+        .isApproximatelyEqualTo(Range3.create(4, 6, -1, 1, -1, 1));
+
+    g.setTransform(Matrix.scaling(2, 2, 2));
+    assertThat(g.boundingBox().getRange())
+        .isApproximatelyEqualTo(Range3.create(4, 6, -1, 1, -1, 1));
   }
 
   @Test

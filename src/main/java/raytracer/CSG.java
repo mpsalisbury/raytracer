@@ -59,12 +59,22 @@ public class CSG implements Shape {
   }
 
   @Override
+  public BoundingBox boundingBox() {
+    return transformed.boundingBox();
+  }
+
+  @Override
   public Stream<MaterialIntersection> intersectStream(Ray ray) {
     return transformed.intersectStream(ray);
   }
 
   // Intersects a raw CSG combination.
   public class CSGIntersectable implements Intersectable {
+    @Override
+    public BoundingBox boundingBox() {
+      return left.boundingBox().getRange().span(right.boundingBox().getRange()).createBoundingBox();
+    }
+
     @Override
     public Stream<MaterialIntersection> intersectStream(Ray ray) {
       List<CSGIntersection> is =

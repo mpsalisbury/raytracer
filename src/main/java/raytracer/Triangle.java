@@ -2,6 +2,8 @@ package raytracer;
 
 import com.google.auto.value.AutoValue;
 import com.google.auto.value.extension.memoized.Memoized;
+import com.google.common.collect.Range;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 
@@ -54,6 +56,24 @@ public abstract class Triangle extends Geometry {
   @Memoized
   public Tuple e2() {
     return p3().minus(p1());
+  }
+
+  @Override
+  public Range3 getRange() {
+    Range<Double> xRange = getRange(p -> p.x());
+    Range<Double> yRange = getRange(p -> p.y());
+    Range<Double> zRange = getRange(p -> p.z());
+    return Range3.create(xRange, yRange, zRange);
+  }
+
+  private Range<Double> getRange(ToDoubleFunction<Tuple> getCoord) {
+    double min = forEachVertex().mapToDouble(getCoord).min().orElse(0);
+    double max = forEachVertex().mapToDouble(getCoord).max().orElse(0);
+    return Range.closed(min, max);
+  }
+
+  private Stream<Tuple> forEachVertex() {
+    return Stream.of(p1(), p2(), p3());
   }
 
   @Override

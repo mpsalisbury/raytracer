@@ -7,6 +7,16 @@ public interface Intersectable {
     return Intersections.create(intersectStream(ray));
   }
 
+  // Returns true if given ray possibly hits this intersectable.
+  // Returns false if it definitely does not hit.
+  // Used for optimizing expensive intersection tests.
+  default boolean maybeHits(Ray ray) {
+    return boundingBox().maybeHits(ray);
+  }
+
+  // Returns a bounding box for this intersectable.
+  BoundingBox boundingBox();
+
   // Returns an unordered stream of intersections with the given ray.
-  public Stream<MaterialIntersection> intersectStream(Ray ray);
+  Stream<MaterialIntersection> intersectStream(Ray ray);
 }

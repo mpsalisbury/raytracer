@@ -105,8 +105,6 @@ public abstract class Intersection {
 
   public abstract double t();
 
-  // TODO: switch to material ranges.
-
   public abstract int shapeId();
 
   public abstract Tuple point();

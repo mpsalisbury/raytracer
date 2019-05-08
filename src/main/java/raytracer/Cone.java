@@ -21,6 +21,11 @@ public class Cone extends Geometry {
   private static final Matrix Y_SHIFT_TRANSFORM = Matrix.translation(0, -Y_SHIFT, 0);
 
   @Override
+  public Range3 getRange() {
+    return Range3.create(-1, 1, -1, 1, -1, 1);
+  }
+
+  @Override
   public DoubleStream intersect(Ray ray) {
     Ray localRay = ray.transform(Y_SHIFT_TRANSFORM);
     return DoubleStream.concat(intersectWalls(localRay), intersectCap(localRay));

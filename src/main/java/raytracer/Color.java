@@ -39,7 +39,8 @@ public abstract class Color {
   }
 
   // Sqrt of color, hack to support transparent light code.
-  // TODO: Remove when transparent lighting code fixed.
+  // TODO: Remove when transparent lighting code (World.visibleLightColor) handles
+  // light through material vs through two surfaces.
   public Color sqrt() {
     return Color.create(Math.sqrt(red()), Math.sqrt(green()), Math.sqrt(blue()));
   }

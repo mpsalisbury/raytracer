@@ -67,7 +67,6 @@ public class CubeScene {
   private static Shape createCube1() {
     Shape s = Cube.create();
     s.setTransform(Matrix.rotationY(Math.PI / 6).translate(-0.5, 1, 0.5));
-    // TODO: make this an opaque cube. Not working.
     s.setMaterial(
         Material.builder().setColor(Color.create(0.4, 0, 0)).setReflectivity(0.5).build());
     return s;

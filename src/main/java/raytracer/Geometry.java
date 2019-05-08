@@ -9,6 +9,8 @@ public abstract class Geometry {
   // Returns stream of t values where given ray intersects this shape.
   protected abstract DoubleStream intersect(Ray ray);
 
+  public abstract Range3 getRange();
+
   public Stream<MaterialIntersection> intersectStream(Ray ray) {
     return intersect(ray)
         .mapToObj(

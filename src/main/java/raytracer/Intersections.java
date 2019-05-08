@@ -50,9 +50,14 @@ public class Intersections {
       List<Intersection> is = inputIs.collect(Collectors.toList());
 
       Stream.Builder<Intersection> materialIs = Stream.builder();
-      // TODO only continue if material is not opaque.
-      // TODO prioritize nesting of shapes.
+      boolean noMoreLight = false;
       for (Intersection i : is) {
+        if (i.material().transparency() == 0.0 || noMoreLight) {
+          // Opaque material stops light. Don't compute any more refractions.
+          noMoreLight = true;
+          materialIs.add(i);
+          continue;
+        }
         Optional<Intersection> matchedI =
             intersectionStack.stream().filter(si -> si.shapeId() == i.shapeId()).findAny();
         if (matchedI.isPresent()) {
@@ -76,6 +81,10 @@ public class Intersections {
 
   public Intersections(Intersection... is) {
     this(Arrays.stream(is));
+  }
+
+  public boolean isEmpty() {
+    return is.isEmpty();
   }
 
   public int length() {

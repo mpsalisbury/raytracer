@@ -13,6 +13,11 @@ public class TransformedIntersectable implements Intersectable {
   }
 
   @Override
+  public BoundingBox boundingBox() {
+    return inner.boundingBox().transform(transform);
+  }
+
+  @Override
   public Stream<MaterialIntersection> intersectStream(Ray ray) {
     return inner.intersectStream(inverseTransformRay(ray)).map(i -> transformIntersection(i));
   }

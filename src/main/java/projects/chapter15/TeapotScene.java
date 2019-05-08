@@ -13,7 +13,6 @@ import raytracer.ObjFile;
 import raytracer.ObjFile.ParsingException;
 import raytracer.Pattern;
 import raytracer.Shape;
-import raytracer.Sphere;
 import raytracer.Tuple;
 import raytracer.World;
 
@@ -80,8 +79,7 @@ public class TeapotScene {
               .build());
       return teapot;
     } catch (IOException | ParsingException e) {
-      System.err.println("Error loading file: " + e.getMessage());
-      return Sphere.create(); // TODO yuck
+      throw new RuntimeException("Error loading teapot file", e);
     }
   }
 

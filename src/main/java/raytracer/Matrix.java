@@ -2,7 +2,6 @@ package raytracer;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.function.BiConsumer;
 import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
@@ -219,8 +218,12 @@ public class Matrix {
     colStream().forEach(consumer);
   }
 
-  // Todo: replace BiConsumer with IntBiConsumer
-  public void forEachCell(BiConsumer<Integer, Integer> consumer) {
+  @FunctionalInterface
+  public interface IntBiConsumer {
+    void accept(int i1, int i2);
+  }
+
+  public void forEachCell(IntBiConsumer consumer) {
     forEachCol(col -> forEachRow(row -> consumer.accept(row, col)));
   }
 

@@ -11,7 +11,8 @@ public class World {
 
   private List<Light> lights = new ArrayList<>();
   // TODO: Use Group?
-  private List<Shape> shapes = new ArrayList<>();
+  //  private List<Shape> shapes = new ArrayList<>();
+  private Group group = Group.create();
 
   public Iterable<Light> getLights() {
     return lights;
@@ -26,16 +27,16 @@ public class World {
   }
 
   public Iterable<Shape> getShapes() {
-    return shapes;
+    return group.shapes();
   }
 
   public void addShape(Shape shape) {
-    shapes.add(shape);
+    group.add(shape);
   }
 
   public Intersections intersect(Ray ray) {
-    // return new Intersections(shapes.stream().flatMap(s -> s.intersectStream(ray)));
-    return Intersections.create(shapes.stream().flatMap(s -> s.intersectStream(ray)));
+    return Intersections.create(group.intersectStream(ray));
+    //    return Intersections.create(shapes.stream().flatMap(s -> s.intersectStream(ray)));
   }
 
   public Color shadeHit(Intersection i, int remainingBounces) {
@@ -43,7 +44,6 @@ public class World {
 
     Color surfaceC = Color.BLACK;
     for (Light light : lights) {
-      //      boolean shadow = isShadowed(i.point(), light);
       Color visibleLightC = visibleLightColor(i.point(), light);
       surfaceC =
           surfaceC.plus(material.lighting(light, i.point(), i.eyev(), i.normalv(), visibleLightC));

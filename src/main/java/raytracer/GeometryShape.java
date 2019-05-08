@@ -38,6 +38,11 @@ public class GeometryShape implements Shape {
   }
 
   @Override
+  public BoundingBox boundingBox() {
+    return transformed.boundingBox();
+  }
+
+  @Override
   public Stream<MaterialIntersection> intersectStream(Ray ray) {
     return transformed.intersectStream(ray);
   }

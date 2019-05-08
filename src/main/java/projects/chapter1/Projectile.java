@@ -1,6 +1,7 @@
 package projects.chapter1;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 import raytracer.Tuple;
 
 // Describes a physical projectile
@@ -10,8 +11,8 @@ public abstract class Projectile {
   // @param position point
   // @param velocity vector
   public static Projectile create(Tuple position, Tuple velocity) {
-    // todo assert position.isPoint();
-    // todo assert velocity.isVector();
+    Preconditions.checkArgument(position.isPoint(), "position must be a vector");
+    Preconditions.checkArgument(velocity.isVector(), "velocity must be a vector");
     return new AutoValue_Projectile(position, velocity);
   }
 

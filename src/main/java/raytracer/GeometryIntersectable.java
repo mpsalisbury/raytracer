@@ -26,6 +26,11 @@ public class GeometryIntersectable implements Intersectable {
   }
 
   @Override
+  public BoundingBox boundingBox() {
+    return geometry.getRange().createBoundingBox();
+  }
+
+  @Override
   public Stream<MaterialIntersection> intersectStream(Ray ray) {
     return geometry.intersectStream(ray).map(i -> i.copyWithMaterial(material));
   }
