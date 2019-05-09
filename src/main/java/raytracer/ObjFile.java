@@ -1,11 +1,11 @@
 package raytracer;
 
-// import com.google.common.flogger.FluentLogger;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Joiner;
 import com.google.common.base.Verify;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Range;
+import com.google.common.flogger.FluentLogger;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,8 +25,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 public class ObjFile {
-  // TODO: fix
-  //  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   public static ObjFile parse(Reader rawReader) throws IOException, ParsingException {
     return new FileParser(rawReader).parse();
@@ -97,7 +96,6 @@ public class ObjFile {
     Matrix transform =
         Matrix.scaling(xSize / 2, ySize / 2, zSize / 2).translate(xMiddle, yMiddle, zMiddle);
 
-    // TODO: wrap cube with another transform so that this transform stays fixed.
     Shape cube = Cube.create();
     cube.setTransform(transform);
     Group group = Group.create();
@@ -288,8 +286,7 @@ public class ObjFile {
 
       @Override
       public void parse(String[] terms) {
-        // TODO: fix
-        //        logger.atInfo().log("Ignoring command: %s", Joiner.on(' ').join(terms));
+        logger.atInfo().log("Ignoring command: %s", Joiner.on(' ').join(terms));
         ++objfile.ignoredCommandCount;
       }
     }

@@ -84,7 +84,8 @@ class Range3 {
   }
 
   // Returns this range transformed by the given transform.
-  private Range3 transform(Matrix transform) {
+  // VisibleForTesting
+  public Range3 transform(Matrix transform) {
     if (isEmpty()) {
       return this;
     }

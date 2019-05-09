@@ -155,8 +155,8 @@ public class SphereTest {
     assertThat(n).isEqualTo(n.normalize());
   }
 
-  /*
   // TODO reinstate
+  /*
     @Test
     // Scenario: Computing the normal on a translated sphere
     public void normalOnTranslated() {

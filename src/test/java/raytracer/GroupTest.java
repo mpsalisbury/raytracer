@@ -38,6 +38,10 @@ public class GroupTest {
     Group g = Group.create();
     Shape s = Sphere.create();
     g.add(s);
+    g.add(s); // BoundingBox only kicks in after 5 objects within group.
+    g.add(s);
+    g.add(s);
+    g.add(s);
     assertThat(g.boundingBox().getRange())
         .isApproximatelyEqualTo(Range3.create(-1, 1, -1, 1, -1, 1));
 

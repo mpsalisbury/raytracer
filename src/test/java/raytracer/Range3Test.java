@@ -99,7 +99,6 @@ public class Range3Test {
     assertThat(range2.span(range1)).isEqualTo(expectedCombinedRange);
   }
 
-  /* TODO: Reinstate
   @Test
   // Scenario: transform range
   public void transform() {
@@ -115,5 +114,4 @@ public class Range3Test {
     assertThat(range.transform(Matrix.scaling(0, 1, 2)))
         .isEqualTo(Range3.create(0, 0, 2, 3, 8, 10));
   }
-  */
 }

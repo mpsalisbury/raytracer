@@ -10,8 +10,6 @@ public class World {
   private static final int DEFAULT_MAX_BOUNCES = 4;
 
   private List<Light> lights = new ArrayList<>();
-  // TODO: Use Group?
-  //  private List<Shape> shapes = new ArrayList<>();
   private Group group = Group.create();
 
   public Iterable<Light> getLights() {
@@ -36,7 +34,6 @@ public class World {
 
   public Intersections intersect(Ray ray) {
     return Intersections.create(group.intersectStream(ray));
-    //    return Intersections.create(shapes.stream().flatMap(s -> s.intersectStream(ray)));
   }
 
   public Color shadeHit(Intersection i, int remainingBounces) {
