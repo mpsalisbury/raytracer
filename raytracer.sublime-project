@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+		{
+			"name": "library",
+			"path": "library/src/main/java/raytracer"
+		},
+		{
+			"name": "test",
+			"path": "library/src/test/java/raytracer"
+		},
+		{
+			"name": "projects",
+			"path": "projects/src/main/java/projects"
+		},
+		{
+			"name": "root",
+			"path": "."
+		},
+	]
+}
