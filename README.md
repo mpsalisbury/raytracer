@@ -9,16 +9,16 @@ projects/ contains the executable projects. Most projects output a single image 
 directory. See projects/build.gradle for the executable task names.
 
 ## Libraries
-Raytracing code at [library/](library).
+Raytracing code at [library/](library/src/main/java/raytracer).
 
 ## Tests
 `gradle test` to run the unit tests.
 
 ## Chapter 1: Tuples, Points, and Vectors
 ### Project: TextRocketTracker
-Code at [projects/chapter1/TextRocketTracker.java](blob/master/projects/chapter1/TextRocketTracker.java).  
+Code at [projects/chapter1/TextRocketTracker.java](projects/src/main/projects/chapter1/TextRocketTracker.java).  
 Execute: `gradle project:textrocket`  
-Output: [text](../blob/master/projects/images/TextRocketTracker.out)
+Output: [text](projects/images/TextRocketTracker.out)
 
 ## Chapter 2: Drawing on a Canvas
 ### Project: CanvasRocketTracker
