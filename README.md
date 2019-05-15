@@ -16,13 +16,13 @@ Raytracing code at [library/](library/src/main/java/raytracer).
 
 ## Chapter 1: Tuples, Points, and Vectors
 ### Project: TextRocketTracker
-Code at [projects/chapter1/TextRocketTracker.java](projects/src/main/projects/chapter1/TextRocketTracker.java).  
+Code at [projects/chapter1/TextRocketTracker.java](projects/src/main/java/projects/chapter1/TextRocketTracker.java).  
 Execute: `gradle project:textrocket`  
 Output: [text](projects/images/TextRocketTracker.out)
 
 ## Chapter 2: Drawing on a Canvas
 ### Project: CanvasRocketTracker
-Code at [projects/chapter2/CanvasRocketTracker.java](blob/master/projects/chapter2/CanvasRocketTracker.java).  
+Code at [projects/chapter2/CanvasRocketTracker.java](projects/src/main/java/chapter2/CanvasRocketTracker.java).  
 Execute: `gradle project:canvasrocket`  
 Output: [image](projects/images/CanvasRocketTracker.png)
 
