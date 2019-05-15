@@ -22,9 +22,9 @@ Output: [text](projects/images/TextRocketTracker.out)
 
 ## Chapter 2: Drawing on a Canvas
 ### Project: CanvasRocketTracker
-Code at [projects/chapter2/CanvasRocketTracker.java](projects/src/main/java/chapter2/CanvasRocketTracker.java).  
+Code at [projects/chapter2/CanvasRocketTracker.java](projects/src/main/java/projects/chapter2/CanvasRocketTracker.java).  
 Execute: `gradle project:canvasrocket`  
-Output: [image](projects/images/CanvasRocketTracker.png)
+Output: ![image](projects/images/rocket.png)
 
 task clock(type:JavaExec) {
   main = 'projects.chapter4.Clock'
