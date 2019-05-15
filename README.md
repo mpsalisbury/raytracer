@@ -98,7 +98,8 @@ Output: ![image](projects/images/conescene.png)
 
 ## Chapter 14: Groups
 ### Project: Hexagons
-Code at [projects/chapter14/HexagonScene.java](projects/src/main/java/projects/chapter14/HexagonScene.java).  
+Code at [projects/chapter14/HexagonScene.java](projects/src/main/java/projects/chapter14/HexagonScene.java),
+[Hexagon.java](projects/src/main/java/projects/chapter14/Hexagon.java).  
 Execute: `gradle project:hexagon`  
 Output: ![image](projects/images/hexagonscene.png)
 
