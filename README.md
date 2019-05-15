@@ -22,8 +22,8 @@ Output: [text](images/TextRocketTracker.out)
 
 ## Chapter 2: Drawing on a Canvas
 ### Project: CanvasRocketTracker
-Code at [projects/chapter2/CanvasRocketTracker.java](projects/chapter2/CanvasRocketTracker.java).
-Execute: `gradle project:canvasrocket`
+Code at [projects/chapter2/CanvasRocketTracker.java](projects/chapter2/CanvasRocketTracker.java).  
+Execute: `gradle project:canvasrocket`  
 Output: [image](projects/images/CanvasRocketTracker.png)
 
 task clock(type:JavaExec) {
