@@ -106,7 +106,7 @@ Output: ![image](projects/images/hexagonscene.png)
 ### Project: Teapot
 Code at [projects/chapter15/TeapotScene.java](projects/src/main/java/projects/chapter15/TeapotScene.java).  
 Execute: `gradle project:teapot`  
-Output: ![image](projects/images/teapotscene.png)
+Output: ![image](projects/images/teapotscene.png)  
 Output with reflections: ![image](projects/images/teapotscene-reflect.png)
 
 ## Chapter 16: Constructive Solid Geometry (CSG)
