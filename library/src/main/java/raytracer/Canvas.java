@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.imageio.ImageIO;
 
+// A film canvas onto which images will be rendered.
 public class Canvas {
   // Index is [0..width-1][0..height-1]
   private int width;
@@ -50,6 +51,7 @@ public class Canvas {
     return IntStream.range(0, height);
   }
 
+  // Calls callback for each pixel (x,y).
   public void forEachIndex(BiConsumer<Integer, Integer> callback) {
     yIndexStream().forEach(y -> xIndexStream().forEach(x -> callback.accept(x, y)));
   }
@@ -58,6 +60,7 @@ public class Canvas {
     return (x >= 0 && x < width && y >= 0 && y < height);
   }
 
+  // Returns the color of the given pixel.
   public Color pixel(int x, int y) {
     if (indexInRange(x, y)) {
       return pixels.get(x, y);
@@ -66,6 +69,7 @@ public class Canvas {
     }
   }
 
+  // Sets the color of the given pixel.
   public void setPixel(int x, int y, Color c) {
     if (indexInRange(x, y)) {
       pixels.set(x, y, c);
@@ -83,6 +87,7 @@ public class Canvas {
     return (int) (channel * 256.0);
   }
 
+  // Writes the contents of this Canvas to the given raster image.
   private void writeToRaster(WritableRaster raster) {
     forEachIndex(
         (x, y) -> {
@@ -99,6 +104,7 @@ public class Canvas {
     return image;
   }
 
+  // Writes this canvas to the given file in PNG format.
   public void writePngFile(File outFile) throws IOException {
     RenderedImage image = toImage();
     ImageIO.write(image, "png", outFile);
@@ -110,7 +116,7 @@ public class Canvas {
         "%d %d %d", toChannelByte(c.red()), toChannelByte(c.green()), toChannelByte(c.blue()));
   }
 
-  // Writes this canvas to the given PPM file.
+  // Writes this canvas to the given file in PPM format.
   public void writePpmFile(File outFile) throws IOException {
     FileOutputStream outfile = new FileOutputStream(outFile);
     writePpmStream(outfile);

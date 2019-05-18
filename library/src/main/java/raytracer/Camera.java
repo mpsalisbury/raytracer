@@ -3,7 +3,7 @@ package raytracer;
 import com.google.auto.value.AutoValue;
 import com.google.auto.value.extension.memoized.Memoized;
 
-// Describes a Camera
+// Describes a Camera. Renders a view of a World into a Canvas.
 @AutoValue
 public abstract class Camera {
 
@@ -15,18 +15,25 @@ public abstract class Camera {
     return new AutoValue_Camera(hPixels, vPixels, fieldOfView, transform);
   }
 
+  // @param fromP camera location
+  // @param toP camera look-at location
+  // @param upV camera up direction
   public static Camera create(
       int hPixels, int vPixels, double fieldOfView, Tuple fromP, Tuple toP, Tuple upV) {
     return new AutoValue_Camera(
         hPixels, vPixels, fieldOfView, Matrix.viewTransform(fromP, toP, upV));
   }
 
+  // Horizontal count of pixels in output canvas.
   public abstract int hPixels();
 
+  // Vertical count of pixels in output canvas.
   public abstract int vPixels();
 
+  // Angle in radians of camera view (larger dimension).
   public abstract double fieldOfView();
 
+  // Transform camera direction from origin in -Z direction.
   public abstract Matrix transform();
 
   @Memoized
@@ -34,6 +41,8 @@ public abstract class Camera {
     return transform().invert();
   }
 
+  // Renders a view of the given World onto a canvas of the configured size using the
+  // configured camera view.
   public Canvas render(World world) {
     Canvas c = new Canvas(hPixels(), vPixels());
     c.forEachIndex(
@@ -45,6 +54,7 @@ public abstract class Camera {
 
   private static final Tuple CAMERA_POS = Tuple.point(0, 0, 0);
 
+  // Returns the camera ray that passes from the camera through the pixel at the given coordinates.
   public Ray rayForPixel(int x, int y) {
     Tuple filmPoint = filmPointForPixel(x, y);
     Tuple direction = filmPoint.minus(CAMERA_POS).normalize();

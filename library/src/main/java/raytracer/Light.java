@@ -13,7 +13,9 @@ public abstract class Light {
     return new AutoValue_Light(position, intensity);
   }
 
+  // The location of this light source.
   public abstract Tuple position();
 
+  // The color and intensity of this light source.
   public abstract Color intensity();
 }

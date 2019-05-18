@@ -2,7 +2,7 @@ package raytracer;
 
 import com.google.auto.value.AutoValue;
 
-// Describes a Color
+// Describes a Color, r,g,b channels 0..1.
 @AutoValue
 public abstract class Color {
 
@@ -22,18 +22,22 @@ public abstract class Color {
 
   public abstract double blue();
 
+  // Add this color to the given color.
   public Color plus(Color c) {
     return Color.create(red() + c.red(), green() + c.green(), blue() + c.blue());
   }
 
+  // Subtract this color from the given color.
   public Color minus(Color c) {
     return Color.create(red() - c.red(), green() - c.green(), blue() - c.blue());
   }
 
+  // Multiply this color by the given factor.
   public Color times(double f) {
     return Color.create(red() * f, green() * f, blue() * f);
   }
 
+  // Multiply this color by the given color channels.
   public Color times(Color c) {
     return Color.create(red() * c.red(), green() * c.green(), blue() * c.blue());
   }

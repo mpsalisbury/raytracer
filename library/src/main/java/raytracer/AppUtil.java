@@ -3,6 +3,7 @@ package raytracer;
 import java.io.File;
 import java.io.IOException;
 
+// Utilities for RayTracing applications.
 public class AppUtil {
 
   private static final String OUTDIR = "images";

@@ -33,22 +33,31 @@ public abstract class Material {
     return new AutoValue_Material.Builder();
   }
 
+  // The color pattern of this material.
   public abstract Pattern pattern();
 
+  // The amount of ambient reflectance of this material.
   public abstract double ambient();
 
+  // The amount of diffuse reflectance of this material.
   public abstract double diffuse();
 
+  // The amount of specular reflectance of this material.
   public abstract double specular();
 
+  // The amount of shininess reflectance of this material.
   public abstract double shininess();
 
+  // The amount of reflectivity of this material.
   public abstract double reflectivity();
 
+  // The amount of transparency of this material.
   public abstract double transparency();
 
+  // The refractive index of this material.
   public abstract double refractiveIndex();
 
+  // Does this material block light.
   public abstract boolean castsShadow();
 
   public abstract Builder toBuilder();
@@ -143,6 +152,7 @@ public abstract class Material {
     }
   }
 
+  // How much light bounces off of this material towards the eye.
   public Color lighting(Light light, Tuple point, Tuple eyev, Tuple normalv, Color visibleLightC) {
     // find the direction to the light source
     Tuple lightv = light.position().minus(point).normalize();
@@ -174,7 +184,6 @@ public abstract class Material {
       if (reflectDotEye > 0.0) {
         double factor = Math.pow(reflectDotEye, shininess());
         specular = visibleLightC.times(specular() * factor);
-        // specular = light.intensity().times(specular() * factor);
       }
     }
     // Add the three contributions together to get the final shading

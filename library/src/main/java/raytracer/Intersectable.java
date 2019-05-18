@@ -2,6 +2,7 @@ package raytracer;
 
 import java.util.stream.Stream;
 
+// Anything we can intersect with a Ray.
 public interface Intersectable {
   default Intersections intersect(Ray ray) {
     return Intersections.create(intersectStream(ray));

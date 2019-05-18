@@ -24,12 +24,16 @@ public class Intersections {
     this.is = propagateRefractiveIndices(sortedIs).collect(Collectors.toList());
   }
 
+  // Set the refractive indices (n1, n2) of the included intersections now that we know
+  // the ordering of the materials.
   private static Stream<Intersection> propagateRefractiveIndices(Stream<Intersection> inputIs) {
     return new ProcessIntersections().propagateRefractiveIndices(inputIs);
   }
 
+  // Keeps track of the materials of objects as we pass through them so that when
+  // we pass out the far end we know which material to exit.
   private static class ProcessIntersections {
-    // Ordered list of <shapeId, material> of current intersection along ray.
+    // Ordered list of intersections along ray.
     // Each successive intersection either passes into a new shape or
     // out of an existing shape on the stack. With each transition we
     // will establish the in and out refractiveIndex in the intersection.
@@ -46,6 +50,8 @@ public class Intersections {
       }
     }
 
+    // Walk through stream of intersections and set refractive indices based upon
+    // the in/out materials along the ray path. Returns the adjusted intersections.
     public Stream<Intersection> propagateRefractiveIndices(Stream<Intersection> inputIs) {
       List<Intersection> is = inputIs.collect(Collectors.toList());
 
@@ -58,6 +64,7 @@ public class Intersections {
           materialIs.add(i);
           continue;
         }
+        // Have we seen this shapeId before?
         Optional<Intersection> matchedI =
             intersectionStack.stream().filter(si -> si.shapeId() == i.shapeId()).findAny();
         if (matchedI.isPresent()) {
@@ -99,16 +106,14 @@ public class Intersections {
     return is.stream();
   }
 
+  // Returns the first intersection along the path.
   public Optional<Intersection> hit() {
     return is.stream().filter(i -> i.t() >= 0.0).min(comparingDouble(Intersection::t));
   }
 
   // Returns intersection of closest object t>0 that will cast a shadow.
   public Optional<Intersection> shadowHit() {
-    return is.stream()
-        .filter(i -> i.material().castsShadow())
-        .filter(i -> i.t() >= 0.0)
-        .min(comparingDouble(Intersection::t));
+    return shadowHits().min(comparingDouble(Intersection::t));
   }
 
   // Returns intersections objects that will cast a shadow.

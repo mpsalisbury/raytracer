@@ -2,6 +2,7 @@ package raytracer;
 
 import java.util.stream.Stream;
 
+// The Shape form of a given Geometry.
 public class GeometryShape implements Shape {
 
   private TransformedIntersectable transformed;

@@ -1,5 +1,9 @@
 package raytracer;
 
+// BoundingBox represents geometry that fully encloses other geometry.
+// It is used to optimize ray intersection calculations by first checking
+// whether the ray couldn't possibly hit the complex geometry because it
+// doesn't even hit the bounding box.
 public interface BoundingBox {
   // Might the given ray hit this bounding box? False === no. True === maybe.
   // Used for optimizing expensive intersection tests.

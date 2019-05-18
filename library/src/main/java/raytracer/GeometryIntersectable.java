@@ -3,6 +3,7 @@ package raytracer;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+// An Intersectable form of a given Geometry.
 public class GeometryIntersectable implements Intersectable {
 
   private Geometry geometry;

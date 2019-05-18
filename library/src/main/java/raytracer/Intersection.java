@@ -10,7 +10,6 @@ public abstract class Intersection {
     return create(i.ray(), i.t(), i.normalv(), i.material(), i.shapeId());
   }
 
-  // Shape is lowest-level shape responsible for this intersection.
   // Visible for testing.
   public static Intersection create(
       Ray ray, double t, Tuple normalv, Material material, int shapeId) {
@@ -103,29 +102,43 @@ public abstract class Intersection {
         schlickReflectance);
   }
 
+  // The ray parameter at which this intersection occurs.
   public abstract double t();
 
+  // Id for the shape causing this intersection.
+  // Used to recognize entry and exit intersections for a single object.
   public abstract int shapeId();
 
+  // The geometric point of the intersection.
   public abstract Tuple point();
 
+  // The vector from the eye to the intersection.
   public abstract Tuple eyev();
 
+  // The normal vector of the surface at the intersection.
   public abstract Tuple normalv();
 
+  // Does the ray hit the inside of the surface.
   public abstract boolean inside();
 
+  // The ray representing the reflection of the original ray off the surface.
   public abstract Tuple reflectv();
 
+  // The material of the object at the intersection.
   public abstract Material material();
 
+  // The refractivity index of the material before the intersection.
   public abstract double n1();
 
+  // The refractivity index of the material after the intersection.
   public abstract double n2();
 
+  // Is the ray trapped inside the material.
   public abstract boolean isTotalInternalReflection();
 
+  // The ray representing the refraction of the original ray off the surface.
   public abstract Tuple refractv();
 
+  // Reflectance calculation.
   public abstract double schlickReflectance();
 }

@@ -4,13 +4,16 @@ import java.util.Objects;
 import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 
+// Describes a shape that we can render.
 public abstract class Geometry {
 
   // Returns stream of t values where given ray intersects this shape.
   protected abstract DoubleStream intersect(Ray ray);
 
+  // Returns the bounding range around this shape.
   public abstract Range3 getRange();
 
+  // Returns the locations at which the given ray intersects this shape.
   public Stream<MaterialIntersection> intersectStream(Ray ray) {
     return intersect(ray)
         .mapToObj(
