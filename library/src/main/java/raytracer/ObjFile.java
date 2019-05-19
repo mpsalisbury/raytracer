@@ -4,7 +4,6 @@ import com.google.auto.value.AutoValue;
 import com.google.common.base.Joiner;
 import com.google.common.base.Verify;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Range;
 import com.google.common.flogger.FluentLogger;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -18,23 +17,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.ToDoubleFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
+// Parser for OBJ-formatted model files.
 public class ObjFile {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  public static ObjFile parse(Reader rawReader) throws IOException, ParsingException {
-    return new FileParser(rawReader).parse();
+  // Parses the OBJ file from the given reader.
+  public static ObjFile parse(Reader reader) throws IOException, ParsingException {
+    return new FileParser(reader).parse();
   }
 
+  // Parses the OBJ file at the given filename.
   public static ObjFile parseFile(String filename) throws IOException, ParsingException {
     return parse(new FileReader(filename));
   }
 
+  // Parses the OBJ file at the given resource name.
   public static ObjFile parseResource(String resourceFilename)
       throws IOException, ParsingException {
     InputStream inputStream = ObjFile.class.getResourceAsStream(resourceFilename);
@@ -44,15 +46,19 @@ public class ObjFile {
     return parse(new InputStreamReader(inputStream));
   }
 
+  // Parses the OBJ file with the given content.
   public static ObjFile parseContent(String content) throws IOException, ParsingException {
     return parse(new StringReader(content));
   }
 
+  // Tracks how many OBJ file commands we didn't understand.
   private int ignoredCommandCount = 0;
   private List<Tuple> vertices = new ArrayList<>();
   private List<Tuple> normals = new ArrayList<>();
+  // Map of group name to group of triangles.
   private Map<String, TriangleGroup> groups = new HashMap<>();
 
+  // Represents this ObjFile as a Shape.
   public Shape asShape() {
     Group group = Group.create();
     for (TriangleGroup subgroup : groups.values()) {
@@ -63,6 +69,7 @@ public class ObjFile {
     return group;
   }
 
+  /*
   // Returns cube-oid bounding box containing all triangles.
   public Shape boundingBox() {
     Range<Double> xRange = getRange(p -> p.x());
@@ -102,6 +109,7 @@ public class ObjFile {
     group.add(cube);
     return group;
   }
+  */
 
   public int ignoredCommandCount() {
     return ignoredCommandCount;
@@ -188,6 +196,7 @@ public class ObjFile {
     }
   }
 
+  // Parses the OBJ file.
   private static class FileParser {
     private BufferedReader reader;
     // The ObjFile being constructed.
@@ -195,6 +204,7 @@ public class ObjFile {
     private TriangleGroup currentGroup;
     private List<CommandParser> commandParsers;
 
+    // Vertex Normal format is #/#/#
     private static final Pattern VERTEX_NORMAL_PATTERN = Pattern.compile("(\\d*)/\\d*/(\\d*)");
 
     public FileParser(Reader rawReader) {
@@ -205,8 +215,10 @@ public class ObjFile {
           ImmutableList.of(
               new VertexParser(),
               new VertexNormalParser(),
+              new VertexTextureParser(),
               new FaceParser(),
               new GroupParser(),
+              new CommentParser(),
               new EmptyParser());
     }
 
@@ -237,6 +249,7 @@ public class ObjFile {
       return Joiner.on(' ').join(terms);
     }
 
+    // Abstract class for parsing a command/line in an OBJ file.
     private abstract class CommandParser {
       // Returns the token that this command parser handles.
       public abstract String getToken();
@@ -248,6 +261,7 @@ public class ObjFile {
         return getToken().equals(token);
       }
 
+      // Helper for parsing a string into an int.
       protected int parseInt(String term) throws ParsingException {
         try {
           return Integer.parseInt(term);
@@ -256,6 +270,7 @@ public class ObjFile {
         }
       }
 
+      // Helper for parsing a string into a double.
       protected double parseDouble(String term) throws ParsingException {
         try {
           return Double.parseDouble(term);
@@ -265,7 +280,7 @@ public class ObjFile {
       }
     }
 
-    // Record count of commands we don't understand.
+    // Handles empty lines
     private class EmptyParser extends CommandParser {
       @Override
       public String getToken() {
@@ -276,7 +291,18 @@ public class ObjFile {
       public void parse(String[] terms) {}
     }
 
-    // Record count of commands we don't understand.
+    // Handles comment lines
+    private class CommentParser extends CommandParser {
+      @Override
+      public String getToken() {
+        return "#";
+      }
+
+      @Override
+      public void parse(String[] terms) {}
+    }
+
+    // Records count of commands we don't understand.
     private class UnknownCommandParser extends CommandParser {
       @Override
       public String getToken() {
@@ -312,6 +338,17 @@ public class ObjFile {
       }
     }
 
+    // Parses (and ignores) a vertex texture command.
+    private class VertexTextureParser extends CommandParser {
+      @Override
+      public String getToken() {
+        return "vt";
+      }
+
+      @Override
+      public void parse(String[] terms) {}
+    }
+
     // Parses a vertex normal command.
     private class VertexNormalParser extends CommandParser {
       @Override
@@ -330,6 +367,7 @@ public class ObjFile {
         objfile.normals.add(Tuple.vector(x, y, z));
       }
     }
+
     // Parses a face command.
     private class FaceParser extends CommandParser {
       @Override

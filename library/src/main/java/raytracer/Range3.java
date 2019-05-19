@@ -69,7 +69,6 @@ class Range3 {
 
   private boolean isEmpty() {
     return xRange == null;
-    // return xRange.isEmpty() || yRange.isEmpty() || zRange.isEmpty();
   }
 
   private boolean isUnbounded() {

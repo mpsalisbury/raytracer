@@ -2,6 +2,7 @@ package raytracer;
 
 import java.util.stream.Stream;
 
+// Transform an intersectable by a given matrix.
 public class TransformedIntersectable implements Intersectable {
   private Intersectable inner;
   private Matrix transform = Matrix.identity();

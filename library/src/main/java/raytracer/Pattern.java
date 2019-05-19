@@ -2,15 +2,20 @@ package raytracer;
 
 import java.util.Objects;
 
+// Describes the colors at a given point in space.
+// Used to describe patterns on shapes.
 public abstract class Pattern {
   protected Matrix inverseTransform = Matrix.identity();
 
+  // Returns the color at the given point.
   public Color colorAt(Tuple p) {
     Tuple localPoint = inverseTransform.times(p);
     return localColorAt(inverseTransform.times(localPoint));
   }
 
   protected abstract Color localColorAt(Tuple p);
+
+  // Constructors for various Pattern types.
 
   public static Pattern createColor(Color color) {
     return new ColorPattern(color);
@@ -49,10 +54,12 @@ public abstract class Pattern {
     return new NoisePattern(noiseScale, noiseMagnitude, sourcePattern);
   }
 
+  // Returns the transform applied to this pattern.
   public Matrix transform() {
     return inverseTransform.invert();
   }
 
+  // Sets the pattern to be applied to this pattern.
   public void setTransform(Matrix transform) {
     this.inverseTransform = transform.invert();
   }
@@ -218,6 +225,7 @@ public abstract class Pattern {
     }
   }
 
+  // Modifies the shape of another pattern by smoothly moving points.
   private static class NoisePattern extends Pattern {
     private double noiseMagnitude;
     private Pattern sourcePattern;

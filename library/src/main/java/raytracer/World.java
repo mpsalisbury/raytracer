@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+// A set of lights and shapes in a scene.
 public class World {
 
   private static final int DEFAULT_MAX_BOUNCES = 4;
@@ -32,10 +33,13 @@ public class World {
     group.add(shape);
   }
 
+  // Intersect the given ray against this world.
   public Intersections intersect(Ray ray) {
     return Intersections.create(group.intersectStream(ray));
   }
 
+  // What color happens at this intersection.
+  // Allow further light bounces if remainingBounces > 0.
   public Color shadeHit(Intersection i, int remainingBounces) {
     Material material = i.material();
 
@@ -56,6 +60,7 @@ public class World {
     }
   }
 
+  // What color is reflected at this intersection.
   public Color reflectedColor(Intersection i, int remainingBounces) {
     if (remainingBounces <= 0) {
       return Color.BLACK;
@@ -69,6 +74,7 @@ public class World {
     return reflectColor.times(reflectivity);
   }
 
+  // What color is refracted at this intersection.
   public Color refractedColor(Intersection i, int remainingBounces) {
     if (remainingBounces <= 0) {
       return Color.BLACK;
@@ -87,6 +93,7 @@ public class World {
     return colorAt(refractRay, remainingBounces - 1).times(i.material().transparency());
   }
 
+  // What color is present in this world at the given ray.
   public Color colorAt(Ray ray) {
     return colorAt(ray, DEFAULT_MAX_BOUNCES);
   }
@@ -123,6 +130,7 @@ public class World {
     return c;
   }
 
+  // Is the given point shadowed by this scene from the given light.
   public boolean isShadowed(Tuple point, Light light) {
     Tuple lightToPoint = point.minus(light.position());
     double distanceToPoint = lightToPoint.magnitude();

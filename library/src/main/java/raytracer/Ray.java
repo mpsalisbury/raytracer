@@ -22,10 +22,12 @@ public abstract class Ray {
 
   public abstract Tuple direction();
 
+  // Returns the point along this ray at parameter t.
   public Tuple position(double t) {
     return origin().plus(direction().times(t));
   }
 
+  // Returns this ray transformed by the given matrix.
   public Ray transform(Matrix m) {
     return create(m.times(origin()), m.times(direction()));
   }

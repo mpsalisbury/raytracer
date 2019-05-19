@@ -52,6 +52,7 @@ public class Matrix {
     return translation(x, y, z).times(this);
   }
 
+  // Static translation transform.
   public static Matrix translation(double x, double y, double z) {
     Matrix t = identity();
     t.set(0, 3, x);
@@ -69,6 +70,7 @@ public class Matrix {
     return scale(s, s, s);
   }
 
+  // Static scaling transform.
   public static Matrix scaling(double x, double y, double z) {
     Matrix s = identity();
     s.set(0, 0, x);
@@ -86,6 +88,7 @@ public class Matrix {
     return rotationX(angle).times(this);
   }
 
+  // Static x-rotation transform.
   public static Matrix rotationX(double angle) {
     return rotation(angle, 1, 2);
   }
@@ -95,6 +98,7 @@ public class Matrix {
     return rotationY(angle).times(this);
   }
 
+  // Static y-rotation transform.
   public static Matrix rotationY(double angle) {
     return rotation(angle, 2, 0);
   }
@@ -104,10 +108,14 @@ public class Matrix {
     return rotationZ(angle).times(this);
   }
 
+  // Static z-rotation transform.
   public static Matrix rotationZ(double angle) {
     return rotation(angle, 0, 1);
   }
 
+  // @param angle the angle (radians) to rotate.
+  // @param index1 the first transform matrix index to set for this rotation.
+  // @param index2 the second transform matrix index to set for this rotation.
   private static Matrix rotation(double angle, int index1, int index2) {
     double cosa = Math.cos(angle);
     double sina = Math.sin(angle);
@@ -124,6 +132,7 @@ public class Matrix {
     return shearing(xy, xz, yx, yz, zx, zy).times(this);
   }
 
+  // Static shearing transform.
   public static Matrix shearing(double xy, double xz, double yx, double yz, double zx, double zy) {
     Matrix s = identity();
     s.set(0, 1, xy);
@@ -135,6 +144,7 @@ public class Matrix {
     return s;
   }
 
+  // Constructs a camera transform looking from fromP to toP with up vector upV.
   public static Matrix viewTransform(Tuple fromP, Tuple toP, Tuple upV) {
     Tuple forwardV = toP.minus(fromP).normalize();
     Tuple leftV = forwardV.cross(upV.normalize());
@@ -182,6 +192,7 @@ public class Matrix {
     return Tuple.create(get(0, 0), get(1, 0), get(2, 0), get(3, 0));
   }
 
+  // Initialize this matrix with the given values in row-major order.
   private void init(double[] initValues) {
     if (initValues.length != values.length) {
       throw new IllegalArgumentException(
@@ -202,18 +213,22 @@ public class Matrix {
     return numCols;
   }
 
+  // Returns an intstream containing the row indices for this matrix.
   private IntStream rowStream() {
     return IntStream.range(0, numRows);
   }
 
+  // Executes the given consumer once for each row index.
   public void forEachRow(IntConsumer consumer) {
     rowStream().forEach(consumer);
   }
 
+  // Returns an intstream containing the column indices for this matrix.
   private IntStream colStream() {
     return IntStream.range(0, numCols);
   }
 
+  // Executes the given consumer once for each row index.
   public void forEachCol(IntConsumer consumer) {
     colStream().forEach(consumer);
   }
@@ -223,6 +238,7 @@ public class Matrix {
     void accept(int i1, int i2);
   }
 
+  // Executes the given consumer once for each row,column index.
   public void forEachCell(IntBiConsumer consumer) {
     forEachCol(col -> forEachRow(row -> consumer.accept(row, col)));
   }
@@ -231,11 +247,13 @@ public class Matrix {
     return (row >= 0 && row < numRows && col >= 0 && col < numCols);
   }
 
+  // Returns the array index for the given row,col.
   private int index(int row, int col) {
     // row-major order.
     return row * numCols + col;
   }
 
+  // Returns the matrix cell value for the given row,col.
   public double get(int row, int col) {
     if (isIndexInRange(row, col)) {
       return values[index(row, col)];
@@ -245,6 +263,7 @@ public class Matrix {
     }
   }
 
+  // Sets the matrix cell value for the given row,col.
   public void set(int row, int col, double value) {
     if (isIndexInRange(row, col)) {
       values[index(row, col)] = value;
@@ -254,6 +273,7 @@ public class Matrix {
     }
   }
 
+  // Returns the result of multiplying this matrix by the given matrix.
   public Matrix times(Matrix b) {
     if (getNumCols() != b.getNumRows()) {
       throw new IllegalArgumentException("Incompatible matrix size for times()");
@@ -273,16 +293,19 @@ public class Matrix {
     return product;
   }
 
+  // Returns the result of multiplying this matrix by the given tuple.
   public Tuple times(Tuple t) {
     return times(Matrix.fromTuple(t)).toTuple();
   }
 
+  // Returns the transpose of this matrix.
   public Matrix transpose() {
     Matrix t = new Matrix(numCols, numRows);
     forEachCell((fromRow, fromCol) -> t.set(fromCol, fromRow, get(fromRow, fromCol)));
     return t;
   }
 
+  // Returns the determinant of this matrix.
   public double determinant() {
     if (numRows != numCols) {
       throw new IllegalArgumentException("Determinant requires square matrix");
@@ -303,7 +326,7 @@ public class Matrix {
     return minor(row, col) * phase;
   }
 
-  // Returns matrix removing row and col.
+  // Returns this matrix removing row and col.
   public Matrix submatrix(int removeRow, int removeCol) {
     if (!isIndexInRange(removeRow, removeCol)) {
       throw new IndexOutOfBoundsException(
@@ -332,6 +355,7 @@ public class Matrix {
     return determinant() != 0.0;
   }
 
+  // Returns the inverse of this matrix.
   public Matrix invert() {
     if (numRows != numCols) {
       throw new IllegalArgumentException("Invert requires square matrix");
